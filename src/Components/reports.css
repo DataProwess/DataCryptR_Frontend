@@ -1,0 +1,17 @@
+@media (max-width: 750px) {
+  .search-icon {
+    flex-direction: column; /* Stack elements vertically */
+    align-items: stretch;
+  }
+
+  .ml-6 {
+    margin-left: 0;
+    margin-top: 8px; /* Add margin on top instead of left */
+  }
+
+  .flex-grow {
+    max-width: 100%; /* Ensure the input field takes the full width */
+  }
+
+ 
+}

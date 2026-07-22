@@ -1,0 +1,88 @@
+#scale-container {
+    margin-bottom: 10px; /* Add some space between the scale and data */
+  }
+  
+  #scale-container > div {
+    margin-right: 20px; /* Add some space between each scale and its label */
+  }
+  
+  #scale-container > div > div {
+    position: absolute;
+    text-align: center;
+    bottom: -25px; /* Adjust the distance of the labels from the scale */
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .topmargin{
+    margin-top: 50px;
+  }
+  .heading{
+    margin-top: 50px;
+  }
+
+  .fixedwidthformatter{
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    margin-top: auto;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  /* .fixedwidthcontainer{
+    display: flex !important;
+    width: 100%;
+    height: 100%;
+    margin-left: 10px;
+  } */
+  .fixedruler{
+    width: 100%;
+    margin-top: 150px;
+    
+  }
+  .dataformat{
+    display: flex;
+    margin-right: 20px;
+  }
+
+  .columnfield{
+    width: 150px;
+    height: 30px;
+    border-color: black;
+    border: 2px;
+    outline-color: black;
+    font-size: 15px;
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+
+  .manualWidthInput{
+    margin-left: 20px;
+    width: 80px;
+  }
+
+  .precisionDropdown{
+    margin-left: 20px;
+    width: 50px;
+  }
+  .submit{
+    margin-right: 20px;
+  }
+
+  .modal-popup {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    z-index: 1000;
+    width: 60%; /* Adjust the width as needed */
+    height: 60%; /* Take full height of the viewport */
+    overflow-y: auto;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 100px;
+  }
+

@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: ./newfrontend
+    ports:
+      - "3000:3000"  # Map container port to host port for React
+    volumes:
+      - ./newfrontend:/app

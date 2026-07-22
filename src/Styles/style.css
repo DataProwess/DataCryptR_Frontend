@@ -1,0 +1,58 @@
+/* styles.css (Tailwind CSS version) */
+
+.table-design-data {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  
+  .table-design-data th,
+  .table-design-data td {
+    @apply py-2 px-4 border border-gray-300;
+    text-align: left;
+  }
+  
+  .resize-handle {
+    @apply absolute top-0 right-0 bottom-0 w-6 cursor-col-resize bg-transparent;
+  }
+  
+  .resize-handle.active {
+    @apply bg-gray-300;
+  }
+  
+  .container {
+    @apply relative overflow-x-auto;
+  }
+  
+  .table-wrapper {
+    @apply overflow-y-auto overflow-x-hidden max-w-full border border-gray-300;
+  }
+  
+  .resizeable-table {
+    @apply w-full border-collapse;
+  }
+  
+  .resizeable-table th,
+  .resizeable-table td {
+    @apply py-2 px-4 border border-gray-300;
+    text-align: left;
+  }
+  
+  .resizeable-table th {
+    @apply relative;
+  }
+  
+  .resizeable-table th span {
+    @apply whitespace-nowrap overflow-hidden overflow-ellipsis block;
+  }
+  
+  .resizeable-table th .resize-handle {
+    @apply absolute top-0 right-0 bottom-0 w-6 cursor-col-resize bg-transparent;
+  }
+  
+  .resizeable-table th .resize-handle.active {
+    @apply bg-gray-300;
+  }
+  .zoom-in{
+    @apply overflow-y-auto
+  }

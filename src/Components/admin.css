@@ -1,0 +1,135 @@
+/* Base Styles */
+.add-field-button {
+    font-size: 11px; /* Default font size for all screens */
+    width:110px
+}
+.search-field {
+    font-size: 11px; /* Default font size for all screens */
+    width:300px;
+    height:35px
+}
+
+.global-mask-field {
+  font-size: 11px; /* Default font size for all screens */
+  width:210px;
+  height:35px
+}
+
+.dynamic-flex {
+  display: flex;
+  flex-direction: row; /* Default to column */
+
+}
+
+
+/* Responsive Font Size */
+@media (max-width: 1200px) {
+  .add-field-button {
+    font-size: 11px; /* Smaller font size for narrower screens */
+  }
+  .search-field {
+    font-size: 11px; /* Smaller font size for narrower screens */
+    width: 350px;
+    height:25px;
+  }
+  .global-mask-field {
+    font-size: 11px; /* Default font size for all screens */
+    width:250px;
+    height:25px;
+  }
+  .dynamic-flex {
+    display: flex;
+    flex-direction: column; /* Default to column */
+  
+  }
+}
+
+@media (max-width: 900px) {
+  .add-field-button {
+    font-size: 10px; /* Further reduce font size */
+    width: 120px; 
+  }
+  .search-filed {
+    font-size: 10px; /* Further reduce font size */
+    width: 200px; 
+  }
+  .dynamic-flex {
+    display: flex;
+    flex-direction: row; /* Default to column */
+  
+  }
+  
+}
+
+@media (max-width: 610px) {
+  .add-field-button {
+    font-size: 14px; /* Ensure font size is 8px for very narrow screens */
+  }
+  .search-field {
+    font-size: 14px; /* Ensure font size is 8px for very narrow screens */
+    width: 200px;
+    height:22px;
+  }
+  .global-mask-field {
+    font-size: 14px; /* Default font size for all screens */
+    width:150px;
+    height:22px
+  }
+  .dynamic-flex {
+    display: flex;
+    flex-direction: col; 
+  
+  }
+  
+}
+@media (max-width: 532px) {
+    .search-container {
+      width: 250px;
+    }
+  }
+  
+
+/* Media query for screens with a width from 400px to 650px */
+@media (min-width: 400px) and (max-width: 650px) {
+    .table-header {
+      width: 100%; /* Ensure it doesn't exceed the container's width */
+      overflow-x: hidden; /* Prevent horizontal scrolling */
+      height: 10px; /* Set a fixed height */
+    }
+  
+    .table-header .header-content {
+      /* Adjust header content styles for screens between 400px and 650px */
+      font-size: 12px; /* Adjust font size to prevent overflow */
+      line-height: 1; /* Ensure text fits within the height */
+      white-space: nowrap; /* Prevent text wrapping */
+      overflow: hidden; /* Hide overflow text */
+      text-overflow: ellipsis; /* Add ellipsis for overflowing text */
+    }
+  }
+  
+  /* Media query for screens with a width of 650px or more */
+  @media (min-width: 650px) {
+    .table-header {
+      width: 100%; /* Full width */
+      overflow-x: auto; /* Allow horizontal scrolling if needed */
+      height: auto; /* Remove fixed height */
+    }
+  
+    .table-header .header-content {
+      font-size: 16px; /* Set font size for larger screens */
+    }
+  }
+  
+  /* Media query for screens with a width of 700px */
+  @media (min-width: 700px) {
+    .table-header {
+      width: 100%; /* Ensure it doesn't exceed the container's width */
+   
+      height: 6px; /* Set a fixed height */
+    }
+  
+    .table-header .header-content {
+      /* Adjust header content styles for screens of 700px width */
+      font-size: 16px; /* Set font size */
+    }
+  }

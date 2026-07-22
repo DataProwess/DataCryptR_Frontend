@@ -1,0 +1,123 @@
+
+  .margin-top{
+    margin-top:0.5rem
+  }
+  
+  @media (min-width: 300px) and (max-width: 500px) {
+    .margin-top{
+        margin-top: 1.25rem;
+    }
+
+  }
+  
+  @media (min-width: 400px) and (max-width: 500px) {
+    .margin-top{
+        margin-top: 1rem;
+    }
+
+  }
+ 
+
+/* Media query for viewports between 500px and 600px */
+@media (min-width: 500px) and (max-width: 600px) {
+    .margin-top{
+        margin-top: 0.75rem;
+    }
+    
+    
+}
+@media (width: 637px) {
+    
+  }
+@media (min-width: 600px) and (max-width: 700px) {
+    .margin-top{
+        margin-top: 0.75rem;
+    }
+   
+  }
+  
+
+/* Media query for viewports between 700px and 799px */
+@media (min-width: 700px) and (max-width: 800px) {
+    .margin-top{
+        margin-top: 0.75rem;
+    }
+    
+   
+}
+
+/* Media query for 150% viewports between 800px and 999px */
+@media (min-width: 800px) and (max-width: 999px) {
+    .margin-top{
+        margin-top: 1.15rem;
+    }
+  
+}
+@media (min-width: 1000px) and (max-width: 1100px) {
+    .margin-top{
+        margin-top: 0.75rem;
+    }
+
+    
+  }
+
+/* Media query for 125% viewports between 1000px and 1200px */
+@media (min-width: 1100px) and (max-width: 1200px) {
+    .margin-top{
+        margin-top: 0.75rem;
+    }
+
+    
+  }
+  
+/* Media query for 110%*/
+@media (min-width: 1200px) and (max-width: 1300px) {
+    .margin-top{
+        margin-top: 1.25rem;
+    }
+  
+}
+
+@media (min-width: 1300px) and (max-width: 1400px) {
+    .margin-top{
+        margin-top: 0.5rem;
+    }
+  
+}
+@media (width: 1390px) and (height: 893px) {
+    .margin-top{
+        margin-top: 0.15rem;
+    }
+   
+  }
+  @media (min-width: 1400px) and (max-width: 1500px) {
+    .margin-top{
+        margin-top: 0.5px;
+    }
+ 
+}
+  /* Adjusted media query for a viewport size at 80% zoom */
+@media (min-width: 1536px) and (min-height: 864px) and (max-width: 1540px) and (max-height: 868px) {
+    .margin-top{
+        /* margin-top: 0.15rem; */
+        margin-top: 10px;
+    }
+   
+}
+
+/* Media query for 90% viewports larger than 1400px */
+@media (min-width: 1400px) and (max-width: 1700px) {
+    .margin-top{
+        /* margin-top: 0.15rem; */
+        margin-top: 4px;
+    }
+ 
+}
+
+/* Media query for 80% viewports larger than 1700px */
+@media (min-width: 1700px) {
+    .margin-top{
+        margin-top: 4px;
+    }
+ 
+}

@@ -1,0 +1,665 @@
+/* styles.css */
+/* .custom-container {
+    @apply shadow-md border border-gray-300 rounded-lg  py-3 px-2 m-4 flex items-baseline;
+  } */
+  
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+  
+
+
+.custom-container-page {
+  @apply shadow-md border border-primary rounded-lg  flex items-baseline;
+}
+
+.custom-container label {
+  @apply w-32 mb-2; /* Adjust width and margin-bottom as needed */
+}
+
+.custom-container select {
+  @apply w-36 h-6 border rounded-xl mx-2; /* Adjust width, height, and margin as needed */
+}
+.button-base {
+  @apply cursor-pointer rounded-lg ml-8 h-7 w-24 font-semibold text-[13px] justify-center;
+}
+
+/* Enabled state styles */
+.button-enabled {
+  @apply ml-8 h-7 w-24 rounded-lg shadow-lg font-semibold text-[13px]  bg-purpleshade1 text-white
+     hover:bg-purpleshade1 hover:text-white focus:bg-purpleshade1;
+}
+
+/* Disabled state styles */
+/* .button-disabled {
+  @apply text-purpleshade1 cursor-not-allowed  rounded-lg shadow-mg shadow-slate-500/30 ml-8 h-7 w-24 font-medium  text-[13px] bg-white;
+} */
+/* .custom-layout {
+    @apply shadow-md border border-gray-400 rounded-lg  py-5 px-5 m-5 ml-36 flex items-baseline w-[60%] h-auto;
+  } */
+.custom-layout {
+  @apply relative shadow-sm py-5 px-5 m-5 ml-36 flex items-baseline w-[60%] h-auto border-b-2 border-t-2 z-40;
+}
+/* .download-button {
+    @apply inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 
+    text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-100
+    
+  } */
+/* .download-button {
+    @apply inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-100;
+  } */
+
+/* .custom-modal {
+    @apply fixed top-0 left-2/4 -translate-x-2/4 bg-white border border-solid
+     border-gray-300 z-[1000px] w-84.5 h-full overflow-y-auto cursor-pointer rounded-5 transition-right-0.3s ease-in-out;
+  } */
+
+.table {
+  @apply w-[80%];
+}
+
+.table-design {
+  @apply border-collapse  border-none;
+  /* height: 13px; */
+  /* margin-right: 100px; */
+  width: 100%;
+}
+.explore-table-design {
+  @apply border-collapse  border-none;
+  /* height: 13px; */
+  /* margin-right: 100px; */
+  width: 100%;
+}
+
+.table-design th,
+.table-design td {
+  @apply text-left whitespace-nowrap;
+
+  height: 13px;
+}
+.table-design tr {
+  @apply h-[26px];
+}
+.explore-table-design th,
+.explore-table-design td {
+  @apply text-left whitespace-nowrap;
+
+  height: 13px;
+}
+.explore-table-design tr {
+  @apply h-[26px];
+}
+
+/* .table-design tbody td {
+    @apply  w-80;
+} */
+
+/* .table-design tbody tr {
+    @apply shadow-md transition duration-200 ease-in  w-80;
+    box-shadow: 0 4px 8px lightgray;
+} */
+
+/* .table-design tbody tr:hover {
+    @apply shadow-md transition duration-500 ease-in;
+    /* box-shadow: 0 8px 16px #dcad87; */
+/* } */
+
+.table-design tbody td {
+  @apply border-none;
+}
+
+.explore-table-design tbody td {
+  @apply border-none;
+}
+
+.table-design th,
+.table-design td {
+  @apply text-left whitespace-nowrap;
+
+  height: 15px;
+}
+.table-design tr {
+  @apply h-[26px];
+}
+
+.explore-table-design th,
+.explore-table-design td {
+  @apply text-left whitespace-nowrap;
+
+  height: 15px;
+}
+.explore-table-design tr {
+  @apply h-8;
+}
+
+/* .table-design tbody td {
+    @apply  w-80;
+} */
+
+/* .table-design tbody tr {
+    @apply shadow-md transition duration-200 ease-in  w-80;
+    box-shadow: 0 4px 8px lightgray;
+} */
+
+/* .table-design tbody tr:hover {
+    @apply shadow-md transition duration-500 ease-in;
+    /* box-shadow: 0 8px 16px #dcad87; */
+/* } */
+
+/* .table-design tbody td {
+  @apply border-none;
+} */
+
+/* .table-design1 tbody td {
+  @apply border-gray-400;
+  
+} */
+
+.table-design1 {
+  @apply w-full;
+  border-bottom: #ffffff;
+  border-top: #ffffff;
+  /* height: 13px; */
+  /* margin-right: 100px; */
+  width: 100%;
+}
+
+.table-design1 th,
+.table-design1 td {
+  @apply text-left whitespace-nowrap border-gray-100;
+
+  height: 13px;
+}
+.table-design1 tr {
+  border:#8C52FF
+  @apply h-8;
+}
+
+/* .table-design tbody td {
+  @apply  w-80;
+} */
+
+/* .table-design tbody tr {
+  @apply shadow-md transition duration-200 ease-in  w-80;
+  box-shadow: 0 4px 8px lightgray;
+} */
+
+/* .table-design tbody tr:hover {
+  @apply shadow-md transition duration-500 ease-in;
+  /* box-shadow: 0 8px 16px #dcad87; */
+/* } */
+
+.table-design1 tbody td {
+  @apply border ;
+  /* border:"#737373" */
+  border: 1px solid #F0F0F0;
+}
+
+/* Define styles for table cells */
+/* Define styles for table cells */
+.table-design1 th {
+  border-left: 1px solid #F0F0F0; /* Add left border for each cell */
+
+  padding: 8px; /* Optional: Add padding to cells */
+}
+.table-design1 th {
+  border: 1px solid #F0F0F0;
+}
+
+/* Remove left border for the first column in each row */
+/* .table-design1 tr td:first-child {
+  border-left: none; /* Remove left border for the first column */
+/* } */
+
+input:checked {
+  @apply bg-lightorange-100;
+}
+/* .table-container tbody td:first-child {
+    @apply border-tl- border-bl-8;
+    @apply border-top-r
+}
+
+.table-container tbody td:last-child {
+    @apply border-tr-8 border-br-8;
+} */
+
+.table-design thead th {
+  @apply border-none;
+}
+
+.explore-table-design thead th {
+  @apply border-none;
+}
+
+.custom-header-fs {
+  @apply text-lightgray-100 text-base h-2;
+  font-size: 12px; /* Set the desired font size */
+  font-weight: normal; /* Set the desired font weight */
+}
+
+.custom-row-fs {
+  font-size: 12px; /* Set the desired font size */
+  font-weight: normal; /* Set the desired font weight */
+}
+
+.bg-image {
+  @apply bg-contain;
+
+  background-image: url("/public/backgroundimage1.jpeg");
+  min-width: 100%;
+  min-height: 100vh;
+}
+
+.bg-purpleGlossy {
+  background: rgba(128, 0, 128, 0.2);
+  background: linear-gradient(
+    135deg,
+    rgba(128, 0, 128, 0.3) 0%,
+    rgba(128, 0, 128, 0.2) 100%
+  );
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.3),
+    0 0 10px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(128, 0, 128, 0.5);
+}
+
+.bg-appimage {
+  background-image: url("/public/bgimg.png");
+  background-size: cover;
+  /* Center the background image */
+  background-position: center;
+  /* Set the minimum height to ensure the content is visible */
+  width: 100vw;
+  height: 100vh;
+}
+
+@media screen and (min-width: 1920px) {
+  .bg-appimage {
+    /* Adjust background properties for larger screens */
+    background-size: cover; /* Ensure the background image fits inside the container */
+    background-position: center; /* Center the background image */
+  }
+}
+
+/* Media query for screens larger than 1024px */
+@media screen and (min-width: 1024px) {
+  .bg-appimage {
+    /* Adjust background properties for even larger screens */
+    background-size: cover; /* Ensure the background image fits inside the container */
+    background-position: center; /* Center the background image */
+  }
+}
+@media screen and (min-width: 1926px) {
+  .bg-appimage {
+    /* Adjust background properties for even larger screens */
+    background-size: cover; /* Ensure the background image fits inside the container */
+    background-position: center; /* Center the background image */
+  }
+}
+
+.bg-screen {
+  /* Set the background image */
+  background-image: url("/public/appbackground.jpeg");
+
+  background-size: cover; /* Scale the background image as large as possible without stretching */
+  background-position: center; /* Center the background image */
+  background-repeat: no-repeat; /* Do not repeat the background image */
+  background-attachment: fixed;
+
+  /* Set minimum width and height to cover the entire screen */
+  min-width: 100vw; /* Ensure the background covers the entire viewport width */
+  min-height: 100vh; /* Ensure the background covers the entire viewport height */
+
+  /* Place the background behind all other content */
+  z-index: -1;
+}
+
+.backdrop-blur {
+  backdrop-filter: blur(2px); /* Adjust the blur strength as needed */
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-overlay-blur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.5
+  ); /* Adjust the background color and opacity to control the blur effect */
+  z-index: 1000; /* Make sure it's above your modal */
+  backdrop-filter: blur(1px); /* Adjust the blur amount as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.overlay-blur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  /* z-index: 1000;  */
+  backdrop-filter: none; /* Adjust the blur amount as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* pointer-events: auto; */
+  pointer-events: none;
+}
+.ReactModal__Content {
+  pointer-events: auto; /* Enable pointer events inside the modal */
+}
+
+/* Add this CSS to ensure the UploadPopup appears above the modal */
+.ReactModalPortal {
+  z-index: 1001; /* Ensure the modal has a lower z-index than the UploadPopup */
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 2s linear infinite;
+}
+
+.modal-overlay-blur .sidebar,
+.modal-overlay-blur .Mnavbar {
+  backdrop-filter: none; /* Exclude sidebar and Mnavbar from the blur effect */
+}
+
+@media (min-width: 1441px) {
+  .bg-screen {
+    background-position: center; /* Align background image to the left */
+  }
+}
+
+/* Media query for screens with a minimum width of 1921px */
+@media (min-width: 1921px) {
+  .bg-screen {
+    background-position: center; /* Align background image to the right */
+  }
+}
+
+@media (min-height: 1081px) {
+  .bg-screen {
+    background-position-y: bottom; /* Align background image to the bottom */
+  }
+}
+
+/* Media query for screens with a minimum height of 1025px */
+@media (min-height: 1025px) {
+  .bg-screen {
+    background-position-y: top; /* Align background image to the top */
+  }
+}
+
+.bg-image-popup {
+  @apply bg-cover;
+  background-image: url("/public/loginpopupbg.jpeg");
+  /* opacity: 0.7; */
+}
+
+.important-scroll {
+  @apply overflow-y-auto;
+}
+
+/* .box-shadow-md {
+ @apply box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Add a different box shadow on hover */
+/* .hover\:box-shadow:hover {
+  @apply box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}  */
+.radio-button.checked {
+  @apply bg-orange-400;
+  /* Add any other styles you need for the checked state */
+}
+.overflow-ellipsis {
+  @apply overflow-hidden whitespace-nowrap;
+}
+
+.border-gradient {
+  border-width: 3px;
+  border-style: solid;
+  border-image: linear-gradient(
+    135.59deg,
+    #ffffff 2.15%,
+    rgba(231, 128, 0, 0) 97.12%
+  );
+  border-image-slice: 1;
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, #b9b3ff 0%, #dfcffd 49%, #e9bcdd 100%);
+}
+
+/* .gradient-background {
+  background: linear-gradient(155deg, var(--tw-gradient-stops));
+  --tw-gradient-from: theme('colors.bg-gradient1');
+  --tw-gradient-to: theme('colors.bg-gradient2');
+  --tw-gradient-stops: var(--tw-gradient-from) 40%, var(--tw-gradient-to) 100%;
+} */
+
+.gradient-background {
+  background: linear-gradient(155deg, var(--tw-gradient-stops)),
+    url("/public/backgroundimage1.jpeg"); /* Ensure this path is correct */
+  --tw-gradient-from: theme("colors.bg-gradient1");
+  --tw-gradient-to: theme("colors.bg-gradient2");
+  --tw-gradient-stops: var(--tw-gradient-from) 40%, var(--tw-gradient-to) 100%;
+  background-size: cover; /* Adjust as needed */
+  background-repeat: no-repeat; /* Ensure the image doesn't repeat */
+  background-position: center; /* Center the image */
+  /* Adjust gradient transparency to let the image show through */
+  /* background-blend-mode: overlay; Optional:  */
+}
+
+/* Toggle Button On State */
+.toggle-button-on {
+  @apply text-white bg-green-500;
+}
+
+.blur-effect {
+  filter: blur(2px); /* Adjust the blur strength as needed */
+}
+
+.admin-blur-effect {
+  filter: blur(4px); /* Adjust the blur strength as needed */
+  pointer-events: none;
+}
+.backdrop-filter-none {
+  backdrop-filter: none;
+}
+
+.shadow-top {
+  box-shadow: 0px 0px 10px 2px rgba(111, 103, 103, 0.3);
+}
+.admin-shadow-top {
+  box-shadow: 0px -3px 0px 0px rgb(224, 221, 221);
+  border-radius: 5px 5px 5px 5px;
+}
+.switch-disabled {
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+.modal-content {
+  filter: blur(5px);
+}
+
+.save-button.disabled {
+  cursor: not-allowed;
+  background-color: #5e17eb; /* Adjust the color for the disabled state */
+  
+}
+
+
+.edit-modal-content {
+  
+  transform: translate(-50%, -50%);
+  width: 60%;
+  height: 80%;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #a0a0a0 #f0f0f0;
+}
+
+.modal-content.blur-none {
+  filter: none;
+}
+.upload-popup {
+  backdrop-filter: none;
+  /* Add any other styles as needed */
+}
+/* styles.css */
+/* Default font size for viewports below 700px */
+
+.modal-custom-dimensions {
+  width: 65vw;
+  height: 87vh;
+  /* margin-left: 2vw; */
+  margin-top: 6vh;
+}
+.addedit-user-dimensions {
+  width: 66vw;
+  height: 88vh;
+  margin-left: 23vw;
+  margin-top: 6vh;
+}
+
+.error-popup-dimensions {
+  width: 30vw;
+  height: 10vh;
+  margin-left: 30vw;
+  margin-top: 10vh;
+}
+
+.upload-popup-dimensions {
+  width: 30vw;
+  height: 70vh;
+  margin-left: 30vw;
+  /* margin-top: 10vh; */
+}
+
+/* .timezone-modal{
+
+  width: 25vw;
+  height: 80vh;
+ 
+  
+}
+.timezone-modal-list{
+  width:100%;
+  height:80%;
+  
+}
+.timezone-list{
+  width:100%;
+  height:80%
+} */
+ /* Ensure the modal size */
+.timezone-modal {
+  width: 30vw;
+  height: 80vh;
+  box-sizing: border-box;
+  padding: 10px; /* adjust padding if needed */
+}
+
+/* Adjust the list container within the modal */
+.timezone-modal-list {
+  width: 90%;
+  height: 80%; /* Adjust to fit inside the modal, allowing for header, padding, etc. */
+  margin: 0 auto;
+  box-sizing: border-box;
+  
+}
+
+/* Adjust the list to fit inside the list container */
+.timezone-list {
+  width: 100%;
+  height: 80%;
+  box-sizing: border-box;
+  overflow-y: auto; /* Handles any overflow */
+}
+
+/* For WebKit browsers (Chrome, Safari, etc.) */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px; /* Width of the scrollbar */
+  height: 6px; /* Height of the scrollbar (for horizontal scrollbar) */
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Background of the scrollbar track */
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Roundness of the scrollbar thumb */
+  border: 2px solid transparent; /* Creates padding around the thumb */
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Color when hovered */
+}
+
+/* For Firefox */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
+
+
+@media (min-width: 1000px) {
+  .adjusted-margin-top {
+    margin-top: 0.5rem;
+     /* Equivalent to mt-3 */
+  }
+  .adjusted-margin-bottom {
+    margin-top: 0.5rem; /* Further increase margin-top for smaller viewports */
+  }
+}
+
+/* For viewport widths below 1000px */
+@media (max-width: 999px) {
+  .adjusted-margin-top {
+     /* Equivalent to mt-0 */
+    margin-top: 0.75rem;
+  }
+  .adjusted-margin-bottom {
+    margin-top: 0.75rem; /* Further increase margin-top for smaller viewports */
+  }
+}
+
+/* For viewport widths between 800px and 999px */
+@media (min-width: 800px) and (max-width: 999px) {
+  .adjusted-margin-top {
+    margin-top: 1rem; /* Increase margin-top for this range */
+  }
+  .adjusted-margin-bottom {
+    margin-top: 1rem; /* Further increase margin-top for smaller viewports */
+  }
+}
+
+
+
+/* For viewport widths below 800px */
+@media (max-width: 799px) {
+  .adjusted-margin-top {
+    margin-top: 1.5rem; /* Further increase margin-top for smaller viewports */
+  }
+  .adjusted-margin-bottom {
+    margin-top: 1.5rem; /* Further increase margin-top for smaller viewports */
+  }
+}

@@ -1,0 +1,646 @@
+.sidebar-container {
+  --sidebar-width: 5rem;
+  --sidebar-height: 100%;
+  --sidebar-bg-color: #ffffff;
+  --sidebar-padding-y: 1rem;
+  --sidebar-gap: 1.5rem;
+  --sidebar-icon-width: 1.5rem;
+  --sidebar-icon-height: 1.5rem;
+  --icon-container-width: 2.75rem;   /* base defaults added */
+  --icon-container-height: 2.75rem;
+   --margin-top:2rem;
+
+  height: 100%;
+  display: flex;
+  flex-shrink: 0;
+}
+
+@media (min-height: 1400px) and (max-height: 4000px) {
+     .sidebar-container {
+    --sidebar-width: 5rem;
+    --sidebar-height: 100%;
+    --sidebar-bg-color: #ffb366;
+    --sidebar-padding-y: 1rem;
+    --sidebar-gap: 1.5rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.5rem;
+    --icon-container-height: 4rem;
+     --margin-top:2rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+
+/* 50% */
+@media (min-height: 1050px) and (max-height: 1400px) {
+     .sidebar-container {
+    --sidebar-width: 5rem;
+    --sidebar-height: 100%;
+    --sidebar-bg-color: #00cccc;
+    --sidebar-padding-y: 1rem;
+    --sidebar-gap: 1.5rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.5rem;
+    --icon-container-height: 4rem;
+     --margin-top:2rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+
+/* 67% */
+@media (min-height: 950px) and (max-height: 1050px) and (min-width: 1201px) and (max-width: 2500px) {
+    .sidebar-container {
+    --sidebar-width: 5rem;
+    --sidebar-height: 100%;
+    --sidebar-bg-color: #333399;
+    --sidebar-padding-y: 1rem;
+    --sidebar-gap: 1.5rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.5rem;
+    --icon-container-height: 4rem;
+     --margin-top:2rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+
+@media (min-height: 950px) and (max-height: 1050px) and (min-width: 500px) and (max-width: 1200px) {
+     .sidebar-container {
+    --sidebar-width: 5rem;
+    --sidebar-height: 100%;
+    --sidebar-bg-color: #bf00ff;
+    --sidebar-padding-y: 1rem;
+    --sidebar-gap: 1.5rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.5rem;
+    --icon-container-height: 4rem;
+     --margin-top:2rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+
+
+/* 75% */
+
+@media (min-height: 900px) and (max-height: 950px) and (min-width: 1201px) and (max-width: 2000px) {
+     .sidebar-container {
+    --sidebar-width: 5rem;
+    --sidebar-height: 100%;
+    --sidebar-bg-color: #e60000;
+    --sidebar-padding-y: 1rem;
+    --sidebar-gap: 1.5rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.5rem;
+    --icon-container-height: 4rem;
+     --margin-top:2rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+
+@media (min-height: 900px) and (max-height: 950px) and (min-width: 700px) and (max-width: 1200px) {
+    .sidebar-container {
+    --sidebar-width: 5rem;
+    --sidebar-height: 100%;
+    --sidebar-bg-color: #d56000;
+    --sidebar-padding-y: 1rem;
+    --sidebar-gap: 1.5rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.5rem;
+    --icon-container-height: 4rem;
+     --margin-top:2rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+
+@media (min-height: 900px) and (max-height: 950px) and (min-width: 300px) and (max-width: 700px) {
+     .sidebar-container {
+    --sidebar-width: 5rem;
+    --sidebar-height: 100%;
+    --sidebar-bg-color: #d56;
+    --sidebar-padding-y: 1rem;
+    --sidebar-gap: 1.5rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.5rem;
+    --icon-container-height: 4rem;
+     --margin-top:2rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+
+/* 80% */
+@media (min-height: 800px) and (max-height: 900px) and (min-width: 1000px) and (max-width: 1920px) {
+     .sidebar-container {
+    --sidebar-width: 5rem;
+    --sidebar-height: 100%;
+    --sidebar-bg-color: #990099;
+    --sidebar-padding-y: 1rem;
+    --sidebar-gap: 1.5rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.5rem;
+    --icon-container-height: 4rem;
+     --margin-top:2rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+
+@media (min-height: 800px) and (max-height: 900px) and (min-width: 300px) and (max-width: 1000px) {
+      .sidebar-container {
+    --sidebar-width: 5rem;
+    --sidebar-height: 100%;
+    --sidebar-bg-color: #7399;
+    --sidebar-padding-y: 1rem;
+    --sidebar-gap: 1.5rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.5rem;
+    --icon-container-height: 4rem;
+     --margin-top:2rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+
+/* 90% */
+@media (min-height: 750px) and (max-height: 800px) and (min-width: 1200px) and (max-width: 1920px) {
+    .sidebar-container {
+    --sidebar-width: 5rem;
+    --sidebar-height: 100%;
+    --sidebar-bg-color: #ff1a75;
+    --sidebar-padding-y: 1rem;
+    --sidebar-gap: 1.5rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.5rem;
+    --icon-container-height: 4rem;
+     --margin-top:2rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+@media (min-height: 750px) and (max-height: 800px) and (min-width: 1000px) and (max-width: 1200px) {
+     .sidebar-container {
+    --sidebar-width: 5rem;
+    --sidebar-height: 100%;
+    --sidebar-bg-color: #ff4d94;
+    --sidebar-padding-y: 1rem;
+    --sidebar-gap: 1.5rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.5rem;
+    --icon-container-height: 4rem;
+     --margin-top:2rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+
+@media (min-height: 750px) and (max-height: 800px) and (min-width: 750px) and (max-width: 1000px) {
+     .sidebar-container {
+    --sidebar-width: 5rem;
+    --sidebar-height: 100%;
+    --sidebar-bg-color: #ff80b3;
+    --sidebar-padding-y: 1rem;
+    --sidebar-gap: 1.5rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.5rem;
+    --icon-container-height: 4rem;
+     --margin-top:2rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+
+@media (min-height: 750px) and (max-height: 800px) and (min-width: 700px) and (max-width: 750px) {
+     .sidebar-container {
+    --sidebar-width: 5rem;
+    --sidebar-height: 100%;
+    --sidebar-bg-color: #ffcce0;
+    --sidebar-padding-y: 1rem;
+    --sidebar-gap: 1.5rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.5rem;
+    --icon-container-height: 4rem;
+     --margin-top:2rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+@media (min-height: 750px) and (max-height: 800px) and (min-width: 300px) and (max-width: 700px) {
+      .sidebar-container {
+    --sidebar-width: 5rem;
+    --sidebar-height: 100%;
+    --sidebar-bg-color: #99003d;
+    --sidebar-padding-y: 1rem;
+    --sidebar-gap: 1.5rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.5rem;
+    --icon-container-height: 4rem;
+     --margin-top:2rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+/* 100%  */
+
+@media (min-height: 650px) and (max-height: 750px) and (min-width: 1201px) and (max-width: 1920px) {
+    
+  .sidebar-container {
+    --sidebar-width: 5rem;
+    --sidebar-height: 100%;
+    --sidebar-bg-color: #87da00;
+    --sidebar-padding-y: 1rem;
+    --sidebar-gap: 1.5rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.5rem;
+    --icon-container-height: 3.5rem;
+     --margin-top:2rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+
+@media (min-height: 650px) and (max-height: 750px) and (min-width: 1000px) and (max-width: 1200px) {
+  .sidebar-container {
+    --sidebar-bg-color: #269900;
+    --sidebar-width: 5rem;
+    --sidebar-height: 100%;
+    --sidebar-padding-y: 1rem;
+    --sidebar-gap: 1.5rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.5rem;
+    --icon-container-height: 3.5rem;
+     --margin-top:2rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+
+@media (min-height: 650px) and (max-height: 750px) and (min-width: 751px) and (max-width: 1000px) {
+  .sidebar-container {
+    --sidebar-bg-color: #00cc00;
+    --sidebar-width: 5rem;
+    --sidebar-height: 100%;
+    --sidebar-padding-y: 1rem;
+    --sidebar-gap: 1.5rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.5rem;
+    --icon-container-height: 3.5rem;
+     --margin-top:2rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+
+@media (min-height: 650px) and (max-height: 750px) and (min-width: 700px) and (max-width: 750px) {
+  .sidebar-container {
+    --sidebar-bg-color: #b3ffb3;
+    --sidebar-width: 4.5rem;
+    --sidebar-height: 100%;
+    --sidebar-padding-y: 1rem;
+    --sidebar-gap: 1.5rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.5rem;
+    --icon-container-height: 4rem;
+     --margin-top:2rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+
+@media (min-height: 650px) and (max-height: 750px) and (min-width: 300px) and (max-width: 700px) {
+  .sidebar-container {
+    --sidebar-bg-color: #b3f3;
+    --sidebar-width: 4rem;
+    --sidebar-height: 100%;
+    --sidebar-padding-y: 1rem;
+    --sidebar-gap: 1.5rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3rem;
+    --icon-container-height: 3.5rem;
+     --margin-top:2rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+
+/* 110% */
+@media (min-height: 600px) and (max-height: 650px) and (min-width: 1200px) and (max-width: 1920px)  {
+  .sidebar-container {
+    --sidebar-bg-color: #03fc;
+   --sidebar-width: 5rem;
+    --sidebar-height: 100%;
+    --sidebar-padding-y: 1rem;
+    --sidebar-gap: 1.5rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3rem;
+    --icon-container-height: 3.5rem;
+     --margin-top:2rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+
+@media (min-height: 600px) and (max-height: 650px) and (min-width: 1000px) and (max-width: 1200px)  {
+  .sidebar-container {
+    --sidebar-bg-color: #003399;
+    --sidebar-width: 4.5rem;
+    --sidebar-height: 100%;
+    --sidebar-padding-y: 1rem;
+    --sidebar-gap: 2.5rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3rem;
+    --icon-container-height: 3.5rem;
+     --margin-top:2rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+
+@media (min-height: 600px) and (max-height: 650px) and (min-width: 750px) and (max-width: 1000px)  {
+  .sidebar-container {
+   
+    --sidebar-bg-color: #0052cc;
+   --sidebar-width: 4.5rem;
+    --sidebar-height: 100%;
+    --sidebar-padding-y: 1rem;
+    --sidebar-gap: 1.5rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.75rem;
+    --icon-container-height: 3.5rem;
+     --margin-top:2rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+
+@media (min-height: 600px) and (max-height: 650px)  and (min-width: 700px) and (max-width: 750px)  {
+  .sidebar-container {
+  
+    --sidebar-bg-color: #1a75ff;
+    --sidebar-width: 4.5rem;
+    --sidebar-height: 100%;
+    --sidebar-padding-y: 1rem;
+    --sidebar-gap: 1.5rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.75rem;
+    --icon-container-height: 3.5rem;
+     --margin-top:2rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+    
+  }
+}
+
+@media (min-height: 600px) and (max-height: 650px)  and (min-width: 300px) and (max-width: 700px)  {
+  .sidebar-container {
+  
+    --sidebar-bg-color: #4db8ff;
+   --sidebar-width: 4.25rem;
+    --sidebar-height: 100%;
+    --sidebar-padding-y: 1rem;
+    --sidebar-gap: 1.5rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.25rem;
+    --icon-container-height: 3.5rem;
+     --margin-top:2rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+
+/* 125% */
+@media (min-height: 500px) and (max-height: 600px) and (min-width: 900px) and (max-width: 1200px) {
+     .sidebar-container {
+  
+    --sidebar-bg-color: #a11570;
+   --sidebar-width: 5rem;
+    --sidebar-height: 100%;
+    --sidebar-padding-y: 1rem;
+    --sidebar-gap: 1.5rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.25rem;
+    --icon-container-height: 3.5rem;
+    --margin-top:2rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+
+@media (min-height: 500px) and (max-height: 600px) and (min-width: 700px) and (max-width: 900px) {
+     .sidebar-container {
+  
+    --sidebar-bg-color: #ff1ac6;
+   --sidebar-width: 4.5rem;
+    --sidebar-height: 100%;
+    --sidebar-padding-y: 1rem;
+    --sidebar-gap: 1.5rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.25rem;
+    --icon-container-height: 3.5rem;
+    --margin-top:2rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+
+@media (min-height: 500px) and (max-height: 600px) and (min-width: 300px) and (max-width: 700px) {
+        .sidebar-container {
+  
+    --sidebar-bg-color: #ff66d9;
+   --sidebar-width: 4.5rem;
+    --sidebar-height: 100%;
+    --sidebar-padding-y: 1rem;
+    --sidebar-gap: 1.5rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.25rem;
+    --icon-container-height: 3.5rem;
+    --margin-top:2rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+/* 150% */
+@media (min-height: 400px) and (max-height: 549px) and (min-width: 700px) and (max-width: 1000px) {
+        .sidebar-container {
+  
+    --sidebar-bg-color: #ff9900;
+   --sidebar-width: 5rem;
+    --sidebar-height: 100%;
+    --sidebar-padding-y: 0.5rem;
+    --sidebar-gap: 1.25rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.25rem;
+    --icon-container-height: 3.5rem;
+    --margin-top:1rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+
+@media (min-height: 400px) and (max-height: 549px) and (min-width: 300px) and (max-width: 700px) {
+          .sidebar-container {
+  
+    --sidebar-bg-color: #66ffff;
+   --sidebar-width: 4.5rem;
+    --sidebar-height: 100%;
+    --sidebar-padding-y: 0.5rem;
+    --sidebar-gap: 1.25rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.25rem;
+    --icon-container-height: 3.5rem;
+    --margin-top:1rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+/* 175% */
+
+@media (min-height: 351px) and (max-height: 400px) and (min-width: 700px) and (max-width: 900px) {
+            .sidebar-container {
+  
+    --sidebar-bg-color:  #2c2e2c;
+   --sidebar-width: 5rem;
+    --sidebar-height: 100%;
+    --sidebar-padding-y: 0.25rem;
+    --sidebar-gap: 1.25rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.25rem;
+    --icon-container-height: 3.5rem;
+    --margin-top:0.5rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+ @media (min-height: 351px) and (max-height: 400px) and (min-width: 300px) and (max-width: 700px) {
+              .sidebar-container {
+  
+    --sidebar-bg-color:  #4d2600;
+   --sidebar-width: 4.25rem;
+    --sidebar-height: 100%;
+    --sidebar-padding-y: 0.25rem;
+    --sidebar-gap: 1.25rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.25rem;
+    --icon-container-height: 3.5rem;
+    --margin-top:0.5rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+
+ /* 200% */
+  @media (min-height: 300px) and (max-height: 350px) and (min-width: 300px) and (max-width: 1000px) {
+              .sidebar-container {
+  
+    --sidebar-bg-color: #66ffff;
+   --sidebar-width: 5rem;
+    --sidebar-height: 100%;
+    --sidebar-padding-y: 0.25rem;
+    --sidebar-gap: 1.25rem;
+    --sidebar-icon-width: 1.25rem;
+    --sidebar-icon-height: 1.5rem;
+    --icon-container-width: 3.25rem;
+    --icon-container-height: 3.5rem;
+    --margin-top:0.5rem;
+    height: 100%;
+    display: flex;
+    flex-shrink: 0;
+  }
+}
+
+
+.sidebar-container .sidebar-bar {
+  width: var(--sidebar-width);
+  height: var(--sidebar-height);
+  /* background-color: var(--sidebar-bg-color) !important; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sidebar-gap, 1.5rem);
+  padding: var(--sidebar-padding-y, 1rem) 0;
+  box-sizing: border-box;
+  flex-shrink: 0;
+   overflow-y: auto;
+   scrollbar-width: thin; /* For Firefox */
+  transition: width 0.15s ease-out, background-color 0.15s ease-out;
+}
+
+.sidebar-container .sidebar-icon-button {
+  width: var(--icon-container-width);
+  height: var(--icon-container-height);
+}
+
+.sidebar-container .sidebar-icon {
+  width: var(--sidebar-icon-width);
+  height: var(--sidebar-icon-height);
+}
+
+.sidebar-container .margin-top {
+    /* Uses the variable if found; otherwise defaults to 1.5rem */
+    margin-top: var(--margin-top); 
+}

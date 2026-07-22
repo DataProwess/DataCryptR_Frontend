@@ -1,0 +1,7 @@
+build/
+/node_modules
+/DATACRYPTA_FRONTEND/node_modules
+.env
+.env.local
+.env.development
+.env.production

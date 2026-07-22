@@ -1,0 +1,93 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Install Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      # Install dependencies and build React app (validates build; image build below also runs npm run build)
+      # Set Repository Secrets: Settings > Secrets and variables > Actions > Secrets:
+      #   REACT_APP_API_URL, REACT_APP_FRONTEND_URL (no trailing slash)
+      - name: Install dependencies and build React app
+        run: |
+          npm install
+          npm run build
+        env:
+          CI: false
+          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
+          REACT_APP_FRONTEND_URL: ${{ secrets.REACT_APP_FRONTEND_URL }}
+
+      - name: Archive npm failure logs
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: npm-logs
+          path: ~/.npm/_logs
+
+      # Build Docker image (CRA injects REACT_APP_* at build time inside the image)
+      - name: Build Docker image
+        run: |
+          docker build -t newfrontend \
+            --build-arg REACT_APP_API_URL="${{ secrets.REACT_APP_API_URL }}" \
+            --build-arg REACT_APP_FRONTEND_URL="${{ secrets.REACT_APP_FRONTEND_URL }}" \
+            .
+
+      # Log in to Azure Container Registry (ACR)
+      - name: Login to Azure Container Registry (ACR)
+        uses: azure/docker-login@v1
+        with:
+          login-server: dcbackend.azurecr.io
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      # Tag Docker image for React app
+      - name: Tag Docker image
+        run: docker tag newfrontend dcbackend.azurecr.io/newfrontend:latest
+
+      # Push Docker image to ACR
+      - name: Push Docker image to ACR
+        run: docker push dcbackend.azurecr.io/newfrontend:latest
+
+      # Log in to Azure
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          enable-AzPSSession: true
+
+      # Update Azure Web App with Docker image for React app
+      - name: Update Azure Web App
+        run: |
+          az webapp config container set \
+            --name newdcfront \
+            --resource-group DCBackend_group \
+            --docker-custom-image-name dcbackend.azurecr.io/newfrontend:latest
+
+      # Update Azure Web App Settings
+      - name: Update Azure Web App Settings
+        run: |
+          az webapp config appsettings set \
+            --name newdcfront \
+            --resource-group DCBackend_group \
+            --settings WEBSITES_PORT=3000
+
+      # Restart Azure Web App (Optional)
+      - name: Restart Azure Web App
+        run: |
+          az webapp restart \
+          --name newdcfront \
+          --resource-group DCBackend_group

@@ -1,0 +1,853 @@
+/* ==========================================================================
+   navbar.css — fully self-contained. No parent file needs to know about
+   .navbar-container or any of these variables. Class names are deliberately
+   unique (navbar-container, navbar-bar, navbar-logo) so nothing in the
+   parent app's CSS can ever collide with or override these rules.
+   ========================================================================== */
+
+.navbar-container {
+  /* ─── Base defaults (always defined, regardless of viewport) ─── */
+  --navbar-height: 4rem;
+  --navbar-width: 100%;
+  --logo-width: 2.5rem;
+  --logo-height: 2.5rem;
+  --navbar-bg-color: #ffffff;
+
+  width: 100%;
+  flex-shrink: 0;
+}
+
+/* ─── Responsive overrides 100% ─── */
+@media (min-height: 650px) and (max-height: 750px) and (min-width: 1201px) and (max-width: 1920px) {
+  .navbar-container {
+    --navbar-height: 4.25rem;
+    --navbar-width: 100%;
+    --logo-width: 12rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 14rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #8877dd;
+    --pading-x: 0.5rem;
+    --profile-container-width: 20rem;
+    --profile-container-height: 3.5rem;
+    --profile-icon-width: 2.5rem;
+    --profile-icon-height: 2.5rem;
+    --user-font-size: 1rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 12.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+  }
+}
+@media (min-height: 650px) and (max-height: 750px) and (min-width: 1001px) and (max-width: 1200px) {
+    .navbar-container {
+    --navbar-height: 4rem;
+    --navbar-width: 100%;
+    --logo-width: 12rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 14rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #bf0;
+    --pading-x: 0.5rem;
+    --profile-container-width: 20rem;
+    --profile-container-height: 3.5rem;
+    --profile-icon-width: 2.5rem;
+    --profile-icon-height: 2.5rem;
+    --user-font-size: 1rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 12.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+  }
+}
+@media (min-height: 650px) and (max-height: 750px) and (min-width: 750px) and (max-width: 1000px) {
+    .navbar-container {
+    --navbar-height: 4rem;
+    --navbar-width: 100%;
+    --logo-width: 12rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 14rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #ff0000;
+    --pading-x: 0.5rem;
+    --profile-container-width: 20rem;
+    --profile-container-height: 3.5rem;
+    --profile-icon-width: 2.5rem;
+    --profile-icon-height: 2.5rem;
+    --user-font-size: 1rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 12.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+  }
+}
+
+@media (min-height: 650px) and (max-height: 750px) and (min-width: 300px) and (max-width: 750px) {
+    .navbar-container {
+    --navbar-height: 4rem;
+    --navbar-width: 100%;
+    --logo-width: 10rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 10rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #ff0;
+    --pading-x: 0.5rem;
+    --profile-container-width: 12rem;
+    --profile-container-height: 3.5rem;
+    --profile-icon-width: 2rem;
+    --profile-icon-height: 2rem;
+    --user-font-size: 0.95rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 12.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+  }
+}
+
+@media (min-height: 600px) and (max-height: 650px) and (min-width: 1201px) and (max-width: 1920px) {
+     .navbar-container {
+    --navbar-height: 4rem;
+    --navbar-width: 100%;
+    --logo-width: 12rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 14rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #ff99ff;
+    --pading-x: 0.5rem;
+    --profile-container-width: 20rem;
+    --profile-container-height: 3.5rem;
+    --profile-icon-width: 2.5rem;
+    --profile-icon-height: 2.5rem;
+    --user-font-size: 1rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 12.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+  }
+}
+
+@media (min-height: 600px) and (max-height: 650px) and (min-width: 1000px) and (max-width: 1200px) {
+    .navbar-container {
+    --navbar-height: 4rem;
+    --navbar-width: 100%;
+    --logo-width: 10rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 10rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #ff80ff;
+    --pading-x: 0.75rem;
+    --profile-container-width: 12rem;
+    --profile-container-height: 3.5rem;
+    --profile-icon-width: 2rem;
+    --profile-icon-height: 2rem;
+    --user-font-size: 0.95rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 12.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+  }
+
+}
+@media (min-height: 600px) and (max-height: 650px) and (min-width: 300px) and (max-width: 750px) {
+    .navbar-container {
+    --navbar-height: 4rem;
+    --navbar-width: 100%;
+    --logo-width: 10rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 10rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #ffb3ff;
+    --pading-x: 0.75rem;
+    --profile-container-width: 12rem;
+    --profile-container-height: 3.5rem;
+    --profile-icon-width: 2rem;
+    --profile-icon-height: 2rem;
+    --user-font-size: 0.95rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 12.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+  }
+
+}
+
+@media (min-height: 600px) and (max-height: 650px) and (min-width: 750px) and (max-width: 1000px) {
+    .navbar-container {
+    --navbar-height: 4rem;
+    --navbar-width: 100%;
+    --logo-width: 10rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 10rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #ffb3ff;
+    --pading-x: 0.75rem;
+    --profile-container-width: 12rem;
+    --profile-container-height: 3.5rem;
+    --profile-icon-width: 2rem;
+    --profile-icon-height: 2rem;
+    --user-font-size: 0.95rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 12.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+  }
+
+}
+
+@media (min-height: 500px) and (max-height: 600px) and (min-width: 900px) and (max-width: 1200px) {
+    .navbar-container {
+    --navbar-height: 3.75rem;
+    --navbar-width: 100%;
+    --logo-width: 10rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 10rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #c4ff4d;
+    --pading-x: 1rem;
+    --profile-container-width: 12rem;
+    --profile-container-height: 3.5rem;
+    --profile-icon-width: 2rem;
+    --profile-icon-height: 2rem;
+    --user-font-size: 0.95rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 12.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+    }
+
+}
+
+@media (min-height: 500px) and (max-height: 600px) and (min-width: 700px) and (max-width: 900px) {
+    .navbar-container {
+    --navbar-height: 3.75rem;
+    --navbar-width: 100%;
+    --logo-width: 10rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 10rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #c4ff;
+    --pading-x: 0.75rem;
+    --profile-container-width: 12rem;
+    --profile-container-height: 3.5rem;
+    --profile-icon-width: 2rem;
+    --profile-icon-height: 2rem;
+    --user-font-size: 0.95rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 12.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+    }
+
+}
+@media (min-height: 500px) and (max-height: 600px) and (min-width: 300px) and (max-width: 700px) {
+    .navbar-container {
+    --navbar-height: 4rem;
+    --navbar-width: 100%;
+    --logo-width: 10rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 10rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #c4ff;
+    --pading-x: 0.75rem;
+    --profile-container-width: 12rem;
+    --profile-container-height: 3.5rem;
+    --profile-icon-width: 2rem;
+    --profile-icon-height: 2rem;
+    --user-font-size: 0.95rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 12.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+    }
+
+}
+
+@media (min-height: 400px) and (max-height: 549px) and (min-width: 700px) and (max-width: 1000px) {
+    .navbar-container {
+    --navbar-height: 3.5rem;
+    --navbar-width: 100%;
+    --logo-width: 10rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 10rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #c4ff;
+    --pading-x: 0.75rem;
+    --profile-container-width: 12rem;
+    --profile-container-height: 3.25rem;
+    --profile-icon-width: 2rem;
+    --profile-icon-height: 2rem;
+    --user-font-size: 0.95rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 12.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+    }
+
+}
+
+@media (min-height: 400px) and (max-height: 549px) and (min-width: 300px) and (max-width: 700px) {
+    .navbar-container {
+    --navbar-height: 3.25rem;
+    --navbar-width: 100%;
+    --logo-width: 10rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 10rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #c4ff;
+    --pading-x: 0.5rem;
+    --profile-container-width: 12rem;
+    --profile-container-height: 3.25rem;
+    --profile-icon-width: 2rem;
+    --profile-icon-height: 2rem;
+    --user-font-size: 0.95rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 12.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+    }
+
+}
+
+@media (min-height: 300px) and (max-height: 400px) and (min-width: 700px) and (max-width: 900px) {
+    .navbar-container {
+    --navbar-height: 3.25rem;
+    --navbar-width: 100%;
+    --logo-width: 10rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 10rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #c4ff;
+    --pading-x: 0.5rem;
+    --profile-container-width: 12rem;
+    --profile-container-height: 3.25rem;
+    --profile-icon-width: 2rem;
+    --profile-icon-height: 2rem;
+    --user-font-size: 0.95rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 12.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+    }
+}
+
+
+@media (min-height: 300px) and (max-height: 400px) and (min-width: 300px) and (max-width: 700px) {
+    .navbar-container {
+    --navbar-height: 3.25rem;
+    --navbar-width: 100%;
+    --logo-width: 10rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 10rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #c4ff;
+    --pading-x: 0.5rem;
+    --profile-container-width: 12rem;
+    --profile-container-height: 3.25rem;
+    --profile-icon-width: 2rem;
+    --profile-icon-height: 2rem;
+    --user-font-size: 0.95rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 12.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+    }
+
+}
+
+@media (min-height: 750px) and (max-height: 800px) and (min-width: 1201px) and (max-width: 1920px) {
+    .navbar-container {
+    --navbar-height: 4.5rem;
+    --navbar-width: 100%;
+    --logo-width: 10rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 10rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #80ff00;
+    --pading-x: 0.5rem;
+    --profile-container-width: 15rem;
+    --profile-container-height: 3.5rem;
+    --profile-icon-width: 2rem;
+    --profile-icon-height: 2rem;
+    --user-font-size: 0.95rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 13rem;
+    --profile-dropdown-height:10.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+    }
+}
+@media (min-height: 750px) and (max-height: 800px) and (min-width: 1001px) and (max-width: 1200px) {
+    .navbar-container {
+    --navbar-height: 4.5rem;
+    --navbar-width: 100%;
+    --logo-width: 10rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 10rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #66cc00;
+    --pading-x: 1rem;
+    --profile-container-width: 15rem;
+    --profile-container-height: 3.5rem;
+    --profile-icon-width: 2rem;
+    --profile-icon-height: 2rem;
+    --user-font-size: 0.95rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 13rem;
+    --profile-dropdown-height:10.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+    }
+
+}
+
+@media (min-height: 750px) and (max-height: 800px) and (min-width: 750px) and (max-width: 1000px) {
+    .navbar-container {
+    --navbar-height: 4.5rem;
+    --navbar-width: 100%;
+    --logo-width: 10rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 10rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #4d9900;
+    --pading-x: 1rem;
+    --profile-container-width: 15rem;
+    --profile-container-height: 3.5rem;
+    --profile-icon-width: 2rem;
+    --profile-icon-height: 2rem;
+    --user-font-size: 0.95rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 13rem;
+    --profile-dropdown-height:10.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+    }
+
+}
+
+
+@media (min-height: 750px) and (max-height: 800px) and (min-width: 700px) and (max-width: 750px) {
+    .navbar-container {
+    --navbar-height: 4.5rem;
+    --navbar-width: 100%;
+    --logo-width: 10rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 10rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #336600;
+    --pading-x: 1rem;
+    --profile-container-width: 15rem;
+    --profile-container-height: 3.5rem;
+    --profile-icon-width: 2rem;
+    --profile-icon-height: 2rem;
+    --user-font-size: 0.95rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 13rem;
+    --profile-dropdown-height:10.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+    }
+
+}
+
+@media (min-height: 750px) and (max-height: 800px) and (min-width: 300px) and (max-width: 700px) {
+
+    .navbar-container {
+    --navbar-height: 4.5rem;
+    --navbar-width: 100%;
+    --logo-width: 10rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 10rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #264d00;
+    --pading-x: 1rem;
+    --profile-container-width: 15rem;
+    --profile-container-height: 3.5rem;
+    --profile-icon-width: 2rem;
+    --profile-icon-height: 2rem;
+    --user-font-size: 0.95rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 13rem;
+    --profile-dropdown-height:10.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+    }
+
+}
+
+@media (min-height: 800px) and (max-height: 900px) and (min-width: 1000px) and (max-width: 1920px) {
+     .navbar-container {
+    --navbar-height: 4.5rem;
+    --navbar-width: 100%;
+    --logo-width: 10rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 10rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #990099;
+    --pading-x: 1rem;
+    --profile-container-width: 15rem;
+    --profile-container-height: 3.5rem;
+    --profile-icon-width: 2rem;
+    --profile-icon-height: 2rem;
+    --user-font-size: 0.95rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 13rem;
+    --profile-dropdown-height:10.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+    }
+
+}
+@media (min-height: 800px) and (max-height: 900px) and (min-width: 300px) and (max-width: 1000px) {
+     .navbar-container {
+    --navbar-height: 4.5rem;
+    --navbar-width: 100%;
+    --logo-width: 10rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 10rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #990099;
+    --pading-x: 1rem;
+    --profile-container-width: 15rem;
+    --profile-container-height: 3.5rem;
+    --profile-icon-width: 2rem;
+    --profile-icon-height: 2rem;
+    --user-font-size: 0.95rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 13rem;
+    --profile-dropdown-height:10.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+    }
+
+}
+
+@media (min-height: 900px) and (max-height: 950px) and (min-width: 1201px) and (max-width: 2000px) {
+      .navbar-container {
+    --navbar-height: 4.5rem;
+    --navbar-width: 100%;
+    --logo-width: 10rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 10rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #e60000;
+    --pading-x: 1rem;
+    --profile-container-width: 15rem;
+    --profile-container-height: 3.5rem;
+    --profile-icon-width: 2rem;
+    --profile-icon-height: 2rem;
+    --user-font-size: 0.95rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 13rem;
+    --profile-dropdown-height:10.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+    }
+
+
+}
+
+@media (min-height: 900px) and (max-height: 950px) and (min-width: 700px) and (max-width: 1200px) {
+     .navbar-container {
+    --navbar-height: 4.5rem;
+    --navbar-width: 100%;
+    --logo-width: 10rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 10rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #d56000;
+    --pading-x: 1rem;
+    --profile-container-width: 15rem;
+    --profile-container-height: 3.5rem;
+    --profile-icon-width: 2rem;
+    --profile-icon-height: 2rem;
+    --user-font-size: 0.95rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 13rem;
+    --profile-dropdown-height:10.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+    }
+
+}
+
+@media (min-height: 900px) and (max-height: 950px) and (min-width: 300px) and (max-width: 700px) {
+     .navbar-container {
+    --navbar-height: 4.5rem;
+    --navbar-width: 100%;
+    --logo-width: 10rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 10rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #d56000;
+    --pading-x: 1rem;
+    --profile-container-width: 15rem;
+    --profile-container-height: 3.5rem;
+    --profile-icon-width: 2rem;
+    --profile-icon-height: 2rem;
+    --user-font-size: 0.95rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 13rem;
+    --profile-dropdown-height:10.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+    }
+}
+
+@media (min-height: 950px) and (max-height: 1050px) and (min-width: 1201px) and (max-width: 2500px) {
+     .navbar-container {
+    --navbar-height: 4.5rem;
+    --navbar-width: 100%;
+    --logo-width: 10rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 10rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #333399;
+    --pading-x: 1rem;
+    --profile-container-width: 15rem;
+    --profile-container-height: 3.5rem;
+    --profile-icon-width: 2rem;
+    --profile-icon-height: 2rem;
+    --user-font-size: 0.95rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 13rem;
+    --profile-dropdown-height:10.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+    }
+}
+
+@media (min-height: 950px) and (max-height: 1050px) and (min-width: 500px) and (max-width: 1200px) {
+     .navbar-container {
+    --navbar-height: 4.5rem;
+    --navbar-width: 100%;
+    --logo-width: 10rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 10rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #bf00ff;
+    --pading-x: 1rem;
+    --profile-container-width: 15rem;
+    --profile-container-height: 3.5rem;
+    --profile-icon-width: 2rem;
+    --profile-icon-height: 2rem;
+    --user-font-size: 0.95rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 13rem;
+    --profile-dropdown-height:10.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+    }
+}
+
+@media (min-height: 950px) and (max-height: 1050px) and (min-width: 200px) and (max-width: 500px) {
+     .navbar-container {
+    --navbar-height: 4.5rem;
+    --navbar-width: 100%;
+    --logo-width: 10rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 10rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #bf00ff;
+    --pading-x: 1rem;
+    --profile-container-width: 15rem;
+    --profile-container-height: 3.5rem;
+    --profile-icon-width: 2rem;
+    --profile-icon-height: 2rem;
+    --user-font-size: 0.95rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 13rem;
+    --profile-dropdown-height:10.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+    }
+}
+
+
+@media (min-height: 1050px) and (max-height: 1400px) {
+    .navbar-container {
+    --navbar-height: 4.5rem;
+    --navbar-width: 100%;
+    --logo-width: 10rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 10rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #00cccc;
+    --pading-x: 1rem;
+    --profile-container-width: 15rem;
+    --profile-container-height: 3.5rem;
+    --profile-icon-width: 2rem;
+    --profile-icon-height: 2rem;
+    --user-font-size: 0.95rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 13rem;
+    --profile-dropdown-height:10.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+    }
+}
+
+@media (min-height: 1400px) and (max-height: 4000px) {
+     .navbar-container {
+    --navbar-height: 6rem;
+    --navbar-width: 100%;
+    --logo-width: 10rem;
+    /* --logo-height: 14rem; */
+    --logo-container-width: 10rem;
+    /* --logo-container-height: 4.5rem; */
+    --navbar-bg-color: #ffb366;
+    --pading-x: 1rem;
+    --profile-container-width: 15rem;
+    --profile-container-height: 3.5rem;
+    --profile-icon-width: 2rem;
+    --profile-icon-height: 2rem;
+    --user-font-size: 0.95rem;
+    --email-font-size: 0.75rem;
+    --profile-dropdown-width: 13rem;
+    --profile-dropdown-height:10.5rem;
+    --dropdown-padding-x: 0.5rem;
+    --dropdown-text-font-size: 0.75rem;
+    --icon-width: 0.75rem;
+    --icon-height: 0.75rem;
+    }
+}
+
+
+
+
+
+.navbar-container .navbar-bar {
+  height: var(--navbar-height);
+  width: var(--navbar-width);
+  /* background-color:var(--navbar-bg-color); */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  flex-shrink: 0;
+  /* transition: height 0.15s ease-out, background-color 0.15s ease-out; */
+}
+
+.navbar-container .navbar-padding {
+  padding: var(--pading-x);
+}
+.navbar-container .logo-container {
+  width: var(--logo-container-width);
+  height: var(--logo-container-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.navbar-container .navbar-logo {
+  width: var(--logo-width);
+  height: var(--logo-height);
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.navbar-container .navbar-profile-icon {
+  width: var(--profile-icon-width);
+  height: var(--profile-icon-height);
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.navbar-container .navbar-profile-container {
+  width: var(--profile-container-width);
+  height: var(--profile-container-height);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.navbar-container .navbar-profile-username {
+  font-size: var(--user-font-size);
+  color: #000000;
+  flex-shrink: 0;
+}
+.navbar-container .navbar-profile-email {
+  font-size: var(--email-font-size);
+  color: #555555;
+  flex-shrink: 0;
+}
+
+.navbar-container .navbar-dropdown {
+  width: var(--profile-dropdown-width);
+  height: var(--profile-dropdown-height);
+ 
+}
+.navbar-container .navbar-dropdown-ul  {
+  padding: var(--dropdown-padding-x);
+  font-size: var(--dropdown-text-font-size);
+  
+}
+
+.navbar-container .navbar-dropdown-icon {
+  width: var(--icon-width);
+  height: var(--icon-height);
+  flex-shrink: 0;
+}

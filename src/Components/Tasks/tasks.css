@@ -1,0 +1,2162 @@
+
+
+/* Zoom Level 50% */
+@media (min-height: 1050px) and (max-height: 1400px) {
+  .task-container {
+    --workspace-gap: 0.75rem;
+    --vertical-gap: 1rem;
+    --inner-padding: 0.6rem;
+    --bg-color: #00cccc;
+     --back-dashboard-width: 100%;
+    --back-dashboard-height: 6rem;
+    --route-text-size: 1rem;
+    --route-font-weight:8rem;
+    --padding-x: 1rem;
+    --padding-y: 0.5rem;
+    --container-padding: 1.5rem;
+    --data-container-width: 100%;
+    --data-container-height: calc(100vh - 25rem);
+    --button-container-width: 100%;
+    --button-container-height: 4rem;
+    --button-text-size: 1rem;
+    --search-container-width: 30rem;
+    --search-container-height: 2.75rem;
+    --search-bar-width:25rem;
+     --search-image-width:1.25rem;
+    --search-image-height:1.15rem;
+    --search-image-margin:0.15rem;
+    --table-structure-width: 100%;
+    --table-structure-height: 54rem;
+    --header-height: 2.5rem;
+    --breadcrums-container-height: 3rem;
+   
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 54rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 20rem;  
+    
+    --chatbot-right: 2.5rem;
+    --chatbot-bottom: 10rem;
+  }
+}
+
+/* 67% Zoom Level */
+
+@media (min-height: 950px) and (max-height: 1050px) and (min-width: 1201px) and (max-width: 2500px) {
+  .task-container {
+   
+    --workspace-gap: 0.65rem;
+    --vertical-gap: 0.85rem;
+    --inner-padding: 0.6rem;
+    --bg-color: #333399;
+     --back-dashboard-width: 100%;
+    --back-dashboard-height: 4rem;
+    --route-text-size: 1rem;
+    --padding-x: 1rem;
+    --padding-y: 0.5rem;
+    --container-padding: 1rem;
+    --data-container-width: 100%;
+    --data-container-height: calc(100vh - 15rem);
+    --button-container-width: 100%;
+    --button-container-height: 4rem;
+    --button-text-size: 1rem;
+    --search-container-width: 20rem;
+    --search-container-height: 2.75rem;
+    --search-bar-width:20rem;
+     --search-image-width:1.25rem;
+    --search-image-height:1.15rem;
+    --search-image-margin:0.15rem;
+   
+    --table-structure-height: calc(100vh - 28rem);
+    --header-height: 2.5rem;
+    --breadcrums-container-height: 3rem;
+   
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 40rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 28rem;
+   
+      --chatbot-right: 2.5rem;
+    --chatbot-bottom: 10rem;
+  }
+}
+
+@media (min-height: 950px) and (max-height: 1050px) and (min-width: 500px) and (max-width: 1200px) {
+  .task-container {
+   
+    --workspace-gap: 0.75rem;
+    --vertical-gap: 0.85rem;
+    --inner-padding: 0.6rem;
+    --bg-color: #bf00ff;
+     --back-dashboard-width: 100%;
+    --back-dashboard-height: 4rem;
+    --route-text-size: 1rem;
+    --padding-x: 1rem;
+    --padding-y: 0.5rem;
+    --container-padding: 1rem;
+    --data-container-width: 100%;
+    --data-container-height: calc(100vh - 15rem);
+    --button-container-width: 100%;
+    --button-container-height: 4rem;
+    --button-text-size: 1rem;
+    --search-container-width: 19rem;
+    --search-container-height: 2.75rem;
+    --search-bar-width:18rem;
+    --search-image-width:1.25rem;
+    --search-image-height:1.15rem;
+    --search-image-margin:0.15rem;
+    --table-structure-height: calc(100vh - 25rem);
+    --header-height: 2.5rem;
+    --breadcrums-container-height: 3rem;
+   
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 40rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 38rem;
+    --chatbot-right: 2.5rem;
+    --chatbot-bottom: 8rem;
+  }
+}
+
+@media (min-height: 950px) and (max-height: 1050px) and (min-width: 200px) and (max-width: 500px) {
+  .task-container {
+   
+    --workspace-gap: 0.75rem;
+    --vertical-gap: 0.85rem;
+    --inner-padding: 0.6rem;
+    --bg-color: #bf00ff;
+     --back-dashboard-width: 100%;
+    --back-dashboard-height: 4rem;
+    --route-text-size: 1rem;
+    --padding-x: 1rem;
+    --padding-y: 0.5rem;
+    --container-padding: 1rem;
+    --data-container-width: 100%;
+    --data-container-height: calc(100vh - 15rem);
+    --button-container-width: 100%;
+    --button-container-height: 4rem;
+    --button-text-size: 1rem;
+    --search-container-width: 15rem;
+    --search-container-height: 2.5rem;
+    --search-bar-width:10rem;
+    --search-image-width:1rem;
+    --search-image-height:1.15rem;
+    --search-image-margin:0.15rem;
+    --table-structure-height: calc(100vh - 25rem);
+    --header-height: 2.5rem;
+    --breadcrums-container-height: 3rem;
+   
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 40rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 38rem;
+    --chatbot-right: 2.5rem;
+    --chatbot-bottom: 8rem;
+  }
+}
+
+
+/*  Zoom level 75% */
+@media (min-height: 900px) and (max-height: 950px) and (min-width: 1200px) and (max-width: 2000px) {
+  .task-container {
+    --workspace-gap: 0.75rem;
+    --vertical-gap: 0.75rem;
+    --inner-padding: 0.6rem;
+    --bg-color: #e60000;
+     --back-dashboard-width: 100%;
+    --back-dashboard-height: 4rem;
+    --route-text-size: 0.75rem;
+    --route-font-weight:500;
+    --padding-x: 1rem;
+    --padding-y: 0.5rem;
+    --container-padding: 1rem;
+    --data-container-width: 100%;
+    --data-container-height: calc(100vh - 15rem);
+    --button-container-width: 100%;
+    --button-container-height: 4rem;
+    --button-text-size: 1rem;
+    --search-container-width: 23rem;
+    --search-container-height: 2.75rem;
+    --search-bar-width:22rem;
+     --search-bar-height:2rem;
+     --search-text-size:0.75rem;
+     --search-text-font:1.5rem;
+     --search-image-width:1.15rem;
+    --search-image-height:1.13rem;
+    --search-image-margin:0.15rem;
+    --table-structure-height: calc(100vh - 25rem);
+   --table-structure-width:100%;
+    --header-height: 2.5rem;
+    --breadcrums-container-height: 3rem;
+   
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 33rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 20rem;
+     --grid-width: 100%;
+    --grid-height: 28rem;
+    --grid-data-width: 100%;
+    --grid-data-height: 38rem;
+    --chatbot-right: 2.5rem;
+    --chatbot-bottom: 8rem;
+  }
+}
+
+@media (min-height: 900px) and (max-height: 950px) and (min-width: 700px) and (max-width: 1200px) {
+  .task-container {
+    /* --navbar-height: 5rem; */
+    /* --sidebar-width: 5rem; */
+    --workspace-gap: 0.75rem;
+    --vertical-gap: 0.75rem;
+    --inner-padding: 0.6rem;
+    --bg-color: #d56000;
+     --back-dashboard-width: 100%;
+    --back-dashboard-height: 4rem;
+    --route-text-size: 1rem;
+     --route-font-weight:500;
+    --padding-x: 1rem;
+    --padding-y: 0.5rem;
+    --container-padding: 1rem;
+    --data-container-width: 100%;
+    --data-container-height: calc(100vh - 15rem);
+    --button-container-width: 100%;
+    --button-container-height: 4rem;
+    --button-text-size: 0.75rem;
+    --search-container-width: 18rem;
+    --search-container-height: 2.75rem;
+     --search-bar-width:16rem;
+     --search-bar-height:1.75rem;
+     --search-text-size:0.8rem;
+     --search-text-font:1.25rem;
+    --search-image-width:1.15rem;
+    --search-image-height:1.13rem;
+    --search-image-margin:0.15rem;
+    --table-structure-height: calc(100vh - 25rem);
+    --table-structure-width:100%;
+    --header-height: 2.5rem;
+    --breadcrums-container-height: 3rem;
+   
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 32rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 30rem;
+    --chatbot-right: 2.5rem;
+    --chatbot-bottom: 8rem;
+  }
+}
+
+@media (min-height: 900px) and (max-height: 950px) and (min-width: 300px) and (max-width: 700px) {
+  .task-container {
+    /* --navbar-height: 5rem; */
+    /* --sidebar-width: 5rem; */
+    --workspace-gap: 0.75rem;
+    --vertical-gap: 0.75rem;
+    --inner-padding: 0.6rem;
+    --bg-color: #d56;
+     --back-dashboard-width: 100%;
+    --back-dashboard-height: 4rem;
+    --route-text-size: 1rem;
+     --route-font-weight:500;
+    --padding-x: 1rem;
+    --padding-y: 0.5rem;
+    --container-padding: 1rem;
+    --data-container-width: 100%;
+    --data-container-height: calc(100vh - 15rem);
+    --button-container-width: 100%;
+    --button-container-height: 4rem;
+    --button-text-size: 1rem;
+    --search-container-width: 15rem;
+    --search-container-height: 2.75rem;
+     --search-bar-width:10rem;
+     --search-bar-height:1.75rem;
+     --search-text-size:0.8rem;
+     --search-text-font:1.25rem;
+    --search-image-width:1.15rem;
+    --search-image-height:1.13rem;
+    --search-image-margin:0.15rem;
+    --table-structure-height: calc(100vh - 25rem);
+    --header-height: 2.5rem;
+    --breadcrums-container-height: 3rem;
+   
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 33rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: rem;
+    --chatbot-right: 2.5rem;
+    --chatbot-bottom: 8rem;
+  }
+}
+
+
+/* ==========================================================================
+   📊 TIER 2: COMPACT (400px ≤ height < 550px)
+   Zoom: ~80%
+   Target: ~985x465 CSS pixels
+   Strategy: Reduced padding, compact components
+   ========================================================================== */
+
+/* Compact + Wide (≥768px) */
+
+/* Compact + Very Wide (≥1200px) */
+@media (min-height: 800px) and (max-height: 900px) and (min-width: 1000px) and (max-width: 1920px) {
+ .task-container {
+    
+    --workspace-gap: 0.5rem;
+    --vertical-gap: 0.5rem;
+    --inner-padding: 0.75rem;
+    --bg-color: #990099;
+    --back-dashboard-width: 100%;
+    --back-dashboard-height: 2rem;
+    
+    --padding-x:1rem;
+    --padding-y:0.5rem;
+    /* container */
+     
+    --container-padding: 0.6rem;
+    --data-container-width: 100%;
+    --data-container-height: 40rem;
+    --sub-container-gap: 0.5rem;
+    /* button container */
+    --button-container-width: 100%;
+    --button-container-height: 3.75rem;
+    --button-text-size: 0.9rem;
+    /* search container */
+    --search-container-width: 20rem;
+    --search-container-height: 2.75rem;
+    --route-text-size: 0.9rem;
+     --route-font-weight:500;
+     --search-bar-width:19rem;
+     --search-bar-height:1.75rem;
+     --search-text-size:0.8rem;
+     --search-text-font:1.25rem;
+    --search-image-width:1.15rem;
+    --search-image-height:1.13rem;
+    --search-image-margin:0.15rem;
+    --table-structure-width: 100%;
+    --table-structure-height: 38rem;
+    /* Table Structure wrapper */
+    --table-width: 100%;
+    --table-height: 35rem;
+    /* breadcrums and tabular view */
+    --header-height: 2.5rem;
+    --breadcrums-container-width: 100%;
+    --breadcrums-container-height: 2.25rem;
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 32rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 30rem;
+   
+    --chatbot-right: 2.5rem;
+    --chatbot-bottom: 8rem;
+    
+  }
+}
+
+@media (min-height: 800px) and (max-height: 900px) and (min-width: 300px) and (max-width: 1000px) {
+  .task-container {
+    /* --navbar-height: 4rem; */
+    /* --sidebar-width: 4.5rem; */
+    --workspace-gap: 0.75rem;
+    --vertical-gap: 0.5rem;
+    --inner-padding: 0.6rem;
+    --bg-color: #7399;
+     --back-dashboard-width: 100%;
+    --back-dashboard-height: 3rem;
+    --route-text-size: 0.8rem;
+    --padding-x: 1rem;
+    --padding-y: 0.5rem;
+    --container-padding: 0.8rem;
+    --data-container-width: 100%;
+    --data-container-height: calc(100vh - 15rem);
+    --button-container-width: 100%;
+    --button-container-height: 4rem;
+    --button-text-size: 1rem;
+     --search-container-width: 16rem;
+    --search-container-height: 2.75rem;
+    --route-text-size: 0.9rem;
+     --route-font-weight:500;
+     --search-bar-width:15rem;
+     --search-bar-height:1.75rem;
+     --search-text-size:0.8rem;
+     --search-text-font:1.25rem;
+    --search-image-width:1.15rem;
+    --search-image-height:1.13rem;
+    --search-image-margin:0.15rem;
+    --table-structure-width: 100%;
+    --table-structure-height: 38rem;
+    /* Table Structure wrapper */
+    --table-width: 100%;
+    --table-height: 35rem;
+    
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 30rem;
+    /* rows Structure3 */
+    --table-data-width: 100%;
+    --table-data-height: 16rem;
+      --grid-width: 100%;
+    --grid-height: 25rem;
+    --grid-data-width: 100%;
+    --grid-data-height: 35rem;
+    --chatbot-right: 2.5rem;
+    --chatbot-bottom: 8rem;
+  }
+}
+
+
+/* ==========================================================================
+   🖥️ TIER 4: STANDARD (750px ≤ height < 800px)
+   Zoom: ~90%
+   Target: ~1920x1080 CSS pixels (or equivalent)
+   Strategy: Full comfortable layout
+   ========================================================================== */
+@media (min-height: 750px) and (max-height: 800px) and (min-width: 1200px) and (max-width: 1920px) {
+
+     .task-container {
+      /* --navbar-height: 4rem;  */
+     /* --navbar-width: 100%;  */
+    --sidebar-width: 5rem;
+    --workspace-gap: 0.5rem;
+    --vertical-gap: 0.5rem;
+    --inner-padding: 0.75rem;
+     --bg-color: #ff1a75;
+    --back-dashboard-width: 100%;
+    --back-dashboard-height: 3rem;
+    --route-text-size: 0.8rem;
+    --padding-x:1rem;
+    --padding-y:0.5rem;
+    /* container */
+    --container-padding: 0.6rem;
+    --data-container-width: 100%;
+    --data-container-height: 35rem;
+    --sub-container-gap: 0.5rem;
+    /* button container */
+    --button-container-width: 100%;
+    --button-container-height: 3rem;
+    --button-text-size: 0.9rem;
+    /* search container */
+    --search-container-width: 20rem;
+    --search-container-height: 2rem;
+   --route-text-size: 0.9rem;
+     --route-font-weight:500;
+     --search-bar-width:19rem;
+     --search-bar-height:1.75rem;
+     --search-text-size:0.8rem;
+     --search-text-font:1.25rem;
+      --search-image-width:1.15rem;
+    --search-image-height:1rem;
+    --search-image-margin:0.15rem;
+    /* outer table structure */
+    --table-structure-width: 100%;
+    --table-structure-height: 35rem;
+    /* Table Structure wrapper */
+    --table-width: 100%;
+    --table-height: 34rem;
+    /* breadcrums and tabular view */
+    --header-height: 2.5rem;
+    --breadcrums-container-width: 100%;
+    --breadcrums-container-height: 2.25rem;
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 27rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 25rem;
+   
+    --chatbot-right: 2.5rem;
+    --chatbot-bottom: 6rem;
+    
+  }
+ 
+}
+
+@media (min-height: 750px) and (max-height: 800px) and (min-width: 1000px) and (max-width: 1200px) {
+    .task-container {
+      /* --navbar-height: 4rem;  */
+     /* --navbar-width: 100%;  */
+    --sidebar-width: 5rem;
+    --workspace-gap: 0.5rem;
+    --vertical-gap: 0.5rem;
+    --inner-padding: 0.75rem;
+     --bg-color: #ff4d94;
+    --back-dashboard-width: 100%;
+    --back-dashboard-height: 3rem;
+    --route-text-size: 0.8rem;
+    --padding-x:1rem;
+    --padding-y:0.5rem;
+    /* container */
+    --container-padding: 0.6rem;
+    --data-container-width: 100%;
+    --data-container-height: 35rem;
+    --sub-container-gap: 0.5rem;
+    /* button container */
+    --button-container-width: 100%;
+    --button-container-height: 3rem;
+    --button-text-size: 0.9rem;
+    /* search container */
+    --search-container-width: 18rem;
+    --search-container-height: 2rem;
+   --route-text-size: 0.9rem;
+     --route-font-weight:500;
+     --search-bar-width:17rem;
+     --search-bar-height:1.75rem;
+     --search-text-size:0.9rem;
+     --search-text-font:1.25rem;
+      --search-image-width:1.15rem;
+    --search-image-height:1rem;
+    --search-image-margin:0.15rem;
+    --table-structure-width: 100%;
+    --table-structure-height: 30rem;
+    /* Table Structure wrapper */
+    --table-width: 100%;
+    --table-height: 30rem;
+    /* breadcrums and tabular view */
+    --header-height: 2.5rem;
+    --breadcrums-container-width: 100%;
+    --breadcrums-container-height: 2.25rem;
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 27rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 26rem;
+    --chatbot-right: 2.5rem;
+    --chatbot-bottom: 6rem;
+    
+  }
+}
+
+@media (min-height: 750px) and (max-height: 800px) and (min-width: 750px) and (max-width: 1000px) {
+  .task-container {
+      /* --navbar-height: 4rem;  */
+     /* --navbar-width: 100%;  */
+    --sidebar-width: 5rem;
+    --workspace-gap: 0.5rem;
+    --vertical-gap: 0.5rem;
+    --inner-padding: 0.75rem;
+     --bg-color: #ff80b3;
+    --back-dashboard-width: 100%;
+    --back-dashboard-height: 3rem;
+    --route-text-size: 0.8rem;
+    --padding-x:1rem;
+    --padding-y:0.5rem;
+    /* container */
+    --container-padding: 0.6rem;
+    --data-container-width: 100%;
+    --data-container-height: 35rem;
+    --sub-container-gap: 0.5rem;
+    /* button container */
+    --button-container-width: 100%;
+    --button-container-height: 3rem;
+    --button-text-size: 0.9rem;
+    /* search container */
+   
+   --search-container-width: 15rem;
+    --search-container-height: 2rem;
+   --route-text-size: 0.9rem;
+     --route-font-weight:500;
+     --search-bar-width:12rem;
+     --search-bar-height:1.75rem;
+     --search-text-size:0.9rem;
+     --search-text-font:1.25rem;
+      --search-image-width:1.15rem;
+    --search-image-height:1rem;
+    --search-image-margin:0.15rem;
+    /* outer table structure */
+    --table-structure-width: 100%;
+    --table-structure-height: 30rem;
+    /* Table Structure wrapper */
+    --table-width: 100%;
+    --table-height: 30rem;
+    /* breadcrums and tabular view */
+    --header-height: 2.5rem;
+    --breadcrums-container-width: 100%;
+    --breadcrums-container-height: 2.25rem;
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 27rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 25rem;
+    --chatbot-right: 2.5rem;
+    --chatbot-bottom: 6rem;
+}
+}
+
+@media (min-height: 750px) and (max-height: 800px) and (min-width: 700px) and (max-width: 750px) {
+  .task-container {
+      /* --navbar-height: 4rem;  */
+     /* --navbar-width: 100%;  */
+    --sidebar-width: 5rem;
+    --workspace-gap: 0.5rem;
+    --vertical-gap: 0.5rem;
+    --inner-padding: 0.75rem;
+     --bg-color: #ffcce0;
+    --back-dashboard-width: 100%;
+    --back-dashboard-height: 3rem;
+    --route-text-size: 0.8rem;
+    --padding-x:1rem;
+    --padding-y:0.5rem;
+    /* container */
+    --container-padding: 0.6rem;
+    --data-container-width: 100%;
+    --data-container-height: 35rem;
+    --sub-container-gap: 0.5rem;
+    /* button container */
+    --button-container-width: 100%;
+    --button-container-height: 3rem;
+    --button-text-size: 0.9rem;
+    /* search container */
+    --search-container-width: 11rem;
+    --search-container-height: 2rem;
+  
+   --route-text-size: 0.9rem;
+     --route-font-weight:500;
+     --search-bar-width:7rem;
+     --search-bar-height:1.75rem;
+     --search-text-size:0.8rem;
+     --search-text-font:1.2rem;
+      --search-image-width:1.13rem;
+    --search-image-height:0.9rem;
+    --search-image-margin:0.18rem;
+    /* outer table structure */
+    --table-structure-width: 100%;
+    --table-structure-height: 30rem;
+    /* Table Structure wrapper */
+    --table-width: 100%;
+    --table-height: 30rem;
+    /* breadcrums and tabular view */
+    --header-height: 2.5rem;
+    --breadcrums-container-width: 100%;
+    --breadcrums-container-height: 2.25rem;
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 27rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 25rem;
+    --chatbot-right: 2.5rem;
+    --chatbot-bottom: 6rem;
+  }
+}
+
+@media (min-height: 750px) and (max-height: 800px) and (min-width: 300px) and (max-width: 700px) {
+  .task-container {
+      /* --navbar-height: 4rem;  */
+     /* --navbar-width: 100%;  */
+    --sidebar-width: 5rem;
+    --workspace-gap: 0.5rem;
+    --vertical-gap: 0.5rem;
+    --inner-padding: 0.75rem;
+     --bg-color: #99003d;
+    --back-dashboard-width: 100%;
+    --back-dashboard-height: 3rem;
+    --route-text-size: 0.8rem;
+    --padding-x:1rem;
+    --padding-y:0.5rem;
+    /* container */
+    --container-padding: 0.6rem;
+    --data-container-width: 100%;
+    --data-container-height: 35rem;
+    --sub-container-gap: 0.5rem;
+    /* button container */
+    --button-container-width: 100%;
+    --button-container-height: 3rem;
+    --button-text-size: 0.9rem;
+    /* search container */
+ --search-container-width: 10rem;
+    --search-container-height: 2rem;
+  
+   --route-text-size: 0.9rem;
+     --route-font-weight:500;
+     --search-bar-width:6rem;
+     --search-bar-height:1.5rem;
+     --search-text-size:0.7rem;
+     --search-text-font:1rem;
+      --search-image-width:1rem;
+    --search-image-height:0.8rem;
+    --search-image-margin:0.19rem;
+    /* outer table structure */
+    --table-structure-width: 100%;
+    --table-structure-height: 33rem;
+    /* Table Structure wrapper */
+    --table-width: 100%;
+    --table-height: 30rem;
+    /* breadcrums and tabular view */
+    --header-height: 2.5rem;
+    --breadcrums-container-width: 100%;
+    --breadcrums-container-height: 2.25rem;
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 27rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 26rem;
+    /* grid view */
+    --grid-width: 100%;
+    --grid-height: 22rem;
+    --grid-data-width: 100%;
+    --grid-data-height: 19.5rem;
+    --chatbot-right: 2.5rem;
+    --chatbot-bottom: 6rem;
+  }
+}
+
+
+
+/* ==========================================================================
+   💻 TIER 3: MEDIUM (650px ≤ height < 750px)
+   Zoom: ~100% 
+   Target: ~1100x600 CSS pixels
+   Strategy: Balanced spacing, comfortable but efficient
+   ========================================================================== */
+@media (min-height: 650px) and (max-height: 750px) and (min-width: 1200px) and (max-width: 1920px) {
+  .task-container {
+    --workspace-gap: 0.5rem;
+    --vertical-gap: 0.5rem;
+    --inner-padding: 0.75rem;
+    --bg-color: #87da00;
+    --back-dashboard-width: 100%;
+    --back-dashboard-height: 2rem;
+    --route-text-size: 0.9rem;
+    --padding-x:1rem;
+    --padding-y:0.5rem;
+    --container-padding: 0.6rem;
+    --data-container-width: 100%;
+    --data-container-height: 30rem;
+    --sub-container-gap: 0.5rem;
+     --button-container-width: 100%;
+    --button-container-height: 3rem;
+     --route-text-size: 0.9rem;
+     --route-font-weight:500;
+      --search-text-size:0.8rem;
+     --search-text-font:1rem;
+      --search-image-width:1rem;
+    --search-container-width: 19rem;
+    --search-container-height: 2rem;
+     --search-bar-width:14rem;
+     --search-bar-height:1.5rem;
+    --search-image-width:1rem;
+    --search-image-height:1rem
+   --search-image-margin:0.15rem;
+    /* outer table structure */
+    --table-structure-width: 100%;
+    --table-structure-height: 23rem;
+    /* Table Structure wrapper */
+    --table-width: 100%;
+    --table-height: 22rem;
+    /* breadcrums and tabular view */
+    --header-height: 2.5rem;
+    --breadcrums-container-width: 100%;
+    --breadcrums-container-height: 2.25rem;
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 23rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 5rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+    
+  }
+}
+
+@media (min-height: 650px) and (max-height: 750px) and (min-width: 1000px) and (max-width: 1200px) {
+  .task-container {
+    --workspace-gap: 0.5rem;
+    --vertical-gap: 0.5rem;
+    --inner-padding: 0.75rem;
+    --bg-color: #269900;
+    --back-dashboard-width: 100%;
+    --back-dashboard-height: 2rem;
+    --route-text-size: 0.85rem;
+    --padding-x:1rem;
+    --padding-y:0.5rem;
+    /* container */
+    --container-padding: 0.6rem;
+    --data-container-width: 100%;
+    --data-container-height: 30rem;
+    --sub-container-gap: 0.5rem;
+    /* button container */
+    --button-container-width: 100%;
+    --button-container-height: 3rem;
+    --button-text-size: 0.9rem;
+    /* search container */
+    --route-text-size: 0.9rem;
+     --route-font-weight:500;
+      --search-text-size:0.8rem;
+     --search-text-font:1rem;
+      --search-image-width:1rem;
+    --search-container-width: 19rem;
+    --search-container-height: 2rem;
+     --search-bar-width:14rem;
+     --search-bar-height:1.5rem;
+    --search-image-width:1rem;
+    --search-image-height:1rem
+   --search-image-margin:0.15rem;
+    --table-structure-width: 100%;
+    --table-structure-height: 23rem;
+    /* Table Structure wrapper */
+    --table-width: 100%;
+    --table-height: 22rem;
+    /* breadcrums and tabular view */
+    --header-height: 2.5rem;
+    --breadcrums-container-width: 100%;
+    --breadcrums-container-height: 2.25rem;
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 23rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 18rem;
+   
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+    
+  }
+}
+@media (min-height: 650px) and (max-height: 750px) and (min-width: 750px) and (max-width: 1000px) {
+  .task-container {
+    
+    --workspace-gap: 0.5rem;
+    --vertical-gap: 0.5rem;
+    --inner-padding: 0.75rem;
+    --bg-color: #00cc00;
+    --back-dashboard-width: 100%;
+    --back-dashboard-height: 2rem;
+    --route-text-size: 0.85rem;
+    --padding-x:1rem;
+    --padding-y:0.5rem;
+    /* container */
+    --container-padding: 0.6rem;
+    --data-container-width: 100%;
+    --data-container-height: 30rem;
+    --sub-container-gap: 0.5rem;
+    /* button container */
+    --button-container-width: 100%;
+    --button-container-height: 3rem;
+    --button-text-size: 0.8rem;
+    /* search container */
+  --route-text-size: 0.9rem;
+     --route-font-weight:500;
+      --search-text-size:0.8rem;
+     --search-text-font:1rem;
+      --search-image-width:1rem;
+    --search-container-width: 17rem;
+    --search-container-height: 2rem;
+     --search-bar-width:12rem;
+     --search-bar-height:1.5rem;
+    --search-image-width:1rem;
+    --search-image-height:1rem
+   --search-image-margin:0.15rem;
+    /* outer table structure */
+    --table-structure-width: 100%;
+    --table-structure-height: 23rem;
+    /* Table Structure wrapper */
+    --table-width: 100%;
+    --table-height: 22rem;
+    /* breadcrums and tabular view */
+    --header-height: 2.5rem;
+    --breadcrums-container-width: 100%;
+    --breadcrums-container-height: 2.25rem;
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 23rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 16rem;
+    --grid-width: 100%;
+    --grid-height: 22rem;
+    --grid-data-width: 100%;
+    --grid-data-height: 19rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+  }
+}
+@media (min-height: 650px) and (max-height: 750px) and (min-width: 700px) and (max-width: 750px) {
+  .task-container {
+    
+    --workspace-gap: 0.5rem;
+    --vertical-gap: 0.5rem;
+    --inner-padding: 0.75rem;
+    --bg-color: #b3ffb3;
+    --back-dashboard-width: 100%;
+    --back-dashboard-height: 2rem;
+    --route-text-size: 0.85rem;
+    --padding-x:1rem;
+    --padding-y:0.5rem;
+    /* container */
+    --container-padding: 0.6rem;
+    --data-container-width: 100%;
+    --data-container-height: 30rem;
+    --sub-container-gap: 0.5rem;
+    /* button container */
+    --button-container-width: 100%;
+    --button-container-height: 3rem;
+    --button-text-size: 0.75rem;
+    /* search container */
+   --route-text-size: 0.9rem;
+     --route-font-weight:500;
+      --search-text-size:0.8rem;
+     --search-text-font:1rem;
+      --search-image-width:1rem;
+    --search-container-width: 14rem;
+    --search-container-height: 2rem;
+     --search-bar-width:10rem;
+     --search-bar-height:1.5rem;
+    --search-image-width:1rem;
+    --search-image-height:1rem
+   --search-image-margin:0.5rem;
+    /* outer table structure */
+    --table-structure-width: 100%;
+    --table-structure-height: 23rem;
+    /* Table Structure wrapper */
+    --table-width: 100%;
+    --table-height: 22rem;
+    /* breadcrums and tabular view */
+    --header-height: 2.5rem;
+    --breadcrums-container-width: 100%;
+    --breadcrums-container-height: 2.25rem;
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 23rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 18rem;
+    
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+  }
+}
+@media (min-height: 650px) and (max-height: 750px) and (min-width: 300px) and (max-width: 700px) {
+  .task-container {
+    
+    --workspace-gap: 0.5rem;
+    --vertical-gap: 0.5rem;
+    --inner-padding: 0.75rem;
+    --bg-color: #b3f3;
+    --back-dashboard-width: 100%;
+    --back-dashboard-height: 2rem;
+    --route-text-size: 0.85rem;
+    --padding-x:1rem;
+    --padding-y:0.5rem;
+    /* container */
+    --container-padding: 0.6rem;
+    --data-container-width: 100%;
+    --data-container-height: 30rem;
+    --sub-container-gap: 0.5rem;
+    /* button container */
+    --button-container-width: 100%;
+    --button-container-height: 3rem;
+    --button-text-size: 0.75rem;
+    /* search container */
+   --route-text-size: 0.9rem;
+     --route-font-weight:500;
+      --search-text-size:0.8rem;
+     --search-text-font:1rem;
+      --search-image-width:1rem;
+    --search-container-width: 14rem;
+    --search-container-height: 2rem;
+     --search-bar-width:9rem;
+     --search-bar-height:1.5rem;
+    --search-image-width:1rem;
+    --search-image-height:1rem
+   --search-image-margin:0.5rem;
+    /* outer table structure */
+    --table-structure-width: 100%;
+    --table-structure-height: 23rem;
+    /* Table Structure wrapper */
+    --table-width: 100%;
+    --table-height: 22rem;
+    /* breadcrums and tabular view */
+    --header-height: 2.5rem;
+    --breadcrums-container-width: 100%;
+    --breadcrums-container-height: 2.25rem;
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 23rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 18rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+  }
+}
+
+/* ==========================================================================
+   💻 TIER 3: MEDIUM (650px ≤ height < 750px)
+   Zoom: ~110% 
+   Target: ~1100x600 CSS pixels
+   Strategy: Balanced spacing, comfortable but efficient
+   ========================================================================== */
+@media (min-height: 600px) and (max-height: 650px) and (min-width: 1201px) and (max-width: 1920px)  {
+  .task-container {
+    --navbar-height: 4rem;
+    --sidebar-width: 5rem;
+    --workspace-gap: 0.5rem;
+    --vertical-gap: 0.5rem;
+    --inner-padding: 0.75rem;
+    --bg-color: #03fc;
+    --back-dashboard-width: 100%;
+    --back-dashboard-height: 2rem;
+    --route-text-size: 0.8rem;
+    --padding-x:1rem;
+    --padding-y:0.5rem;
+    /* container */
+    --container-padding: 0.6rem;
+    --data-container-width: 100%;
+    --data-container-height: 28rem;
+    --sub-container-gap: 0.5rem;
+    /* button container */
+    --button-container-width: 100%;
+    --button-container-height: 3rem;
+    --button-text-size: 0.85rem;
+    /* search container */
+    --route-text-size: 0.9rem;
+     --route-font-weight:500;
+      --search-text-size:0.8rem;
+     --search-text-font:1rem;
+      --search-image-width:1rem;
+    --search-container-width: 19rem;
+    --search-container-height: 2rem;
+     --search-bar-width:14rem;
+     --search-bar-height:1.5rem;
+    --search-image-width:0.9rem;
+    --search-image-height:1rem
+   --search-image-margin:0.15rem;
+    /* outer table structure */
+    --table-structure-width: 100%;
+    --table-structure-height: 27rem;
+    /* Table Structure wrapper */
+    --table-width: 100%;
+    --table-height: 23rem;
+    /* breadcrums and tabular view */
+    --header-height: 2.5rem;
+    --breadcrums-container-width: 100%;
+    --breadcrums-container-height: 2.25rem;
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 20rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 18rem;
+   --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+  }
+}
+
+@media (min-height: 600px) and (max-height: 650px) and (min-width: 1000px) and (max-width: 1200px)  {
+  .task-container {
+    /* --navbar-height: 4rem; */
+    /* --sidebar-width: 4rem; */
+    --workspace-gap: 0.5rem;
+    --vertical-gap: 0.5rem;
+    --inner-padding: 0.75rem;
+    --bg-color: #003399;
+    --back-dashboard-width: 100%;
+    --back-dashboard-height: 2rem;
+    --route-text-size: 0.8rem;
+    --padding-x:1rem;
+    --padding-y:0.25rem;
+    /* container */
+    --container-padding: 0.6rem;
+    --data-container-width: 100%;
+    --data-container-height: 26rem;
+    --sub-container-gap: 0.5rem;
+    /* button container */
+    --button-container-width: 100%;
+    --button-container-height: 3rem;
+    --button-text-size: 0.85rem;
+    /* search container */
+   --route-text-size: 0.9rem;
+     --route-font-weight:500;
+      --search-text-size:0.8rem;
+     --search-text-font:1rem;
+      --search-image-width:1rem;
+    --search-container-width: 17rem;
+    --search-container-height: 2rem;
+     --search-bar-width:13rem;
+     --search-bar-height:1.5rem;
+    --search-image-width:0.9rem;
+    --search-image-height:1rem
+   --search-image-margin:0.15rem;
+    /* outer table structure */
+    --table-structure-width: 100%;
+    --table-structure-height: 25rem;
+    /* Table Structure wrapper */
+    --table-width: 100%;
+    --table-height: 23rem;
+    /* breadcrums and tabular view */
+    --header-height: 2.5rem;
+    --breadcrums-container-width: 100%;
+    --breadcrums-container-height: 2.25rem;
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 20rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 18rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+  }
+}
+@media (min-height: 600px) and (max-height: 650px) and (min-width: 750px) and (max-width: 1000px)  {
+  .task-container {
+    /* --navbar-height: 4rem; */
+    /* --sidebar-width: 4rem; */
+    --workspace-gap: 0.5rem;
+    --vertical-gap: 0.25rem;
+    --inner-padding: 0.75rem;
+    --bg-color: #003d99;
+    --back-dashboard-width: 100%;
+    --back-dashboard-height: 2rem;
+    --route-text-size: 0.8rem;
+    --padding-x:1rem;
+    --padding-y:0.25rem;
+    /* container */
+    --container-padding: 0.6rem;
+    --data-container-width: 100%;
+    --data-container-height: 28rem;
+    --sub-container-gap: 0.5rem;
+    /* button container */
+    --button-container-width: 100%;
+    --button-container-height: 3rem;
+    --button-text-size: 0.85rem;
+    /* search container */
+   --route-text-size: 0.9rem;
+     --route-font-weight:500;
+      --search-text-size:0.8rem;
+     --search-text-font:0.9rem;
+      --search-image-width:1rem;
+    --search-container-width: 17rem;
+    --search-container-height: 2rem;
+     --search-bar-width:11rem;
+     --search-bar-height:1.5rem;
+    --search-image-width:0.9rem;
+    --search-image-height:1rem
+   --search-image-margin:0.15rem;
+    /* outer table structure */
+    --table-structure-width: 100%;
+    --table-structure-height: 25rem;
+    /* Table Structure wrapper */
+    --table-width: 100%;
+    --table-height: 23rem;
+    /* breadcrums and tabular view */
+    --header-height: 2.5rem;
+    --breadcrums-container-width: 100%;
+    --breadcrums-container-height: 2.25rem;
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 17rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 16rem;
+     --grid-width: 100%;
+    --grid-height: 22rem;
+    --grid-data-width: 100%;
+    --grid-data-height: 18.5rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+  }
+}
+@media (min-height: 600px) and (max-height: 650px) and (min-width: 750px) and (max-width: 1000px)  {
+  .task-container {
+    /* --navbar-height: 4rem; */
+    /* --sidebar-width: 4rem; */
+    --workspace-gap: 0.5rem;
+    --vertical-gap: 0.5rem;
+    --inner-padding: 0.75rem;
+    --bg-color: #0052cc;
+    --back-dashboard-width: 100%;
+    --back-dashboard-height: 2rem;
+    --route-text-size: 0.8rem;
+    --padding-x:1rem;
+    --padding-y:0.25rem;
+    /* container */
+    --container-padding: 0.6rem;
+    --data-container-width: 100%;
+    --data-container-height: 25rem;
+    --sub-container-gap: 0.5rem;
+    /* button container */
+    --button-container-width: 100%;
+    --button-container-height: 3rem;
+    --button-text-size: 0.85rem;
+    /* search container */
+   --route-text-size: 0.9rem;
+     --route-font-weight:500;
+      --search-text-size:0.8rem;
+     --search-text-font:0.8rem;
+      --search-image-width:1rem;
+    --search-container-width: 15rem;
+    --search-container-height: 2rem;
+     --search-bar-width:10rem;
+     --search-bar-height:1.5rem;
+    --search-image-width:0.9rem;
+    --search-image-height:1rem
+   --search-image-margin:0.15rem;
+    /* outer table structure */
+    --table-structure-width: 100%;
+    --table-structure-height: 27rem;
+    /* Table Structure wrapper */
+    --table-width: 100%;
+    --table-height: 25rem;
+   
+    /* breadcrums and tabular view */
+    --header-height: 2.5rem;
+    --breadcrums-container-width: 100%;
+    --breadcrums-container-height: 2.25rem;
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 20rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 18rem;
+     --grid-width: 100%;
+    --grid-height: 22rem;
+    --grid-data-width: 100%;
+    --grid-data-height: 17.5rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+  }
+}
+
+@media (min-height: 600px) and (max-height: 650px)  and (min-width: 700px) and (max-width: 750px)  {
+  .task-container {
+    /* --navbar-height: 4rem; */
+    /* --sidebar-width: 3.5rem; */
+    --workspace-gap: 0.5rem;
+    --vertical-gap: 0.5rem;
+    --inner-padding: 0.75rem;
+    --bg-color: #1a75ff;
+    --back-dashboard-width: 100%;
+    --back-dashboard-height: 2rem;
+    --route-text-size: 0.8rem;
+    --padding-x:1rem;
+    --padding-y:0.25rem;
+    /* container */
+    --container-padding: 0.6rem;
+    --data-container-width: 100%;
+    --data-container-height: 25rem;
+    --sub-container-gap: 0.5rem;
+    /* button container */
+    --button-container-width: 100%;
+    --button-container-height: 3rem;
+    --button-text-size: 0.8rem;
+    /* search container */
+    --route-text-size: 0.9rem;
+     --route-font-weight:500;
+      --search-text-size:0.8rem;
+     --search-text-font:1rem;
+      --search-image-width:1rem;
+    --search-container-width: 14rem;
+    --search-container-height: 2rem;
+     --search-bar-width:11rem;
+     --search-bar-height:1.5rem;
+    --search-image-width:0.8rem;
+    --search-image-height:1rem
+   --search-image-margin:0.15rem;
+    /* outer table structure */
+    --table-structure-width: 100%;
+    --table-structure-height: 25rem;
+    /* Table Structure wrapper */
+    --table-width: 100%;
+    --table-height: 23rem;
+    /* breadcrums and tabular view */
+    --header-height: 2.5rem;
+    --breadcrums-container-width: 100%;
+    --breadcrums-container-height: 2.25rem;
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 20rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 18rem;
+     --grid-width: 100%;
+    --grid-height: 22rem;
+    --grid-data-width: 100%;
+    --grid-data-height: 17.5rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+  }
+}
+
+@media (min-height: 600px) and (max-height: 650px)  and (min-width: 300px) and (max-width: 700px)  {
+  .task-container {
+    /* --navbar-height: 4rem; */
+    /* --sidebar-width: 3.5rem; */
+    --workspace-gap: 0.5rem;
+    --vertical-gap: 0.5rem;
+    --inner-padding: 0.75rem;
+    --bg-color: #4db8ff;
+    --back-dashboard-width: 100%;
+    --back-dashboard-height: 2rem;
+    --route-text-size: 0.8rem;
+    --padding-x:1rem;
+    --padding-y:0.5rem;
+    /* container */
+    --container-padding: 0.6rem;
+    --data-container-width: 100%;
+    --data-container-height: 25rem;
+    --sub-container-gap: 0.5rem;
+    /* button container */
+    --button-container-width: 100%;
+    --button-container-height: 3rem;
+    --button-text-size: 0.7rem;
+    /* search container */
+   --route-text-size: 0.9rem;
+     --route-font-weight:500;
+      --search-text-size:0.7rem;
+     --search-text-font:1rem;
+      --search-image-width:1rem;
+    --search-container-width: 13rem;
+    --search-container-height: 2rem;
+     --search-bar-width:9rem;
+     --search-bar-height:1.5rem;
+    --search-image-width:0.8rem;
+    --search-image-height:1rem
+   --search-image-margin:0.15rem;
+    /* outer table structure */
+    --table-structure-width: 100%;
+    --table-structure-height: 25rem;
+    /* Table Structure wrapper */
+    --table-width: 100%;
+    --table-height: 23rem;
+    /* breadcrums and tabular view */
+    --header-height: 2.5rem;
+    --breadcrums-container-width: 100%;
+    --breadcrums-container-height: 2.25rem;
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 20rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 18rem;
+    
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+  }
+}
+
+/* ==========================================================================
+   🖥️ TIER 4: STANDARD (750px ≤ height < 800px)
+   Zoom: ~125%
+   Target: ~1920x1080 CSS pixels (or equivalent)
+   Strategy: Full comfortable layout
+   ========================================================================== */
+
+
+
+@media (min-height: 500px) and (max-height: 600px) and (min-width: 900px) and (max-width: 1200px) {
+.task-container {
+  /* ─── Layout Core ─── */
+  /* --navbar-height: 3.5rem; */
+    /* --sidebar-width: 4.5rem; */
+    --workspace-gap: 0.5rem;
+    --vertical-gap: 0.5rem;
+    --inner-padding: 0.75rem;
+    --container-padding: 0.5rem;
+
+  /* ─── Colors ─── */
+  --bg-color: #a11570;
+
+  /* ─── Dashboard ─── */
+  --back-dashboard-width: 100%;
+    --back-dashboard-height: 1.75rem;
+   
+    --padding-x:1rem;
+    --padding-y:0.15rem;
+    /* container */
+    --data-container-width: 100%;
+    --data-container-height: 25rem;
+    --sub-container-gap: 0.75rem;
+    /* button container */
+    --button-container-width: 100%;
+    --button-container-height: 2.5rem;
+    --button-text-size: 0.85rem;
+    /* search container */
+    --route-text-size: 0.9rem;
+     --route-font-weight:500;
+      --search-text-size:0.8rem;
+     --search-text-font:1rem;
+      --search-image-width:1rem;
+    --search-container-width: 14rem;
+    --search-container-height: 2rem;
+     --search-bar-width:11rem;
+     --search-bar-height:1.5rem;
+    --search-image-width:0.8rem;
+    --search-image-height:1rem
+   --search-image-margin:0.15rem;
+    /* outer table structure */
+    --table-structure-width: 100%;
+    --table-structure-height: 23rem;
+    /* Table Structure wrapper */
+    --table-width: 100%;
+    --table-height: 21rem;
+    
+    /* breadcrums and tabular view */
+    --header-height: 2.5rem;
+    --breadcrums-container-width: 100%;
+    --breadcrums-container-height: 2.25rem;
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 18rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 17rem;
+     
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 2rem;
+}
+}
+
+@media (min-height: 500px) and (max-height: 600px) and (min-width: 700px) and (max-width: 900px) {
+.task-container {
+  /* ─── Layout Core ─── */
+  /* --navbar-height: 3.5rem; */
+    /* --sidebar-width: 4rem; */
+    --workspace-gap: 0.5rem;
+    --vertical-gap: 0.5rem;
+    --inner-padding: 0.75rem;
+    --container-padding: 0.5rem;
+
+  /* ─── Colors ─── */
+  --bg-color: #ff1ac6;
+
+  /* ─── Dashboard ─── */
+  --back-dashboard-width: 100%;
+    --back-dashboard-height: 2rem;
+    --route-text-size: 0.8rem;
+    --padding-x:1rem;
+    --padding-y:0.25rem;
+    /* container */
+    --data-container-width: 100%;
+    --data-container-height: 28rem;
+    --sub-container-gap: 0.5rem;
+    /* button container */
+    --button-container-width: 100%;
+    --button-container-height: 3rem;
+    --button-text-size: 0.85rem;
+    /* search container */
+      --route-text-size: 0.9rem;
+     --route-font-weight:500;
+      --search-text-size:0.8rem;
+     --search-text-font:1rem;
+      --search-image-width:1rem;
+    --search-container-width: 14rem;
+    --search-container-height: 2rem;
+     --search-bar-width:11rem;
+     --search-bar-height:1.5rem;
+    --search-image-width:0.8rem;
+    --search-image-height:1rem
+   --search-image-margin:0.15rem;
+    /* outer table structure */
+    --table-structure-width: 100%;
+    --table-structure-height: 23rem;
+    /* Table Structure wrapper */
+    --table-width: 100%;
+    --table-height: 21rem;
+    
+    /* breadcrums and tabular view */
+    --header-height: 2.5rem;
+    --breadcrums-container-width: 100%;
+    --breadcrums-container-height: 2.25rem;
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 17rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 16rem;
+    
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 2rem;
+}
+}
+
+
+@media (min-height: 500px) and (max-height: 600px) and (min-width: 300px) and (max-width: 700px) {
+.task-container {
+  /* ─── Layout Core ─── */
+  /* --navbar-height: 3.5rem; */
+    /* --sidebar-width: 3.5rem; */
+    --workspace-gap: 0.5rem;
+    --vertical-gap: 0.5rem;
+    --inner-padding: 0.75rem;
+    --container-padding: 0.5rem;
+
+  /* ─── Colors ─── */
+  --bg-color: #ff66d9;
+
+  /* ─── Dashboard ─── */
+  --back-dashboard-width: 100%;
+    --back-dashboard-height: 2rem;
+    --route-text-size: 0.8rem;
+    --padding-x:1rem;
+    --padding-y:0.25rem;
+    /* container */
+    --data-container-width: 100%;
+    --data-container-height: 25rem;
+    --sub-container-gap: 0.5rem;
+    /* button container */
+    --button-container-width: 100%;
+    --button-container-height: 3rem;
+    --button-text-size: 0.85rem;
+    /* search container */
+     --route-text-size: 0.9rem;
+     --route-font-weight:500;
+      --search-text-size:0.8rem;
+     --search-text-font:1rem;
+      --search-image-width:1rem;
+    --search-container-width: 13rem;
+    --search-container-height: 2rem;
+     --search-bar-width:9rem;
+     --search-bar-height:1.5rem;
+    --search-image-width:0.8rem;
+    --search-image-height:1rem
+   --search-image-margin:0.15rem;
+    /* outer table structure */
+    --table-structure-width: 100%;
+    --table-structure-height: 23rem;
+    /* Table Structure wrapper */
+    --table-width: 100%;
+    --table-height: 21rem;
+    
+    /* breadcrums and tabular view */
+    --header-height: 2.5rem;
+    --breadcrums-container-width: 100%;
+    --breadcrums-container-height: 2.25rem;
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 17rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 16rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 2rem;
+}
+}
+
+/* ==========================================================================
+   🖥️ TIER 4: STANDARD (750px ≤ height < 800px)
+   Zoom: ~150%
+   Target: ~1920x1080 CSS pixels (or equivalent)
+   Strategy: Full comfortable layout
+   ========================================================================== */
+
+
+@media (min-height: 400px) and (max-height: 549px) and (min-width: 700px) and (max-width: 1000px) {
+  .task-container {
+       /* --navbar-height: 2.75rem; */
+    /* --sidebar-width: 3.5rem; */
+    --workspace-gap: 0.5rem;
+    --vertical-gap: 0.5rem;
+    --inner-padding: 0.75rem;
+    --container-padding: 0.4rem;
+
+    --bg-color: #ff9900;
+    /* ─── Dashboard ─── */
+  --back-dashboard-width: 100%;
+    --back-dashboard-height: 1.5rem;
+    --route-text-size: 0.7rem;
+    --padding-x:1rem;
+    --padding-y:0.15rem;
+    --container-padding: 0.5rem;
+    /* container */
+    --data-container-width: 100%;
+    --data-container-height: 35rem;
+    --sub-container-gap: 0.5rem;
+    /* button container */
+    --button-container-width: 100%;
+    --button-container-height: 2.35rem;
+    --button-text-size: 0.75rem;
+    /* search container */
+     --route-text-size: 0.9rem;
+     --route-font-weight:500;
+      --search-text-size:0.8rem;
+     --search-text-font:1rem;
+      --search-image-width:1rem;
+    --search-container-width: 14rem;
+    --search-container-height: 2rem;
+     --search-bar-width:11rem;
+     --search-bar-height:1.5rem;
+    --search-image-width:0.8rem;
+    --search-image-height:1rem
+   --search-image-margin:0.15rem;
+    /* outer table structure */
+    --table-structure-width: 100%;
+    --table-structure-height: 23rem;
+    /* Table Structure wrapper */
+    --table-width: 100%;
+    --table-height: 21rem;
+    
+    /* breadcrums and tabular view */
+    --header-height: 1.25rem;
+    --breadcrums-container-width: 100%;
+    --breadcrums-container-height: 1.5rem;
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 14rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 13rem;
+      --grid-width: 100%;
+    --grid-height: 20rem;
+    --grid-data-width: 100%;
+    --grid-data-height: 11rem;
+    --chatbot-right: 1.5rem;
+    --chatbot-bottom: 2rem;
+  }
+}
+
+@media (min-height: 400px) and (max-height: 549px) and (min-width: 300px) and (max-width: 700px) {
+  .task-container {
+       /* --navbar-height: 2.75rem; */
+    /* --sidebar-width: 3.25rem; */
+    --workspace-gap: 0.5rem;
+    --vertical-gap: 0.5rem;
+    --inner-padding: 0.75rem;
+    --container-padding: 0.4rem;
+
+    --bg-color: #66ffff;
+    /* ─── Dashboard ─── */
+  --back-dashboard-width: 100%;
+    --back-dashboard-height: 1.5rem;
+    --route-text-size: 0.7rem;
+    --padding-x:1rem;
+    --padding-y:0.15rem;
+    --container-padding: 0.5rem;
+    /* container */
+    --data-container-width: 100%;
+    --data-container-height: 25rem;
+    --sub-container-gap: 0.5rem;
+    /* button container */
+    --button-container-width: 100%;
+    --button-container-height: 2.5rem;
+    --button-text-size: 0.75rem;
+    /* search container */
+     --route-text-size: 0.8rem;
+     --route-font-weight:500;
+      --search-text-size:0.8rem;
+     --search-text-font:1rem;
+      --search-image-width:1rem;
+    --search-container-width: 12rem;
+    --search-container-height: 2rem;
+     --search-bar-width:8rem;
+     --search-bar-height:1.5rem;
+    --search-image-width:0.8rem;
+    --search-image-height:1rem
+   --search-image-margin:0.15rem;
+    /* outer table structure */
+    --table-structure-width: 100%;
+    --table-structure-height: 23rem;
+    /* Table Structure wrapper */
+    --table-width: 100%;
+    --table-height: 21rem;
+    
+    /* breadcrums and tabular view */
+    --header-height: 1.25rem;
+    --breadcrums-container-width: 100%;
+    --breadcrums-container-height: 1.5rem;
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 14rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 12rem;
+      --grid-width: 100%;
+    --grid-height: 20rem;
+    --grid-data-width: 100%;
+    --grid-data-height: 12rem;
+    --chatbot-right: 1.5rem;
+    --chatbot-bottom: 2rem;
+  }
+}
+
+/* ==========================================================================
+   🖥️ TIER 4: STANDARD (750px ≤ height < 800px)
+   Zoom: ~175%
+   Target: ~1920x1080 CSS pixels (or equivalent)
+   Strategy: Full comfortable layout
+   ========================================================================== */
+
+/* Ultra Compact + Very Wide (≥1200px) */
+@media (min-height: 351px) and (max-height: 400px) and (min-width: 700px) and (max-width: 900px) {
+  .task-container {
+     /* --navbar-height: 2.75rem; */
+    /* --sidebar-width: 3.5rem; */
+    --workspace-gap: 0.5rem;
+    --vertical-gap: 0.5rem;
+    --inner-padding: 0.25rem;
+    --container-padding: 0.4rem;
+
+  /* ─── Colors ─── */
+  --bg-color: #2c2e2c;
+
+  /* ─── Dashboard ─── */
+  --back-dashboard-width: 100%;
+    --back-dashboard-height: 1.5rem;
+    --padding-x:1rem;
+    --padding-y:0.15rem;
+    /* container */
+    --data-container-width: 100%;
+    --data-container-height: 20rem;
+    --sub-container-gap: 0.25rem;
+    /* button container */
+    --button-container-width: 100%;
+    --button-container-height: 2.5rem;
+    --button-text-size: 0.75rem;
+    /* search container */
+     --route-text-size: 0.8rem;
+     --route-font-weight:500;
+      --search-text-size:0.8rem;
+     --search-text-font:1rem;
+      --search-image-width:1rem;
+    --search-container-width: 12rem;
+    --search-container-height: 2rem;
+     --search-bar-width:8rem;
+     --search-bar-height:1.5rem;
+    --search-image-width:0.8rem;
+    --search-image-height:1rem
+   --search-image-margin:0.15rem;
+    /* outer table structure */
+    --table-structure-width: 100%;
+    --table-structure-height: 20rem;
+    /* Table Structure wrapper */
+    --table-width: 100%;
+    --table-height: 19rem;
+    /* breadcrums and tabular view */
+    --header-height: 1.25rem;
+    --breadcrums-container-width: 100%;
+    --breadcrums-container-height: 1.5rem;
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 11rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 8rem;
+   --chatbot-right: 1.5rem;
+    --chatbot-bottom: 2rem;
+  }
+}
+
+@media (min-height: 351px) and (max-height: 400px) and (min-width: 300px) and (max-width: 700px) {
+  .task-container {
+    --bg-color: blue; /* 175% */
+     --workspace-gap: 0.4rem;
+    --vertical-gap: 0.5rem;
+    --inner-padding: 0.2rem;
+    --container-padding: 0.4rem;
+  --back-dashboard-width: 100%;
+    --back-dashboard-height: 1.5rem;
+   
+    --padding-x:1rem;
+    --padding-y:0.25rem;
+    /* container */
+    --data-container-width: 100%;
+    --data-container-height: 20rem;
+    --sub-container-gap: 0.5rem;
+    /* button container */
+    --button-container-width: 100%;
+    --button-container-height: 2.5rem;
+    --button-text-size: 0.75rem;
+    /* search container */
+    --route-text-size: 0.8rem;
+     --route-font-weight:500;
+      --search-text-size:0.8rem;
+     --search-text-font:1rem;
+      --search-image-width:1rem;
+    --search-container-width: 12rem;
+    --search-container-height: 2rem;
+     --search-bar-width:8rem;
+     --search-bar-height:1.5rem;
+    --search-image-width:0.8rem;
+    --search-image-height:1rem
+   --search-image-margin:0.15rem;
+    /* outer table structure */
+    --table-structure-width: 100%;
+    --table-structure-height: 20rem;
+    /* Table Structure wrapper */
+    --table-width: 100%;
+    --table-height: 19rem;
+    /* breadcrums and tabular view */
+    --header-height: 1.25rem;
+    --breadcrums-container-width: 100%;
+    --breadcrums-container-height: 1.5rem;
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 11rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 9rem;
+   
+    --chatbot-right: 1.5rem;
+    --chatbot-bottom: 2rem;
+  }
+}
+
+@media (min-height: 300px) and (max-height: 350px) and (min-width: 300px) and (max-width: 1000px) {
+  .task-container {
+     /* --navbar-height: 2.65rem; */
+    /* --sidebar-width: 3.5rem; */
+    --workspace-gap: 0.4rem;
+    --vertical-gap: 0.5rem;
+    --inner-padding: 0.2rem;
+    --container-padding: 0.4rem;
+
+  /* ─── Colors ─── */
+  --bg-color: #4d2 !important;
+
+  /* ─── Dashboard ─── */
+  --back-dashboard-width: 100%;
+    --back-dashboard-height: 1.5rem;
+   
+    --padding-x:1rem;
+    --padding-y:0.1rem;
+    /* container */
+    --data-container-width: 100%;
+    --data-container-height: 20rem;
+    --sub-container-gap: 0.5rem;
+    /* button container */
+    --button-container-width: 100%;
+    --button-container-height: 2.5rem;
+    --button-text-size: 0.75rem;
+    /* search container */
+    --route-text-size: 0.8rem;
+     --route-font-weight:500;
+      --search-text-size:0.8rem;
+     --search-text-font:1rem;
+      --search-image-width:1rem;
+    --search-container-width: 12rem;
+    --search-container-height: 2rem;
+     --search-bar-width:8rem;
+     --search-bar-height:1.5rem;
+    --search-image-width:0.8rem;
+    --search-image-height:1rem
+   --search-image-margin:0.15rem;
+    /* outer table structure */
+    --table-structure-width: 100%;
+    --table-structure-height: 10rem;
+    /* Table Structure wrapper */
+    --table-width: 100%;
+    --table-height: 8rem;
+    /* breadcrums and tabular view */
+    --header-height: 1.25rem;
+    --breadcrums-container-width: 100%;
+    --breadcrums-container-height: 1.5rem;
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 8rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 8rem;
+   
+    --chatbot-right: 1.5rem;
+    --chatbot-bottom: 2rem;
+  }
+}
+
+
+
+
+
+
+/* ==========================================================================
+   🏔️ TIER 5: SPACIOUS (height ≥ 900px)
+   Zoom: None (native resolution)
+   Target: Large monitors (1440p, 4K, ultrawide)
+   Strategy: Generous spacing, large touch targets
+   ========================================================================== */
+@media (min-height: 1400px) and (max-height: 4000px) {
+  .task-container {
+    /* --navbar-height: 0rem; */
+    /* --sidebar-width: 7rem; */
+    --workspace-gap: 1.5rem;
+    --vertical-gap: 1.25rem;
+    --inner-padding: 0.75rem;
+    --bg-color: #ffb366;
+    --padding-x: 1.25rem;
+    --padding-y: 0.75rem;
+    --container-padding: 1.75rem;
+     --back-dashboard-width: 100%;
+    --back-dashboard-height: 5rem;
+    --route-text-size: 0.8rem;
+    --data-container-width: 100%;
+    --data-container-height: calc(100vh - 30rem);
+    --button-container-width: 100%;
+    --button-container-height: 6rem;
+    --button-text-size: 0.85rem;
+   --route-text-size: 0.8rem;
+     --route-font-weight:500;
+      --search-text-size:0.8rem;
+     --search-text-font:1rem;
+      --search-image-width:1rem;
+    --search-container-width: 25rem;
+    --search-container-height: 2rem;
+     --search-bar-width:8rem;
+     --search-bar-height:1.5rem;
+    --search-image-width:0.8rem;
+    --search-image-height:1rem
+   --search-image-margin:0.15rem;
+    /* outer table structure */
+    --table-structure-width: 100%;
+    --table-structure-height: 30rem;
+    /* Table Structure wrapper */
+    --table-width: 100%;
+    --table-height: 25rem;
+    --header-height: 2.75rem;
+    --breadcrums-container-height: 2.5rem;
+    /* table structure */
+    --data-width: 100%;
+    --data-height: 85rem;
+    /* rows Structure */
+    --table-data-width: 100%;
+    --table-data-height: 16rem;
+    --table-margin-top: 0.25rem;
+   
+    --chatbot-right: 3.5rem;
+    --chatbot-bottom: 15rem;
+  }
+}
+
+
+/* ==========================================================================
+   📐 UTILITY CLASSES (unchanged logic, fixed invalid properties)
+   ========================================================================== */
+
+.task-container .task-search-image {
+    height: var(--search-image-height);
+    width: var(--search-image-width);
+}
+
+.task-container .task-search-image-margin {
+    margin-bottom: var(--search-image-margin);
+}
+
+.task-container .task-search-bar-width{
+    width: var(--search-bar-width);
+    height: var(--search-bar-height);
+    font-size: var(--search-text-size);
+    font-weight: var(--search-text-font);
+}
+.task-container .chatbot-margin {
+  position: fixed !important;
+  z-index: 9999 !important;
+  
+  /* Maps exactly to what your style={{ right, bottom }} did, 
+     but reads the responsive numbers dynamically from the layout container 
+  */
+  right: var(--chatbot-right) !important;
+  bottom: var(--chatbot-bottom) !important;
+}
+
+.task-container .table-margin {
+  margin-top: var(--table-margin-top);
+}
+
+.task-container .task-route-text {
+font-size: var(--route-text-size);
+  font-weight: var(--route-font-weight);
+}   
+.task-container .container-padding {
+  padding: var(--container-padding);
+}
+
+.task-container .grid-padding {
+  padding: var(--grid-padding);
+}
+
+.task-container .button-text {
+  font-size: var(--button-text-size);
+}
+
+.task-container .layout-vertical-gap {
+  gap: var(--vertical-gap);
+}
+
+.task-container .task-layout-rows-container {
+  width: var(--table-data-width);
+  height: var(--table-data-height);
+  /* background-color: var(--bg-color); */
+  /* transition: width 0.25s ease-out, height 0.15s ease-out; */
+
+}
+
+.task-container .layout-breadcrums-container {
+  width: var(--breadcrums-container-width);
+  height: var(--breadcrums-container-height);
+  /* transition: width 0.25s ease-out, height 0.15s ease-out; */
+}
+
+.task-container .task-layout-data-container {
+  width: var(--data-width);
+  height: var(--data-height);
+  
+  /* transition: width 0.25s ease-out, height 0.15s ease-out; */
+}
+
+.task-container .layout-grid-container {
+  width: var(--grid-width);
+  height: var(--grid-height);
+  /* transition: width 0.25s ease-out, height 0.15s ease-out; */
+}
+
+.task-container .layout-table {
+  width: var(--table-width);
+  height: var(--table-height);
+  /* transition: width 0.25s ease-out, height 0.15s ease-out; */
+}
+ .task-container.layout-grid {
+  width: var(--grid-data-width);
+  height: var(--grid-data-height);  
+}
+
+.task-container .layout-header {
+    width: 100%;
+  height: var(--header-height);
+  transition: height 0.15s ease-out;
+}
+
+.task-container .layout-table-structure {
+  width: var(--table-structure-width);
+  height: var(--table-structure-height);
+  /* transition: width 0.25s ease-out, height 0.15s ease-out; */
+}
+
+.task-container .layout-button-wrapper {
+  width: var(--button-wrapper-width);
+  height: var(--button-height);
+  /* transition: width 0.25s ease-out, height 0.15s ease-out; */
+}
+
+.task-container .task-layout-search-container {
+  width: var(--search-container-width);
+  height: var(--search-container-height);
+ 
+  /* transition: width 0.25s ease-out, height 0.15s ease-out; */
+}
+
+.task-container .layout-button {
+  width: var(--button-width);
+  height: var(--button-height);
+  transition: width 0.25s ease-out, height 0.15s ease-out;
+}
+
+.task-container .layout-button-container {
+  width: var(--button-container-width);
+  height: var(--button-container-height);
+   overflow-x: auto;
+   scrollbar-width: thin; /* For Firefox */
+  transition: width 0.25s ease-out, height 0.15s ease-out;
+}
+.task-container .task-layout-page-container {
+  width: var(--button-container-width);
+  height: var(--button-container-height);
+   /* overflow-x: auto;
+   scrollbar-width: thin;  */
+    /* background-color: var(--bg-color) !important;  */
+  transition: width 0.25s ease-out, height 0.15s ease-out;
+}
+
+.task-container .task-layout-backdashboard { 
+  /* Reads your dynamic .task-container variable tokens cleanly */
+  width: var(--back-dashboard-width);
+  height: var(--back-dashboard-height) !important;
+  transition: width 0.25s ease-out, height 0.15s ease-out;
+  bg-color: var(--bg-color) !important; /* Forces priority over tailwind defaults */
+}
+
+/* .layout-navbar {
+  height: var(--navbar-height);
+  background-color: var(--bg-color) !important; 
+  transition: height 0.15s ease-out, background-color 0.15s ease-out;
+} */
+
+.task-container .layout-sidebar {
+  width: var(--sidebar-width);
+  transition: width 0.15s ease-out;
+}
+
+.task-container .layout-gap {
+  gap: var(--workspace-gap);
+}
+
+.task-container .sub-container-gap {
+  gap: var(--sub-container-gap);
+}
+
+.task-container .layout-padding {
+  padding: var(--inner-padding);
+}
+
+
+
+.task-container .app-container {
+  @apply w-screen h-screen flex flex-col overflow-hidden;
+}
+
+.task-container .task-navbar-wrapper {
+  @apply w-full flex-shrink-0; 
+  height: var(--navbar-height); 
+  transition: height 0.15s ease-out;
+}
+
+/* THE CONTAINER CORE SPLITTER LAYOUT */
+.task-container .task-wrapper {
+  display: flex !important;
+  flex-direction: row !important;
+  /* Forces components to inherit vertical heights evenly */
+  width: 100%;
+  flex: 1 1 0%;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.task-container .s3-sidebar {
+  @apply flex-shrink-0 ;
+  width: var(--sidebar-width);
+  height:98%;
+  /* background-color: var(--bg-color) !important;  */
+  transition: width 0.15s ease-out, background-color 0.15s ease-out;
+}
+
+.task-container .task-sub-container {
+  /* 1. LAYOUT STRUCTURE MAPPINGS */
+  display: flex !important;
+  flex-direction: column !important;  
+  flex: 1 !important;            
+   width: 100% !important;               
+  height: 98% !important;             
+  min-width: 0 !important;            
+  padding: var(--padding-y) var(--padding-x) !important;       
+  /* background-color: var(--bg-color) !important;  */
+  border-radius: 0.5rem;              
+  overflow: hidden;
+  transition: background-color 0.15s ease-out;
+}
+
+.task-container .data-container {
+    width: var(--data-container-width) !important;
+    height: var(--data-container-height) !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    direction:flex !important;
+    flex-direction: column !important;
+    gap: var(--workspace-gap) !important;
+    padding: var(--padding-y) var(--padding-x) !important;
+}

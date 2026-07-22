@@ -1,0 +1,201 @@
+/* ==========================================================================
+   🎯 BASE VARIABLES — Scale smoothly with viewport + zoom
+   ========================================================================== */
+
+.log-container {
+  /* Use dvh (dynamic viewport height) which accounts for browser chrome/zoom */
+  --vh: 1dvh;
+  --vw: 1dvw;
+  
+  /* Scale factors that adjust smoothly — no hard breakpoints */
+  --scale-h: clamp(0.6, calc(100dvh / 900), 1.2);   /* 0.6 to 1.2 based on height */
+  --scale-w: clamp(0.7, calc(100dvw / 1400), 1.1);   /* 0.7 to 1.1 based on width */
+  
+  /* Use the smaller scale to maintain proportions */
+  --scale: min(var(--scale-h), var(--scale-w));
+  
+  /* All sizes scale smoothly using the scale factor */
+  --horizantal-gap: calc(0.5rem * var(--scale));
+  --vertical-gap: calc(0.5rem * var(--scale));
+  --container-padding: calc(0.75rem * var(--scale));
+  --navigate-home-height: calc(3.5rem * var(--scale));
+  --layout-padding: calc(0.75rem * var(--scale));
+  --navigate-text-size: calc(0.85rem * var(--scale));
+  --navigate-font-weight: 500;
+  --log-font-family: 'Poppins', sans-serif;
+  
+  /* Data wrapper scales with available height */
+  --data-wrapper-height: calc(100dvh - 8rem);  /* fills viewport minus navbar */
+  --data-wrapper-width: 100%;
+  --data-wrapper-gap: calc(0.5rem * var(--scale));
+  
+  --padding-x: calc(1.25rem * var(--scale));
+  --padding-y: calc(1rem * var(--scale));
+  --data-wrapper-padding-x: calc(1rem * var(--scale));
+  --data-wrapper-padding-y: calc(0.75rem * var(--scale));
+  
+  /* Search scales smoothly */
+  --search-wrapper-width: 100%;
+  --search-wrapper-height: calc(2.5rem * var(--scale));
+  --search-text-size: calc(0.8rem * var(--scale));
+  --search-text-font: calc(1rem * var(--scale));
+  --search-image-width: calc(1rem * var(--scale));
+  --search-container-width: min(19rem, 30dvw);
+  --search-container-height: calc(2rem * var(--scale));
+  --search-bar-width: min(14rem, 25dvw);
+  --search-bar-height: calc(1.5rem * var(--scale));
+  --search-image-height: calc(1rem * var(--scale));
+  --search-image-margin: calc(0.15rem * var(--scale));
+  
+  /* Table fills remaining space smoothly */
+  --logs-table-container-width: 100%;
+  --logs-table-container-height: calc(100dvh - 14rem); /* auto-fill */
+  --logs-table-width: 100%;
+  --logs-table-height: 100%;
+  --table-header-width: 100%;
+  --table-header-height: calc(4rem * var(--scale));
+  --table-data-width: 100%;
+  --table-data-height: calc(100% - var(--table-header-height));
+  --logs-data-width: 100%;
+  --logs-data-height: 100%;
+  
+  /* Chatbot position relative to viewport */
+  --chatbot-right: calc(2rem * var(--scale));
+  --chatbot-bottom: calc(5rem * var(--scale));
+  
+  /* Debug color — remove in production */
+  --bg-color: transparent;
+}
+
+/* ==========================================================================
+   📐 UTILITY CLASSES (unchanged logic, fixed invalid properties)
+   ========================================================================== */
+
+.log-container .file-padding {
+  padding-left: var(--file-padding-x);
+  padding-right: var(--file-padding-x);
+}
+
+.log-container .log-app-container {
+  width: 100dvw;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.log-container .log-navbar-wrapper {
+  width: 100%;
+  flex-shrink: 0;
+  height: var(--navbar-height);
+}
+
+.log-container .log-wrapper {
+  display: flex !important;
+  flex-direction: row !important;
+  width: 100%;
+  height: 100%;
+  flex: 1 1 0%;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.log-container .log-sidebar {
+  flex-shrink: 0;
+  width: var(--sidebar-width);
+  height: 98%;
+}
+
+.log-container .log-sub-container {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 !important;
+  width: 100% !important;
+  height: 98% !important;
+  min-width: 0 !important;
+  padding: var(--padding-y) var(--padding-x) !important;
+  gap: var(--layout-padding);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.log-container .horizantal-gap { gap: var(--horizantal-gap); }
+.log-container .vertical-gap { gap: var(--vertical-gap); }
+.log-container .container-padding { padding: var(--container-padding); }
+
+.log-container .navigate-home {
+  width: 100%;
+  height: var(--navigate-home-height);
+}
+
+.log-container .navigate-text {
+  font-size: var(--navigate-text-size);
+  font-weight: var(--navigate-font-weight);
+  font-family: var(--log-font-family) !important;
+}
+
+.log-container .log-data-wrapper {
+  height: var(--data-wrapper-height);
+  width: var(--data-wrapper-width);
+  display: flex;
+  flex-direction: column !important;
+  min-height: 0 !important;
+  min-width: 0 !important;
+  gap: var(--data-wrapper-gap);
+  padding: var(--data-wrapper-padding-y) var(--data-wrapper-padding-x) !important;
+}
+
+.log-container .log-search-wrapper {
+  width: var(--search-wrapper-width);
+  height: var(--search-wrapper-height);
+}
+
+.log-container .log-search-container {
+  width: var(--search-container-width);
+  height: var(--search-container-height);
+}
+
+.log-container .logs-table-container {
+  width: var(--logs-table-container-width);
+  height: var(--logs-table-container-height);
+}
+
+.log-container .logs-table {
+  width: var(--logs-table-width);
+  height: var(--logs-table-height);
+}
+
+.log-container .logs-table-header {
+  width: var(--table-header-width);
+  height: var(--table-header-height);
+}
+
+.log-container .logs-table-data {
+  width: var(--table-data-width);
+  height: var(--table-data-height);
+}
+
+.log-container .logs-data {
+  width: var(--logs-data-width);
+  height: var(--logs-data-height);
+}
+
+.log-container .chatbot-margin {
+  position: fixed !important;
+  z-index: 9999 !important;
+  right: var(--chatbot-right) !important;
+  bottom: var(--chatbot-bottom) !important;
+}
+
+.log-container .log-search-bar-width {
+  width: var(--search-bar-width);
+  height: var(--search-bar-height);
+  font-size: var(--search-text-size);
+  font-weight: var(--search-text-font);
+}
+
+.log-container .log-search-image {
+  height: var(--search-image-height);
+  width: var(--search-image-width);
+}

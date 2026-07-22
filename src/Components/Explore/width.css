@@ -1,0 +1,287 @@
+/* ==========================================================================
+   🏔️ TIER 5: SPACIOUS (height-tier: spacious)
+   ========================================================================== */
+.app-container[data-height-tier="spacious"] {
+  --navbar-height: 5rem;
+  --sidebar-width: 5rem;
+  --workspace-gap: 0.75rem;
+  --vertical-gap: 1.5rem;
+  --inner-padding: 0.6rem;
+  --bg-color: #333399;
+  --back-dashboard-width: 100%;
+  --back-dashboard-height: 4rem;
+  --bucketname-text-size: 1rem;
+  --padding-x: 1rem;
+  --padding-y: 0.5rem;
+  --container-padding: 1rem;
+  --data-container-height: calc(100vh - 15rem);
+  --button-container-width: 100%;
+  --button-container-height: 4rem;
+  --button-text-size: 1rem;
+  --search-container-height: 2.75rem;
+  --button-height: 2.75rem;
+  --table-structure-width: 100%;
+  --table-structure-height: calc(100vh - 25rem);
+  --table-width: 100%;
+  --table-height: 23rem;
+  --header-height: 2.5rem;
+  --breadcrums-container-width: 100%;
+  --breadcrums-container-height: 3rem;
+  --data-width: 100%;
+  --data-height: 35rem;
+  --table-data-width: 100%;
+  --table-data-height: 20rem;
+}
+
+/* ==========================================================================
+   🖥️ TIER 4: STANDARD (height-tier: standard)
+   ========================================================================== */
+.app-container[data-height-tier="standard"] {
+  --navbar-height: 4rem;
+  --sidebar-width: 4.5rem;
+  --workspace-gap: 0.5rem;
+  --vertical-gap: 1rem;
+  --inner-padding: 0.6rem;
+  --bg-color: #ff33cc;
+  --back-dashboard-width: 100%;
+  --back-dashboard-height: 3rem;
+  --bucketname-text-size: 0.8rem;
+  --padding-x: 1rem;
+  --padding-y: 0.5rem;
+  --container-padding: 0.8rem;
+  --data-container-height: calc(100vh - 15rem);
+  --button-container-width: 100%;
+  --button-container-height: 4rem;
+  --button-text-size: 1rem;
+  --search-container-height: 2.75rem;
+  --button-height: 2.75rem;
+  --table-structure-width: 100%;
+  --table-structure-height: calc(100vh - 23rem);
+  --table-width: 100%;
+  --table-height: 16rem;
+  --header-height: 2.5rem;
+  --breadcrums-container-width: 100%;
+  --breadcrums-container-height: 3rem;
+  --data-width: 100%;
+  --data-height: 20rem;
+  --table-data-width: 100%;
+  --table-data-height: 16rem;
+}
+
+/* ==========================================================================
+   💻 TIER 3: MEDIUM (height-tier: medium)
+   ========================================================================== */
+.app-container[data-height-tier="medium"] {
+  --navbar-height: 4rem;
+  --sidebar-width: 5rem;
+  --workspace-gap: 0.5rem;
+  --vertical-gap: 0.5rem;
+  --inner-padding: 0.75rem;
+  --bg-color: #87da00;
+  --back-dashboard-width: 100%;
+  --back-dashboard-height: 2rem;
+  --bucketname-text-size: 0.8rem;
+  --padding-x: 1rem;
+  --padding-y: 0.5rem;
+  --container-padding: 0.6rem;
+  --data-container-width: 100%;
+  --data-container-height: 30rem;
+  --sub-container-gap: 0.5rem;
+  --button-container-width: 100%;
+  --button-container-height: 3rem;
+  --button-text-size: 0.9rem;
+  --search-container-height: 2rem;
+  --button-height: 2rem;
+  --table-structure-width: 100%;
+  --table-structure-height: 24rem;
+  --table-width: 100%;
+  --table-height: 22rem;
+  --header-height: 2.5rem;
+  --breadcrums-container-width: 100%;
+  --breadcrums-container-height: 2.25rem;
+  --data-width: 100%;
+  --data-height: 19.5rem;
+  --table-data-width: 100%;
+  --table-data-height: 18rem;
+}
+
+/* ==========================================================================
+   📊 TIER 2: COMPACT (height-tier: compact)
+   ========================================================================== */
+.app-container[data-height-tier="compact"] {
+  --navbar-height: 2.75rem;
+  --sidebar-width: 3.5rem;
+  --workspace-gap: 0.5rem;
+  --vertical-gap: 0.25rem;
+  --inner-padding: 0.75rem;
+  --bg-color: #800080;
+  --back-dashboard-width: 100%;
+  --back-dashboard-height: 1.5rem;
+  --bucketname-text-size: 0.7rem;
+  --padding-x: 1rem;
+  --padding-y: 0.5rem;
+  --container-padding: 0.5rem;
+  --data-container-width: 100%;
+  --data-container-height: 50rem;
+  --sub-container-gap: 0.5rem;
+  --button-container-width: 100%;
+  --button-container-height: 2rem;
+  --button-text-size: 0.75rem;
+  --search-container-height: 1.5rem;
+  --button-height: 1.5rem;
+  --table-structure-width: 100%;
+  --table-structure-height: 16rem;
+  --table-width: 100%;
+  --table-height: 15rem;
+  --header-height: 1.25rem;
+  --breadcrums-container-width: 100%;
+  --breadcrums-container-height: 1.5rem;
+  --data-width: 100%;
+  --data-height: 13rem;
+  --table-data-width: 100%;
+  --table-data-height: 12rem;
+}
+
+/* ==========================================================================
+   📱 TIER 1: ULTRA COMPACT (height-tier: ultra-compact)
+   ========================================================================== */
+.app-container[data-height-tier="ultra-compact"] {
+  --navbar-height: 2.25rem;
+  --sidebar-width: 3.5rem;
+  --workspace-gap: 0.5rem;
+  --vertical-gap: 0.15rem;
+  --inner-padding: 0.75rem;
+  --container-padding: 0.4rem;
+  --bg-color: #1a97d6;
+  --back-dashboard-width: 100%;
+  --back-dashboard-height: 1.25rem;
+  --bucketname-text-size: 0.7rem;
+  --padding-x: 1rem;
+  --padding-y: 0.5rem;
+  --data-container-width: 100%;
+  --data-container-height: 60rem;
+  --sub-container-gap: 0.5rem;
+  --button-container-width: 100%;
+  --button-container-height: 1.75rem;
+  --button-text-size: 0.65rem;
+  --search-container-height: 1.15rem;
+  --button-height: 1.25rem;
+  --table-structure-width: 100%;
+  --table-structure-height: 10.5rem;
+  --table-width: 100%;
+  --table-height: 10rem;
+  --header-height: 1.25rem;
+  --breadcrums-container-width: 100%;
+  --breadcrums-container-height: 1.5rem;
+  --data-width: 100%;
+  --data-height: 8rem;
+  --table-data-width: 100%;
+  --table-data-height: 7rem;
+}
+
+/* ==========================================================================
+   🎨 SHARED STRUCTURAL FUNCTIONALITIES
+   ========================================================================== */
+.bucketname-text { font-size: var(--bucketname-text-size); } 
+.container-padding { padding: var(--container-padding); }
+.button-text { font-size: var(--button-text-size); }
+.layout-vertical-gap { gap: var(--vertical-gap); }
+
+.layout-rows-container {
+  width: var(--table-data-width);
+  height: var(--table-data-height);
+  transition: width 0.25s ease-out, height 0.15s ease-out;
+}
+.layout-breadcrums-container {
+  width: var(--breadcrums-container-width);
+  height: var(--breadcrums-container-height);
+  transition: width 0.25s ease-out, height 0.15s ease-out;
+}
+.layout-data-container {
+  width: var(--data-width);
+  height: var(--data-height);
+  transition: width 0.25s ease-out, height 0.15s ease-out;
+}
+.layout-table {
+  width: var(--table-width);
+  height: var(--table-height);
+  transition: width 0.25s ease-out, height 0.15s ease-out;
+}
+.layout-header {
+  width: 100%;
+  height: var(--header-height);
+  transition: height 0.15s ease-out;
+}
+.layout-table-structure {
+  width: var(--table-structure-width);
+  height: var(--table-structure-height);
+  transition: width 0.25s ease-out, height 0.15s ease-out;
+}
+.layout-button-container {
+  width: var(--button-container-width);
+  height: var(--button-container-height);
+  transition: width 0.25s ease-out, height 0.15s ease-out;
+}
+.layout-backdashboard { 
+  width: var(--back-dashboard-width);
+  height: var(--back-dashboard-height) !important;
+  transition: width 0.25s ease-out, height 0.15s ease-out;
+  background-color: var(--bg-color) !important; /* Fixed invalid bg-color syntax */
+}
+.layout-navbar {
+  height: var(--navbar-height);
+  background-color: var(--bg-color) !important;
+  transition: height 0.15s ease-out, background-color 0.15s ease-out;
+}
+.layout-gap { gap: var(--workspace-gap); }
+.sub-container-gap { gap: var(--sub-container-gap); }
+.layout-padding { padding: var(--inner-padding); }
+
+.app-container {
+  @apply w-screen h-screen flex flex-col overflow-hidden;
+}
+.s3-navbar-wrapper {
+  @apply w-full flex-shrink-0; 
+  height: var(--navbar-height);
+  transition: height 0.15s ease-out;
+}
+.s3-container {
+  display: flex !important;
+  flex-direction: row !important;
+  width: 100%;
+  flex: 1 1 0%;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+.s3-sidebar {
+  @apply flex-shrink-0;
+  width: var(--sidebar-width);
+  height: 98%;
+  background-color: var(--bg-color) !important; 
+  transition: width 0.15s ease-out, background-color 0.15s ease-out;
+}
+.sub-container {
+  display: flex !important;
+  flex-direction: column !important;  
+  flex: 1 !important;            
+  width: 100% !important;              
+  height: 98% !important;             
+  min-width: 0 !important;            
+  padding: var(--padding-y) var(--padding-x) !important;      
+  border-radius: 0.5rem;              
+  overflow: hidden;
+  transition: background-color 0.15s ease-out;
+}
+.data-container {
+  width: var(--data-container-width) !important;
+  height: var(--data-container-height) !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  overflow: auto !important;
+  display: flex !important; /* Fixed direction: flex bug */
+  flex-direction: column !important;
+  gap: var(--workspace-gap) !important;
+  padding: var(--padding-y) var(--padding-x) !important;
+}
+

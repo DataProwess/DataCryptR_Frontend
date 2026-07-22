@@ -1,0 +1,697 @@
+/* Notification-specific styles */
+.notification-dropdown {
+  background: linear-gradient(135deg, #f8f9ff 60%, #e9e6ff 100%);
+  box-shadow: 0 6px 24px 0 rgba(108, 99, 255, 0.15);
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+  border: 1px solid #ecebff;
+  width: 16rem; /* Equivalent to w-64 (256px) */
+  max-height: 20rem; /* Equivalent to max-h-80 (320px) */
+  overflow-y: auto;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.75rem; /* Base font size for notifications */
+}
+
+.notification-header {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(2px);
+  border-bottom: 1px solid #ecebff;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem; /* Header font size */
+  letter-spacing: 0.02em;
+  color: #6c63ff; /* Assuming text-purpleshade1 is #6c63ff */
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notification-header button {
+  font-size: 0.65rem; /* Mark all as read button */
+  color: #6c63ff;
+  text-decoration: none;
+}
+
+.notification-header button:hover {
+  text-decoration: underline;
+}
+
+.notification-item {
+  padding: 0.375rem 0.5rem;
+  margin: 0.25rem 0.375rem;
+  border-radius: 8px;
+  border-left: 2px solid #ecebff; /* Default for read notifications */
+  transition: all 0.2s ease;
+}
+
+.notification-item.unread {
+  border-left: 2px solid #6c63ff;
+  background: rgba(108, 99, 255, 0.1);
+  box-shadow: 0 1px 3px 0 rgba(108, 99, 255, 0.05);
+}
+
+.notification-item.unread:hover {
+  background: rgba(108, 99, 255, 0.2);
+}
+
+.notification-item.read {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.notification-title {
+  font-size: 0.75rem;
+  letter-spacing: 0.01em;
+  text-transform: capitalize;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.notification-message {
+  font-size: 0.65rem;
+  color: #4b5563; /* Assuming text-gray-600 */
+  text-transform: capitalize;
+  line-height: 1.2;
+}
+
+.notification-timestamp {
+  font-size: 0.6rem;
+  color: #9ca3af; /* Assuming text-gray-400 */
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.notification-timestamp .material-icons {
+  font-size: 0.6rem;
+  opacity: 0.6;
+}
+
+.notification-mark-read {
+  font-size: 0.6rem;
+  color: #6c63ff;
+  font-weight: 600;
+}
+
+.notification-mark-read:hover {
+  text-decoration: underline;
+}
+
+.notification-loading,
+.notification-empty {
+  font-size: 0.7rem;
+  text-align: center;
+  padding: 0.75rem;
+  color: #9ca3af; /* Assuming text-gray-400 for empty, text-gray-500 for loading */
+}
+
+/* Default styles for smaller viewports */
+.dynamic-font {
+  font-size: 18px; /* Default size for smaller viewports */
+}
+
+/* 110% */
+.logo-image {
+  width: 200px; /* Default width for the logo image */
+  height: 40px; /* Default height for the logo image */
+}
+
+.nav-text {
+  font-size: 11px; /* Default font size for nav-text */
+  line-height: 1.2; /* Adjust line height */
+}
+
+.profile-width {
+  width: 170px; /* Set profile width */
+}
+
+.svg-icon {
+  width: 10px; /* Default width for SVG icons */
+  height: 6px; /* Default height for SVG icons */
+}
+
+.profile-icon {
+  width: 20px; /* Default width for profile icon */
+  height: 20px; /* Default height for profile icon */
+}
+
+.dropdown-menu {
+  width: 180px; /* Default width for dropdown menu */
+}
+
+.dropdown-button {
+  font-size: 10px; /* Default font size for dropdown buttons */
+  padding: 6px; /* Default padding for dropdown buttons */
+}
+
+.dropdown-icons {
+  width: 11px; /* Width for dropdown icons */
+  height: 13px; /* Height for dropdown icons */
+}
+
+@media (min-width: 400px) and (max-width: 500px) {
+  .logo-image {
+    width: 120px; /* Adjusted width */
+    height: 30px; /* Adjusted height */
+  }
+
+  .notification-dropdown {
+    width: 14rem; /* Slightly smaller for narrow viewports */
+  }
+}
+
+@media (min-width: 300px) and (max-width: 400px) {
+  .logo-image {
+    width: 120px; /* Adjusted width */
+    height: 30px; /* Adjusted height */
+  }
+
+  .notification-dropdown {
+    width: 13rem; /* Even smaller for very narrow viewports */
+    max-height: 18rem;
+  }
+
+  .notification-header {
+    font-size: 0.8rem;
+  }
+
+  .notification-title {
+    font-size: 0.7rem;
+  }
+
+  .notification-message {
+    font-size: 0.6rem;
+  }
+
+  .notification-timestamp,
+  .notification-mark-read {
+    font-size: 0.55rem;
+  }
+}
+
+/* Media query for viewports between 500px and 600px */
+@media (min-width: 500px) and (max-width: 600px) {
+  .dynamic-font {
+    font-size: 14px; /* Size for viewports between 800px and 999px */
+  }
+
+  .dropdown-icons {
+    width: 10px;
+    height: 12px;
+  }
+
+  .nav-text {
+    font-size: 8px; /* Adjusted font size */
+    line-height: 1.2; /* Adjust line height */
+    margin: 0; /* Remove margin */
+    padding: 0; /* Remove padding */
+  }
+
+  .svg-icon {
+    width: 5px; /* Adjusted width for smaller viewports */
+    height: 3px; /* Adjusted height for smaller viewports */
+  }
+
+  .profile-icon {
+    width: 20px; /* Adjusted width */
+    height: 20px; /* Adjusted height */
+    border-radius: 50%; /* Round shape */
+    border: 1px solid black; /* Border for profile icon */
+    overflow: hidden; /* Hide overflow */
+  }
+
+  .logo-image {
+    width: 120px; /* Adjusted width */
+    height: 30px; /* Adjusted height */
+  }
+
+  .dropdown-menu {
+    width: 180px; /* Adjusted width */
+  }
+
+  .dropdown-button {
+    font-size: 10px; /* Adjusted font size */
+    padding: 7px; /* Adjusted padding */
+  }
+
+  .notification-dropdown {
+    width: 15rem;
+  }
+}
+
+@media (width: 637px) {
+  .dynamic-font {
+    font-size: 16px; /* Adjust the font size for this width */
+  }
+
+  .logo-image {
+    width: 180px; /* Adjusted width for the logo image */
+    height: 50px; /* Adjusted height for the logo image */
+  }
+
+  .nav-text {
+    font-size: 10px; /* Adjusted font size for nav-text */
+  }
+
+  .svg-icon {
+    width: 8px; /* Adjusted width for SVG icons */
+    height: 5px; /* Adjusted height for SVG icons */
+  }
+
+  .profile-icon {
+    width: 26px; /* Adjusted width for profile icon */
+    height: 26px; /* Adjusted height for profile icon */
+  }
+
+  .dropdown-menu {
+    width: 150px; /* Adjusted width for dropdown menu */
+  }
+
+  .dropdown-button {
+    font-size: 12px; /* Adjusted font size for dropdown buttons */
+    padding: 10px; /* Adjusted padding for dropdown buttons */
+  }
+
+  .dropdown-icons {
+    width: 14px;
+    height: 18px;
+  }
+
+  .notification-dropdown {
+    width: 16rem;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 700px) {
+  .dynamic-font {
+    font-size: 14px; /* Size for viewports between 800px and 999px */
+  }
+
+  .dropdown-icons {
+    width: 10px;
+    height: 12px;
+  }
+
+  .nav-text {
+    font-size: 10px; /* Adjusted font size */
+    line-height: 1.2; /* Adjust line height */
+    margin: 0; /* Remove margin */
+    padding: 0; /* Remove padding */
+  }
+
+  .svg-icon {
+    width: 5px; /* Adjusted width for smaller viewports */
+    height: 3px; /* Adjusted height for smaller viewports */
+  }
+
+  .profile-icon {
+    width: 20px; /* Adjusted width */
+    height: 20px; /* Adjusted height */
+    border-radius: 50%; /* Round shape */
+    border: 1px solid black; /* Border for profile icon */
+    overflow: hidden; /* Hide overflow */
+  }
+
+  .logo-image {
+    width: 120px; /* Adjusted width */
+    height: 30px; /* Adjusted height */
+  }
+
+  .dropdown-menu {
+    width: 180px; /* Adjusted width */
+  }
+
+  .dropdown-button {
+    font-size: 10px; /* Adjusted font size */
+    padding: 7px; /* Adjusted padding */
+  }
+
+  .notification-dropdown {
+    width: 15rem;
+  }
+}
+
+/* Media query for viewports between 700px and 799px */
+@media (min-width: 700px) and (max-width: 799px) {
+  .dynamic-font {
+    font-size: 12px; /* Size for viewports between 1000px and 1200px */
+  }
+
+  .dropdown-icons {
+    width: 10px;
+    height: 12px;
+  }
+
+  .profile-width {
+    width: 160px;
+  }
+
+  .nav-text {
+    font-size: 8px; /* Adjusted font size */
+    line-height: 1.2; /* Adjust line height */
+    margin: 0; /* Remove margin */
+    padding: 0; /* Remove padding */
+  }
+
+  .svg-icon {
+    width: 5px; /* Adjusted width for smaller viewports */
+    height: 3px; /* Adjusted height for smaller viewports */
+  }
+
+  .profile-icon {
+    width: 20px; /* Adjusted width */
+    height: 20px; /* Adjusted height */
+    border-radius: 50%; /* Round shape */
+    border: 1px solid black; /* Border for profile icon */
+    overflow: hidden; /* Hide overflow */
+  }
+
+  .logo-image {
+    width: 120px; /* Adjusted width */
+    height: 30px; /* Adjusted height */
+  }
+
+  .dropdown-menu {
+    width: 160px; /* Adjusted width */
+  }
+
+  .dropdown-button {
+    font-size: 10px; /* Adjusted font size */
+    padding: 7px; /* Adjusted padding */
+    margin-right: 0; /* Ensure no right margin */
+  }
+
+  .notification-dropdown {
+    width: 15.5rem;
+  }
+}
+
+/* Media query for 150% viewports between 800px and 999px */
+@media (min-width: 799px) and (max-width: 999px) {
+  .dynamic-font {
+    font-size: 14px; /* Size for viewports between 800px and 999px */
+  }
+
+  .dropdown-icons {
+    width: 10px;
+    height: 12px;
+  }
+
+  .nav-text {
+    font-size: 10px; /* Adjusted font size */
+    line-height: 1.2; /* Adjust line height */
+    margin: 0; /* Remove margin */
+    padding: 0; /* Remove padding */
+  }
+
+  .svg-icon {
+    width: 5px; /* Adjusted width for smaller viewports */
+    height: 3px; /* Adjusted height for smaller viewports */
+  }
+
+  .profile-icon {
+    width: 20px; /* Adjusted width */
+    height: 20px; /* Adjusted height */
+    border-radius: 50%; /* Round shape */
+    border: 1px solid black; /* Border for profile icon */
+    overflow: hidden; /* Hide overflow */
+  }
+
+  .logo-image {
+    width: 200px; /* Adjusted width */
+    height: 40px; /* Adjusted height */
+  }
+
+  .dropdown-menu {
+    width: 180px; /* Adjusted width */
+  }
+
+  .dropdown-button {
+    font-size: 10px; /* Adjusted font size */
+    padding: 7px; /* Adjusted padding */
+  }
+
+  .notification-dropdown {
+    width: 16rem;
+  }
+}
+
+/* Media query for 100% viewports between 1000px and 1200px */
+@media (min-width: 1000px) and (max-width: 1120px) {
+  .dynamic-font {
+    font-size: 18px; /* Size for viewports between 1000px and 1200px */
+  }
+
+  .nav-text {
+    font-size: 12px; /* Adjusted font size */
+  }
+
+  .profile-width {
+    width: 180px; /* Set profile width */
+    background: "#D4D4D4";
+  }
+
+  .profile-icon {
+    width: 20px; /* Adjusted width */
+    height: 20px; /* Adjusted height */
+  }
+
+  .logo-image {
+    width: 160px; /* Adjusted width */
+    height: 30px; /* Adjusted height */
+  }
+
+  .dropdown-menu {
+    width: 190px; /* Adjusted width */
+  }
+
+  .dropdown-button {
+    font-size: 12px; /* Adjusted font size */
+    padding: 7px; /* Adjusted padding */
+  }
+
+  .dropdown-icons {
+    width: 12px;
+    height: 15px;
+  }
+
+  .notification-dropdown {
+    width: 16.5rem;
+  }
+}
+
+/* Media query for 110% */
+@media (min-width: 1200px) and (max-width: 1300px) {
+  .nav-text {
+    font-size: 11px; /* Adjusted font size */
+  }
+
+  .logo-image {
+    width: 180px; /* Adjusted width */
+    height: 38px; /* Adjusted height */
+  }
+
+  .dropdown-menu {
+    width: 180px; /* Adjusted width */
+  }
+
+  .dropdown-button {
+    font-size: 12px; /* Adjusted font size */
+    padding: 7px; /* Adjusted padding */
+  }
+
+  .dropdown-icons {
+    width: 12px;
+    height: 15px;
+  }
+
+  .notification-dropdown {
+    width: 16.5rem;
+  }
+}
+
+@media (width: 1390px) and (height: 893px) {
+  .dynamic-font {
+    font-size: 20px; /* Size for viewports between 1200px and 1400px */
+  }
+
+  .nav-text {
+    font-size: 11px; /* Adjusted font size */
+  }
+
+  .logo-image {
+    width: 150px; /* Adjusted width */
+    height: 38px; /* Adjusted height */
+  }
+
+  .dropdown-menu {
+    width: 120px; /* Adjusted width */
+  }
+
+  .dropdown-button {
+    font-size: 12px; /* Adjusted font size */
+    padding: 7px; /* Adjusted padding */
+  }
+
+  .dropdown-icons {
+    width: 12px;
+    height: 15px;
+  }
+
+  .notification-dropdown {
+    width: 16rem;
+  }
+}
+
+/* Adjusted media query for a viewport size at 80% zoom */
+@media (min-width: 1536px) and (min-height: 864px) and (max-width: 1540px) and (max-height: 868px) {
+  .dynamic-font {
+    font-size: 22px; /* Adjusted font size for viewports at 80% zoom */
+  }
+
+  .nav-text {
+    font-size: 11px; /* Adjusted font size */
+  }
+
+  .logo-image {
+    width: 150px; /* Adjusted width */
+    height: 38px; /* Adjusted height */
+  }
+
+  .dropdown-menu {
+    width: 120px; /* Adjusted width */
+  }
+
+  .dropdown-button {
+    font-size: 12px; /* Adjusted font size */
+    padding: 7px; /* Adjusted padding */
+  }
+
+  .dropdown-icons {
+    width: 12px;
+    height: 15px;
+  }
+
+  .notification-dropdown {
+    width: 16rem;
+  }
+}
+
+/* Media query for 90% viewports larger than 1400px */
+@media (min-width: 1400px) and (max-width: 1700px) {
+  .dynamic-font {
+    font-size: 6px; /* Size for viewports between 1400px and 1700px */
+  }
+
+  .nav-text {
+    font-size: 14px; /* Adjusted font size */
+  }
+
+  .profile-width {
+    width: 200px; /* Set profile width */
+    margin: 0;
+  }
+
+  .profile-icon {
+    width: 25px; /* Adjusted width */
+    height: 25px; /* Adjusted height */
+  }
+
+  .logo-image {
+    width: 190px; /* Adjusted width */
+    height: 38px; /* Adjusted height */
+  }
+
+  .dropdown-menu {
+    width: 220px; /* Adjusted width */
+  }
+
+  .dropdown-icon {
+    width: 12px;
+    height: 16px;
+  }
+
+  .dropdown-button {
+    font-size: 12px; /* Adjusted font size */
+    padding: 9px; /* Adjusted padding */
+  }
+
+  .notification-dropdown {
+    width: 17rem;
+  }
+
+  .notification-header {
+    font-size: 0.9rem;
+  }
+
+  .notification-title {
+    font-size: 0.8rem;
+  }
+
+  .notification-message {
+    font-size: 0.7rem;
+  }
+
+  .notification-timestamp,
+  .notification-mark-read {
+    font-size: 0.65rem;
+  }
+}
+
+/* Media query for 80% viewports larger than 1700px */
+@media (min-width: 1700px) {
+  .dynamic-font {
+    font-size: 28px; /* Size for viewports larger than 1700px */
+  }
+
+  .nav-text {
+    font-size: 16px; /* Adjusted font size */
+    line-height: 1; /* Adjust line height */
+    margin: 0; /* Remove margin */
+    padding: 0; /* Remove padding */
+  }
+
+  .profile-width {
+    width: 210px; /* Set profile width */
+    background: "#D4D4D4";
+  }
+
+  .profile-icon {
+    width: 30px; /* Adjusted width */
+    height: 30px; /* Adjusted height */
+  }
+
+  .logo-image {
+    width: 170px; /* Adjusted width */
+    height: 40px; /* Adjusted height */
+  }
+
+  .dropdown-menu {
+    width: 240px; /* Adjusted width */
+  }
+
+  .dropdown-button {
+    font-size: 16px; /* Adjusted font size */
+    padding: 10px; /* Adjusted padding */
+  }
+
+  .notification-dropdown {
+    width: 18rem;
+  }
+
+  .notification-header {
+    font-size: 0.9rem;
+  }
+
+  .notification-title {
+    font-size: 0.8rem;
+  }
+
+  .notification-message {
+    font-size: 0.7rem;
+  }
+
+  .notification-timestamp,
+  .notification-mark-read {
+    font-size: 0.65rem;
+  }
+}

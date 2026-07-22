@@ -1,0 +1,69 @@
+/* .ruler {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #000;
+  }
+  
+  .marking {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 30px; 
+  }
+  
+  .millimeter-line {
+    width: 1px;
+    height: 10px;
+    background-color: #000;
+    margin-top: 5px; 
+  }
+  
+  .cm-number {
+    margin-top: 5px; 
+    font-size: 12px;
+  }
+   */
+
+   .ruler {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    
+    border-top: 3px solid #000;
+    
+  }
+  
+  .marking {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .line {
+    width: 1px;
+    height: 15px;
+    background-color: #000;
+    margin-bottom: 5px; 
+  }
+  
+  .cm-number {
+    font-size: 12px;
+    margin-top: 5px;
+  }
+
+  /* Add this to your ruler.css file */
+
+.line.selected
+ {
+  /* color: #e9e1e1;  */
+  background-color: #007bff; /* Background color for selected range */
+  width: 3px;
+
+  /* height: 50px; */
+  
+}
+
+  

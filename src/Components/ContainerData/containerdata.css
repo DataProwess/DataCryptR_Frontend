@@ -1,0 +1,16 @@
+/* 100% */
+@media (min-height: 650px) and (max-height: 750px) and (min-width: 1200px) and (max-width: 1920px) {
+    .container-data {
+        --vertical-gap:1rem; 
+        --bg-color:blue;
+
+    }
+}
+
+.container-data .app-container-data {
+ @apply w-screen h-screen flex flex-col overflow-hidden;
+ /* background-color: var(--bg-color) !important; */
+}
+.container-data .vertical-gap{
+    gap: var(--vertical-gap);
+}

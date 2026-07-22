@@ -1,0 +1,168 @@
+/* styles.css */
+.logout-button-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.logout-button {
+  transition: transform 0.5s, box-shadow 0.5s;
+}
+
+.logout-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background:#76E8CD;
+  transform: scale(0.7);
+  z-index: -1;
+}
+
+.logout-button:hover::before {
+  transform: scale(1.1);
+  box-shadow: 0 0 25px #76E8CD;
+}
+
+.logout-button:hover {
+  color: #76E8CD;
+  box-shadow: 0 0 10px #76E8CD;
+  text-shadow: 0 0 10px #76E8CD;
+}
+
+/* src/Styles/styles.css */
+/* src/Styles/styles.css */
+.animated-login {
+  position: relative;
+  width: 300px;
+  height: 400px; /* Adjust height as needed */
+  perspective: 1000px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-container {
+  position: absolute;
+  top: 10%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-button-container {
+  position: absolute;
+  bottom: 10%;
+}
+
+.hand-button {
+  position: absolute;
+  bottom: 20%;
+  right: -50px; /* Start off-screen to the right */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 2s, right 2s; /* Smooth transition for appearing and moving */
+}
+
+.hand-button.move-right {
+  right: 10%; /* Move to the button's position */
+  opacity: 1; /* Show the hand-button */
+}
+
+.hand {
+  font-size: 30px;
+  position: relative;
+}
+
+.finger {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  background-color: transparent;
+  animation: bounce 1s infinite;
+}
+
+.hand-button.click .finger {
+  animation: none; /* Stop bouncing animation when click starts */
+  animation: clickFinger 0.5s ease-in-out forwards;
+}
+
+@keyframes clickFinger {
+  0%, 100% {
+    transform: translate(-50%, 0);
+  }
+  50% {
+    transform: translate(-50%, -10px);
+  }
+}
+
+.login-button {
+  font-size: 20px;
+  background: #0078d4;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-top: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.5s, transform 0.5s;
+}
+
+.login-button.clicked {
+  background-color: #005a9e; /* Darker shade to indicate button click */
+  transform: scale(0.95); /* Slightly shrink to simulate click */
+}
+
+.page {
+  width: 80%; /* Adjust width as needed */
+  height: 30%; /* Adjust height as needed */
+  background: #ffffff;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  opacity: 0;
+  transform: rotateY(90deg); /* Rotate the pages */
+  transition: opacity 1s, transform 1s;
+}
+
+.page.active {
+  opacity: 1;
+  transform: rotateY(0deg); /* Show the active page */
+}
+
+.page:nth-child(1) {
+  top: 0;
+}
+
+.page:nth-child(2) {
+  top: 0;
+}
+
+.page:nth-child(3) {
+  top: 0;
+}
+
+.page:nth-child(4) {
+  top: 0;
+}
+
+.page:not(.active) {
+  transform: rotateY(90deg); /* Hide the inactive pages */
+}
+

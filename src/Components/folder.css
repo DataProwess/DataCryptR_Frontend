@@ -1,0 +1,36 @@
+/* Add these styles to your CSS file */
+
+/* .folder {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  } */
+  
+  .folder-icon {
+    margin-right: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    color: blue !important;
+  }
+  
+  .folder-name {
+    cursor: pointer;
+  }
+  
+  /* ul {
+    list-style-type: none;
+    padding-left: 0;
+  } */
+  
+  /* Optional: Add hover styles for better interactivity */
+  
+  .folder:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .folder-name:hover {
+    text-decoration: underline;
+  }
+
+  
+  
