@@ -2077,7 +2077,7 @@ font-size: var(--route-text-size);
   width: var(--back-dashboard-width);
   height: var(--back-dashboard-height) !important;
   transition: width 0.25s ease-out, height 0.15s ease-out;
-  bg-color: var(--bg-color) !important; /* Forces priority over tailwind defaults */
+  /* bg-color: var(--bg-color) !important;  */
 }
 
 /* .layout-navbar {

@@ -146,7 +146,7 @@ const IsMaskedSwitch = React.memo(({ isMasked, onToggle }) => {
   );
 });
 
-const NewFieldPopup = ({
+const NewGlobalField = ({
   onCancel,
   onSave,
   newFieldName = '',
@@ -186,7 +186,7 @@ const NewFieldPopup = ({
               setNewFieldName(e.target.value);
               setNameError(''); // Clear the error message when typing
             }}
-            placeholder={nameError || 'Storage Account Name'} // Show error message as placeholder
+            placeholder={nameError || 'Feild Name'} // Show error message as placeholder
             className={`px-2 w-80 h-9 py-1 pr-10 text-xs rounded-lg bg-white border shadow-md focus:bg-white focus:outline-none relative z-10 placeholder:text-xs 
               ${nameError ? 'text-red-500 border-red-500 placeholder-red-500' : 'text-black border-gray-300'}`}
             required
@@ -221,5 +221,5 @@ const NewFieldPopup = ({
   );
 };
 
-export default NewFieldPopup;
+export default NewGlobalField;
 

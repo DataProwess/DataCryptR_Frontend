@@ -1,0 +1,105 @@
+/* Option A: Define globally so any modal can access them */
+:root {
+  --user-modal-width: 50rem;
+  --user-modal-height: 40rem;
+}
+
+
+
+/* Apply directly without relying on .admin-data parent nesting */
+.user-modal {
+  width: var(--user-modal-width) !important;
+  height: var(--user-modal-height) !important;
+  max-width: 95vw !important;  /* Fallback so it doesn't overflow small screens */
+  max-height: 95vh !important;
+}
+.admin-data {
+    --userGroup-modal-width:50rem;
+    --userGroup-modal-height:40rem;
+    --input-container-width:50rem;
+    --input-container-height:3rem;
+    --newfeild-container-width:100%;
+    --newfeild-container-height:2.5rem;
+    --input-feild-width:14rem;
+    --input-feild-height:2rem;
+    --permission-lable-width:50rem;
+    --permission-label-height:2.5rem;
+  --permission-container-width:48rem;
+  --permission-container-height:23rem;
+  --permission-data-width:45rem;
+  --permission-data-height:20rem;
+  --authentication-container-width:45rem;
+  --authentication-container-height:7rem;
+  --save-button-wrapper-width:45rem;
+  --save-button-wrapper-height:2.5rem;
+  --save-button-width:6.5rem;
+  --save-button-height:2.25rem;
+
+}
+
+/* .admin-data .user-modal{
+    width: var(--user-modal-width);
+    height: var(--user-modal-height);
+} */
+.overlay-blur {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  /* background-color: rgba(0, 0, 0, 0.4) !important; */
+  /* backdrop-filter: blur(2px); */
+  z-index: 9999 !important; /* Higher than sidebar z-index */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.addedit-user-dimensions {
+  position: relative !important;
+  z-index: 10000 !important;
+  left: auto !important;
+  top: auto !important;
+  transform: none !important;
+}
+.admin-data .permission-container{
+    width: var(--permission-container-width);
+    height: var(--permission-container-height);
+}
+
+.admin-data .userGroup-modal{
+    width: var(--userGroup-modal-width);
+    height: var(--userGroup-modal-height);
+}
+.admin-data .input-container{
+    width: var(--input-container-width);
+    height: var(--input-container-height);
+}
+.admin-data .newfeild-container{
+ width: var(--newfeild-container-width);
+ height: var(--newfeild-container-height);
+}
+.admin-data .input-feild{
+width: var(--input-feild-width);
+height: var(--input-feild-height);
+}
+
+.admin-data .permission-lable{
+    width: var( --permission-lable-width);
+    height: var(--permission-label-height);
+}
+.admin-data .authentication-container{
+ width: var(--authentication-container-width);
+ height: var(--authentication-container-height);
+}
+.admin-data .save-button-wrapper{
+width: var(--save-button-wrapper-width);
+height: var(--save-button-wrapper-height);
+}
+.admin-data .save-button{
+ width: var(--save-button-width);
+ height: var(--save-button-height);
+}
+.admin-data .permission-data{
+    width: var(--permission-data-width);
+    height: var(--permission-data-height);
+}

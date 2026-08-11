@@ -82,7 +82,7 @@ const S3BucketExplore = () => {
   const [selectedFolder, setSelectedFolder] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPageSize, setSelectedPageSize] = useState(100);
-  const [loadingS3BucketFiles, setS3BucketFiles] = useState(false);
+  const [loadingS3BucketFiles, setLoadingS3BucketFiles] = useState(false);
   const [sharedFolders, setSharedFolders] = useState([]);
   const [sharedFiles, setSharedFiles] = useState([]);
   //  const [currentPage, setCurrentPage] = useState(1);
@@ -191,7 +191,7 @@ const S3BucketExplore = () => {
 
     try {
       setError("");
-      setS3BucketFiles(true);
+      setLoadingS3BucketFiles(true);
 
       // const payload = {
       //   s3_bucket_id: bucketId,
@@ -252,7 +252,7 @@ const S3BucketExplore = () => {
       setError(err?.message);
       throw err; // 🎯 CRITICAL: Must throw so the onClick catch block knows it failed!
     } finally {
-      setS3BucketFiles(false);
+      setLoadingS3BucketFiles(false);
     }
     //   return response;
 
@@ -269,7 +269,7 @@ const S3BucketExplore = () => {
 
     //   throw new Error(errorMessage);
     // } finally {
-    //   setS3BucketFiles(false);
+    //   setLoadingS3BucketFiles(false);
     // }
   };
 
@@ -363,7 +363,7 @@ const S3BucketExplore = () => {
     try {
       setFileError("");
       setIsColumnDataFetched(false);
-      setS3BucketFiles(true); // Turn loader ON
+      setLoadingS3BucketFiles(true); // Turn loader ON
 
       const payload = {
         s3_bucket_id: bucketId,
@@ -397,7 +397,7 @@ const S3BucketExplore = () => {
       document.body.style.overflow = "hidden";
 
       // 🛠️ THE CRITICAL FIX: Turn loading OFF right here *before* showing the modal!
-      setS3BucketFiles(false);
+      setLoadingS3BucketFiles(false);
 
       // Now trigger the display states safely
       setIsColumnDataFetched(true);
@@ -412,7 +412,7 @@ const S3BucketExplore = () => {
       );
       setIsPopupOpen(true);
       setIsColumnDataFetched(false);
-      setS3BucketFiles(false); // Turn loader OFF on error
+      setLoadingS3BucketFiles(false); // Turn loader OFF on error
       throw err;
     }
     // ⚠️ Removed the 'finally' block so it doesn't execute out of order during state batching
@@ -431,7 +431,7 @@ const S3BucketExplore = () => {
   //   }
 
   //   try {
-  //     setS3BucketFiles(true);
+  //     setLoadingS3BucketFiles(true);
   //     setSaveButtonClicked(false);
 
   //     // 2. Build the field list payload array dynamically
@@ -490,7 +490,7 @@ const S3BucketExplore = () => {
   //     setFileError(error?.message || "Service temporarily unavailable.");
   //     setIsPopupOpen(true);
   //   } finally {
-  //     setS3BucketFiles(false);
+  //     setLoadingS3BucketFiles(false);
   //   }
   // };
 
@@ -512,7 +512,7 @@ const S3BucketExplore = () => {
     }
 
     try {
-      setS3BucketFiles(true);
+      setLoadingS3BucketFiles(true);
       setSaveButtonClicked(false);
 
       // 2. Map existing valid records to match backend expectations exactly
@@ -629,7 +629,7 @@ const S3BucketExplore = () => {
       setFileError(error?.message || "Service temporarily unavailable.");
       setIsPopupOpen(true);
     } finally {
-      setS3BucketFiles(false);
+      setLoadingS3BucketFiles(false);
     }
   };
 
@@ -772,7 +772,7 @@ const S3BucketExplore = () => {
             className={` s3-navbar-wrapper  flex ${isDisabled || isBlurred || isInteractionDisabled ? "  pointer-events-none" : ""}`}>
             <Navbar />
           </div>
-          <div className="s3-container layout-gap">
+          <div className="s3-container layout-gap ">
             <div
               className={`s3-sidebar
                 ${isDisabled || isBlurred || isInteractionDisabled ? "pointer-events-none" : ""}`}>
@@ -829,7 +829,7 @@ const S3BucketExplore = () => {
                       {/* Right Side: Functional Control Button Deck (Self-adjusting gaps) */}
                       <div className="layout-button-wrapper  flex gap-2 items-center justify-end  px-2 py-1 flex-shrink-0">
                         <button
-                          className={`layout-button items-center justify-center px-4 font-medium button-text rounded-md transition-all 
+                          className={`layout-button items-center justify-center font-medium button-text rounded-md transition-all 
                                 ${
                                   !selectedFiles ||
                                   selectedFiles.length === 0 ||
@@ -880,7 +880,7 @@ const S3BucketExplore = () => {
                         </button>
 
                         <button
-                          className={`layout-button px-4 items-center justify-center font-medium button-text rounded-md transition-all 
+                          className={`layout-button items-center justify-center font-medium button-text rounded-md transition-all 
                             ${
                               selectedFiles.length === 0 || isModalOpen || isColumnDataModalOpen
                                 ? "text-purpleshade1 cursor-not-allowed rounded-md shadow-md shadow-slate-500/30 font-medium text-[13px] bg-white"
@@ -897,7 +897,7 @@ const S3BucketExplore = () => {
                         </button>
 
                         <button
-                          className={`layout-button px-4 items-center justify-center font-medium button-text rounded-md transition-all ${
+                          className={`layout-button items-center justify-center font-medium button-text rounded-md transition-all ${
                             selectedFiles.length === 0 ||
                             isModalOpen ||
                             isMetaDataModalOpen
@@ -926,10 +926,14 @@ const S3BucketExplore = () => {
 
                     <div className={`layout-table-structure rounded-lg shadow-md shadow-slate-500/50 overflow-hidden bg-white flex-1 flex flex-col 
                        ${isInteractionDisabled ? "blur-effect pointer-events-none" : ""}`}>
-                                          <div className="layout-breadcrums-container bg-purpleshade1 flex items-center justify-between px-4 py-2 text-white text-[13px] font-medium">
+                        <div className="layout-breadcrums-container bg-purpleshade1 flex items-center justify-between px-4 py-2 text-white text-[13px] font-medium">
                         <div className=" flex items-center gap-2 text-xs text-white ">
                           <button
-                            onClick={() => setCurrentPath([])}
+                            onClick={() => {
+                              setCurrentPath([]);
+                              setSelectedFiles([]);
+
+                            }}
                             className="font-medium"
                           >
                             {bucketName || "Root"}
@@ -939,7 +943,10 @@ const S3BucketExplore = () => {
                               <span> &gt;</span>
                               <button
                                 onClick={() =>
-                                  setCurrentPath(currentPath.slice(0, idx + 1))
+                                  {
+                                    setCurrentPath(currentPath.slice(0, idx + 1));
+                                    setSelectedFiles([]);
+                                  }
                                 }
                                 className="hover:text-white font-medium"
                               >

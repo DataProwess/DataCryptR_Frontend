@@ -2,25 +2,28 @@ import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import FullScreenPreview from "../FullScreenPreview";
 import { useAuth } from "../AuthContext";
-import TabularPreview from "./TabularPreview";
+import GcpTabularPreview from "./GcpTabularPreview";
 import { apiRequest,makeAuthenticatedRequest } from "../csrfUtils";
 import { API_URL } from "../ApiConfig";
 
 
-const S3PreviewDataModel = ({
-  selectedFiles,
+const GcpPreviewDataModal = ({
+  gcpSelectedFiles,
   handleDownload,
   closePreviewModal,
   handleDynamicPreview,
-  previewData,
-  isModalOpen,
-  s3AccountId,
-  bucketId
+  gcpPreviewData,
+  isGcpModalOpen,
+  setIsGcpModalOpen,
+  gcpAccountId,
+  gcpbucketId,
+  isGcpMetaDataModalOpen,
+  isGcpColumnDataModalOpen
 }) => {
   console.log(
     "Current Preview Data Container State:",
-    previewData,
-    selectedFiles,
+    gcpPreviewData,
+    gcpSelectedFiles,
   );
 
  const { token, csrfToken, permissions } = useAuth();
@@ -61,7 +64,7 @@ const [downlloading,setDownloading] = useState(true)
     containerData ? "container" : "fileShare",
   );
 
-  const [dataLoading, setDataLoading] = useState(!previewData);
+  const [dataLoading, setDataLoading] = useState(!gcpPreviewData);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -81,73 +84,167 @@ const [downlloading,setDownloading] = useState(true)
     };
   }, []); // Keep empty safely now because it doesn't read state; if it reads state later, add them here!
 
-  const getFormattedTableData = (data) => {
-    if (!data) return [];
-    if (Array.isArray(data)) return data;
-    if (Array.isArray(data?.rows)) return data.rows;
+  // Updated table data formatter that correctly un-nests manifest/inventory JSON payloads
+// const getFormattedTableData = (data) => {
+//   if (!data) return [];
+//   if (Array.isArray(data)) return data;
 
-    let parsedPayload = null;
+//   let parsedPayload = null;
 
-    if (typeof data === "string") {
+//   // Step 1: Unwrap top-level string if data is a raw JSON string
+//   if (typeof data === "string") {
+//     try {
+//       parsedPayload = JSON.parse(data);
+//     } catch (e) {
+//       // Fallback CSV string parser
+//       const lines = data.split("\n").filter((line) => line.trim() !== "");
+//       if (lines.length === 0) return [];
+//       const headers = lines[0].split(",");
+//       return lines.slice(1).map((line) => {
+//         const values = line.split(",");
+//         const obj = {};
+//         headers.forEach((header, index) => {
+//           obj[header.trim()] = values[index]?.trim() || "";
+//         });
+//         return obj;
+//       });
+//     }
+//   } else if (typeof data === "object") {
+//     parsedPayload = data;
+//   }
+
+//   // Step 2: Extract nested stringified JSON inside `parsedPayload.data`
+//   let innerData = parsedPayload;
+//   if (parsedPayload && parsedPayload.data) {
+//     if (typeof parsedPayload.data === "string") {
+//       try {
+//         innerData = JSON.parse(parsedPayload.data);
+//       } catch (e) {
+//         innerData = parsedPayload.data;
+//       }
+//     } else {
+//       innerData = parsedPayload.data;
+//     }
+//   }
+
+//   if (!innerData) return [];
+
+//   // Step 3: Handle direct arrays (e.g. standard tabular API outputs)
+//   if (Array.isArray(innerData)) return innerData;
+//   if (Array.isArray(innerData.rows)) return innerData.rows;
+
+//   // Step 4: Handle GeoJSON Features
+//   if (innerData.features && Array.isArray(innerData.features)) {
+//     return innerData.features.map((feature) => {
+//       let rawCoords = feature.geometry?.coordinates
+//         ? JSON.stringify(feature.geometry.coordinates)
+//         : "";
+//       let cleanedCoordinates = rawCoords
+//         .replace(/[\[\]]/g, "")
+//         .split(/,(?=-?\d+\.)/)
+//         .map((coord) => coord.trim())
+//         .filter(Boolean)
+//         .join(" | ");
+
+//       return {
+//         ID: feature.id || "N/A",
+//         Type: feature.type || "Feature",
+//         Name: feature.properties?.name || "N/A",
+//         "Geometry Type": feature.geometry?.type || "N/A",
+//         Coordinates: cleanedCoordinates || "N/A",
+//       };
+//     });
+//   }
+
+//   // Step 5: Handle Blob Inventory / Manifest JSON structures (e.g. files array)
+//   if (Array.isArray(innerData.files)) {
+//     return innerData.files.map((fileObj, idx) => ({
+//       Rule_Name: innerData.ruleName || "N/A",
+//       Destination_Container: innerData.destinationContainer || "N/A",
+//       File_Blob: fileObj.blob || "N/A",
+//       File_Size_Bytes: fileObj.size || 0,
+//       Status: innerData.status || "N/A",
+//       Inventory_Start: innerData.inventoryStartTime || "N/A",
+//       Inventory_Completion: innerData.inventoryCompletionTime || "N/A",
+//       Schema_Fields: innerData.ruleDefinition?.schemaFields
+//         ? innerData.ruleDefinition.schemaFields.join(", ")
+//         : "N/A",
+//     }));
+//   }
+
+//   // Step 6: Fallback for generic metadata Key-Value Object mapping
+//   if (typeof innerData === "object") {
+//     const flattenedObj = {};
+//     Object.keys(innerData).forEach((key) => {
+//       const val = innerData[key];
+//       if (typeof val === "object" && val !== null) {
+//         flattenedObj[key] = JSON.stringify(val);
+//       } else {
+//         flattenedObj[key] = String(val);
+//       }
+//     });
+//     return [flattenedObj];
+//   }
+
+//   return [];
+// };
+
+const getFormattedTableData = (data) => {
+  if (!data) return [];
+  if (Array.isArray(data)) return data;
+
+  let parsedPayload = data;
+
+  // Step 1: If top-level data is a JSON string, parse it
+  if (typeof data === "string") {
+    try {
+      parsedPayload = JSON.parse(data);
+    } catch (e) {
+      // Return raw text string formatted as fallback
+      return [{ content: data }];
+    }
+  }
+
+  // Step 2: Unwrap nested 'data' string/object if present (ignoring file_key)
+  let innerData = parsedPayload;
+  if (parsedPayload && parsedPayload.data) {
+    if (typeof parsedPayload.data === "string") {
       try {
-        parsedPayload = JSON.parse(data);
+        innerData = JSON.parse(parsedPayload.data);
       } catch (e) {
-        const lines = data.split("\n").filter((line) => line.trim() !== "");
-        if (lines.length === 0) return [];
-        const headers = lines[0].split(",");
-        return lines.slice(1).map((line) => {
-          const values = line.split(",");
-          const obj = {};
-          headers.forEach((header, index) => {
-            obj[header.trim()] = values[index]?.trim() || "";
-          });
-          return obj;
-        });
+        innerData = parsedPayload.data;
       }
-    } else if (typeof data === "object") {
-      parsedPayload = data;
+    } else {
+      innerData = parsedPayload.data;
     }
+  }
 
-    if (parsedPayload) {
-      let geoJson = null;
+  if (!innerData) return [];
 
-      if (parsedPayload.data && typeof parsedPayload.data === "string") {
-        try {
-          geoJson = JSON.parse(parsedPayload.data);
-        } catch (e) {}
-      } else if (parsedPayload.data && typeof parsedPayload.data === "object") {
-        geoJson = parsedPayload.data;
-      } else if (parsedPayload.features) {
-        geoJson = parsedPayload;
+  // Step 3: Handle standard arrays
+  if (Array.isArray(innerData)) return innerData;
+  if (Array.isArray(innerData.rows)) return innerData.rows;
+
+  // Step 4: Map all key-value pairs from the inner 'data' object directly
+  if (typeof innerData === "object" && innerData !== null) {
+    const flattenedObj = {};
+
+    Object.keys(innerData).forEach((key) => {
+      const val = innerData[key];
+
+      if (typeof val === "object" && val !== null) {
+        // Stringify nested objects/arrays (e.g., ruleDefinition, summary, files) for clean display
+        flattenedObj[key] = JSON.stringify(val);
+      } else {
+        flattenedObj[key] = String(val ?? "N/A");
       }
+    });
 
-      if (geoJson && Array.isArray(geoJson.features)) {
-        return geoJson.features.map((feature) => {
-          let rawCoords = feature.geometry?.coordinates
-            ? JSON.stringify(feature.geometry.coordinates)
-            : "";
-          let cleanedCoordinates = rawCoords
-            .replace(/[\[\]]/g, "")
-            .split(/,(?=-?\d+\.)/)
-            .map((coord) => coord.trim())
-            .filter(Boolean)
-            .join(" | ");
+    return [flattenedObj];
+  }
 
-          return {
-            ID: feature.id || "N/A",
-            Type: feature.type || "Feature",
-            Name: feature.properties?.name || "N/A",
-            "Geometry Type": feature.geometry?.type || "N/A",
-            Coordinates: cleanedCoordinates || "N/A",
-          };
-        });
-      }
-
-      return Array.isArray(parsedPayload) ? parsedPayload : [parsedPayload];
-    }
-
-    return [];
-  };
+  return [];
+};
 
   const handleButtonClick = () => {
     setSelectedFormat(selectedFormat === "tabular" ? "plain_text" : "tabular");
@@ -273,7 +370,7 @@ const [downlloading,setDownloading] = useState(true)
       setMatchedIndexes([]);
       setCurrentMatchIndex(-1);
     }
-  }, [searchInputText, previewData, currentTablePage, rowsPerPage]);
+  }, [searchInputText, gcpPreviewData, currentTablePage, rowsPerPage]);
 
   const handleSearchInputChange = (event) => {
     setSearchInputText(event.target.value);
@@ -286,7 +383,7 @@ const [downlloading,setDownloading] = useState(true)
     }
   };
 
-  const tableData = getFormattedTableData(previewData);
+  const tableData = getFormattedTableData(gcpPreviewData);
   const tableHeaders =
     tableData.length > 0
       ? Object.keys(tableData[0])
@@ -324,79 +421,9 @@ const [downlloading,setDownloading] = useState(true)
 
 
 
-// const handleDownloadFile = async () => {
-//   // Guard Clause: Ensure a valid file index exists
-//   if (!selectedFiles || !selectedFiles[0]) {
-//     alert("⚠️ No files selected for download compilation.");
-//     return;
-//   }
-
-//   try {
-//     setDownloading(true);
-
-//     const fileKey = selectedFiles[0];
-    
-//     // Construct strict explicit integer structures for Django models
-//     const payload = {
-//       s3_account_id: parseInt(s3AccountId, 10),
-//       s3_bucket_id: parseInt(bucketId, 10),
-//       file_key: fileKey,
-//       is_masked: Boolean(maskedData)
-//     };
-
-//     console.log("[S3 Download Pipeline] Dispatching task request payload...", payload);
-
-//     /* * 🚀 `apiRequest` naturally handles auth headers, checks CSRF validity,
-//      * stringifies data, and returns the raw parsed JSON object automatically.
-//      */
-//    const responseData = await apiRequest(
-//       `${API_URL}/api/s3/files/download/`,
-//       "POST",
-//       payload,
-//       {
-//         headers: {
-//           "Authorization": `Bearer ${token}`,
-//           "X-CSRFToken": csrfToken
-//         }
-//       }
-//     );
-
-//     // Guard Clause: Validate that the backend returned a successful message
-//     if (responseData && responseData.message) {
-//       alert(`✅ ${responseData.message}! You can monitor progress inside your Tasks profile tab.`);
-//     } else if (responseData && responseData.error) {
-//       throw new Error(responseData.error);
-//     } else {
-//       throw new Error("No validation acknowledgment received from cloud task engine.");
-//     }
-
-//   } catch (error) {
-//     console.error("[S3 Download Pipeline Error]:", error);
-    
-//     // Graceful production alert system parsing
-//     if (error.message.includes("504") || error.message.toLowerCase().includes("timeout")) {
-//       alert(
-//         "⚠️ Gateway Timeout (504):\nThe server took too long to queue this task. " +
-//         "Please check your Celery broker terminal logs to see if workers are hanging."
-//       );
-//     } else {
-//       alert(`Failed to compile cloud download streams: ${error.message}`);
-//     }
-//   } finally {
-//     setDownloading(false);
-//   }
-// };
-
-// Helper to safely extract CSRF token directly from cookies if state is empty
-const getCookie = (name) => {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
-  return null;
-};
-
 const handleDownloadFile = async () => {
-  if (!selectedFiles || !selectedFiles[0]) {
+  // Guard Clause: Ensure a valid file index exists
+  if (!gcpSelectedFiles || !gcpSelectedFiles[0]) {
     alert("⚠️ No files selected for download compilation.");
     return;
   }
@@ -404,34 +431,34 @@ const handleDownloadFile = async () => {
   try {
     setDownloading(true);
 
-    const fileKey = selectedFiles[0];
-
+    const fileKey = gcpSelectedFiles[0];
+    
+    // Construct strict explicit integer structures for Django models
     const payload = {
-      s3_account_id: parseInt(s3AccountId, 10),
-      s3_bucket_id: parseInt(bucketId, 10),
+      gcp_account_id: parseInt(gcpAccountId, 10),
+      gcp_bucket_id: parseInt(gcpbucketId, 10),
       file_key: fileKey,
       is_masked: Boolean(maskedData)
     };
 
     console.log("[S3 Download Pipeline] Dispatching task request payload...", payload);
 
-    // Get active CSRF token (fallback to reading cookie directly)
-    const activeCsrfToken = csrfToken || getCookie("csrftoken");
-
-    const responseData = await apiRequest(
+    /* * 🚀 `apiRequest` naturally handles auth headers, checks CSRF validity,
+     * stringifies data, and returns the raw parsed JSON object automatically.
+     */
+   const responseData = await apiRequest(
       `${API_URL}/api/s3/files/download/`,
       "POST",
       payload,
       {
-        credentials: "include", // 👈 CRITICAL: Sends session cookies required by @csrf_protect_api
         headers: {
-          "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`,
-          "X-CSRFToken": activeCsrfToken || "" // 👈 Ensured token value
+          "X-CSRFToken": csrfToken
         }
       }
     );
 
+    // Guard Clause: Validate that the backend returned a successful message
     if (responseData && responseData.message) {
       alert(`✅ ${responseData.message}! You can monitor progress inside your Tasks profile tab.`);
     } else if (responseData && responseData.error) {
@@ -442,7 +469,16 @@ const handleDownloadFile = async () => {
 
   } catch (error) {
     console.error("[S3 Download Pipeline Error]:", error);
-    alert(`Failed to compile cloud download streams: ${error.message}`);
+    
+    // Graceful production alert system parsing
+    if (error.message.includes("504") || error.message.toLowerCase().includes("timeout")) {
+      alert(
+        "⚠️ Gateway Timeout (504):\nThe server took too long to queue this task. " +
+        "Please check your Celery broker terminal logs to see if workers are hanging."
+      );
+    } else {
+      alert(`Failed to compile cloud download streams: ${error.message}`);
+    }
   } finally {
     setDownloading(false);
   }
@@ -495,10 +531,10 @@ const handleDownloadFile = async () => {
       {selectedFormat === "tabular" ? (
         tableData.length > 0 ? (
           <div className="w-full h-full flex flex-col">
-            <TabularPreview
+            <GcpTabularPreview
               isLoading={dataLoading}
               setIsLoading={setDataLoading}
-              previewData={paginatedRows}
+              gcpPreviewData={paginatedRows}
               data={paginatedRows}
               headers={tableHeaders}
               // handlePageClick={handlePageClick}
@@ -506,7 +542,7 @@ const handleDownloadFile = async () => {
               handleSwitchChange={handleSwitchChange}
               maskedData={maskedData}
               isMasked={isMasked}
-              selectedFiles={selectedFiles ? selectedFiles[0] : ""}
+              gcpSelectedFiles={gcpSelectedFiles ? gcpSelectedFiles[0] : ""}
               canSeeRealData={canSeeRealData}
               pageNumbers={[]}
               handletablePrevPage={handletablePrevPage}
@@ -593,9 +629,9 @@ const handleDownloadFile = async () => {
           </div>
 
           <div className="w-[60vw] h-10 flex flex-row px-2 items-center text-black text-xs font-medium">
-            {selectedFiles &&
-              selectedFiles[0] &&
-              selectedFiles[0].split(/[\\/]/).pop()}
+            {gcpSelectedFiles &&
+              gcpSelectedFiles[0] &&
+              gcpSelectedFiles[0].split(/[\\/]/).pop()}
           </div>
 
           {/* Flat Plain CSV View Text Area */}
@@ -652,7 +688,7 @@ const handleDownloadFile = async () => {
         </div>
       )}
 
-      {selectedFiles && selectedFiles[0] && (
+      {gcpSelectedFiles && gcpSelectedFiles[0] && (
         <div className="w-[60vw] h-14 flex flex-row items-center justify-between mt-4 px-2">
           <div className="w-32 h-8 flex items-center justify-center flex-shrink-0">
             <button
@@ -671,6 +707,6 @@ const handleDownloadFile = async () => {
       )}
     </div>
   );
-};
+}
 
-export default S3PreviewDataModel;
+export default GcpPreviewDataModal

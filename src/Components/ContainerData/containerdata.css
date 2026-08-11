@@ -1,11 +1,27 @@
 /* 100% */
-@media (min-height: 650px) and (max-height: 750px) and (min-width: 1200px) and (max-width: 1920px) {
+/* @media (min-height: 650px) and (max-height: 750px) and (min-width: 1200px) and (max-width: 1920px) { */
     .container-data {
-        --vertical-gap:1rem; 
+        --vertical-gap:0.5rem; 
         --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width: 100%;
+    --back-dashboard-height: 2rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --container-accounts-width:25%;
+    --container-accounts-height:28rem;
+    --container-data-width:80%;
+    --container-data-height:28rem;
 
     }
-}
+/* } */
 
 .container-data .app-container-data {
  @apply w-screen h-screen flex flex-col overflow-hidden;
@@ -13,4 +29,88 @@
 }
 .container-data .vertical-gap{
     gap: var(--vertical-gap);
+}
+.container-data .container-padding{
+    padding: var(--container-padding);
+}
+
+.container-data .container-navbar-wrapper {
+  @apply w-full flex-shrink-0; 
+  height: var(--navbar-height); 
+  transition: height 0.15s ease-out;
+}
+
+.container-data .container-wrapper {
+  display: flex !important;
+  flex-direction: row !important;
+  /* Forces components to inherit vertical heights evenly */
+  width: 100%;
+  flex: 1 1 0%;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+.container .layout-gap{
+    gap: var(--layout-gap);
+}
+
+.container-data .container-Sidebar-wrapper {
+  @apply flex-shrink-0 ;
+  width: var(--sidebar-width);
+  height:99%;
+  /* background-color: var(--bg-color) !important;  */
+  transition: width 0.15s ease-out, background-color 0.15s ease-out;
+}
+.container-data .subcontainer-wrapper{
+ display: flex !important;
+  flex-direction: column !important;  
+  flex: 1 !important;            
+   width: 100% !important;               
+  height: 99% !important;             
+  min-width: 0 !important;            
+  padding: var(--padding-y) var(--padding-x) !important;       
+  /* background-color: var(--bg-color) !important;  */
+  border-radius: 0.5rem;              
+  overflow: hidden;
+  transition: background-color 0.15s ease-out;
+}
+
+.container-data .container-back-dashboard{
+ width: var(--back-dashboard-width);
+  height: var(--back-dashboard-height) !important;
+  transition: width 0.25s ease-out, height 0.15s ease-out;
+}
+
+.container-data .padding{
+    padding: var(--container-padding-y) var(--container-padding-x) !important;
+}
+
+.container-data .tab-container{
+    width: var(--tab-container-width);
+    height: var(--tab-container-height);
+}
+.container-data .containers-view{
+    display: flex !important;
+  flex-direction: row !important;
+  /* Forces components to inherit vertical heights evenly */
+  width: 100%;
+  flex: 1 1 0%;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+.container-data .tab-margin-bottom{
+    margin-bottom: var(--tab-padding);
+}
+
+.container-data .sub-container-gap {
+  gap: var(--sub-container-gap);
+}
+.container-data .container-accounts-wrapper{
+    width: var(--container-accounts-width);
+    height: var(--container-accounts-height);
+}
+.container-data .container-data-wrapper{
+    width: var(--container-data-width);
+    height: var(--container-data-height);
 }

@@ -3,7 +3,7 @@ const OptionsItems = ({ item, selectedOption, onClick }) => {
 
   return (
     <div
-      className="text-xs font-medium text-black ml-2 px-4 py-4 cursor-pointer flex flex-row h-8 items-center"
+      className=" box text-xs font-medium text-black  px-4 py-4 cursor-pointer flex flex-row options-item items-center"
       style={{
         backgroundColor: isActive ? "white" : "",
         boxShadow: isActive ? "0px 2px 10px rgba(0, 0, 0, 0.3)" : "none",

@@ -1,0 +1,204 @@
+/* @media (min-height: 650px) and (max-height: 750px) and (min-width: 1001px) and (max-width: 1200px) { */
+.gcp-container {
+  --container-padding: 0.5rem;
+  --vertical-gap: 0.5rem;
+  --workspace-gap: 0.5rem;
+  --sub-container-gap: 0.5rem;
+  --back-dashboard-width: 100%;
+  --back-dashboard-height: 2rem;
+  --button-container-width: 100%;
+  --button-container-height: 3rem;
+  --search-container-width: 15rem;
+  --search-container-height: 2rem;
+  --button-wrapper-width: 22rem;
+  --button-wrapper-height: 2.75rem;
+  --button-width: 20rem;
+  --button-height: 2rem;
+  --table-structure-width: 100%;
+  --table-structure-height: 24rem;
+  --breadcrums-container-width: 100%;
+  --breadcrums-container-height: 2.25rem;
+  --table-width: 100%;
+    --table-height: 29rem;
+     --data-width: 100%;
+    --data-height: 19rem;
+    --table-data-width: 100%;
+    --table-data-height: 15rem;
+     --grid-width: 100%;
+    --grid-height: 22rem;
+    --grid-data-width: 100%;
+    --grid-data-height: 19rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+}
+/* } */
+
+.gcp-container .container-padding {
+  padding: var(--container-padding);
+}
+.gcp-container .layout-vertical-gap {
+  gap: var(--vertical-gap);
+}
+
+.gcp-container .gcp-navbar-wrapper {
+  @apply w-full flex-shrink-0;
+  /* height: var(--navbar-height);  */
+  transition: height 0.15s ease-out;
+}
+
+.gcp-container .gcp-container {
+  display: flex !important;
+  flex-direction: row !important;
+  /* Forces components to inherit vertical heights evenly */
+  width: 100%;
+  flex: 1 1 0%;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.gcp-container .gcp-sidebar {
+  @apply flex-shrink-0;
+  width: var(--sidebar-width);
+  height: 99%;
+  /* background-color: var(--bg-color) !important;  */
+  transition:
+    width 0.15s ease-out,
+    background-color 0.15s ease-out;
+}
+
+.gcp-container .gcp-sub-container {
+  /* 1. LAYOUT STRUCTURE MAPPINGS */
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 !important;
+  width: 100% !important;
+  height: 99% !important;
+  min-width: 0 !important;
+  padding: var(--padding-y) var(--padding-x) !important;
+  /* background-color: var(--bg-color) !important;  */
+  border-radius: 0.5rem;
+  overflow: hidden;
+  transition: background-color 0.15s ease-out;
+}
+
+.gcp-container .gcp-layout-gap {
+  gap: var(--workspace-gap);
+}
+
+.gcp-container .gcp-layout-backdashboard {
+  /* Reads your dynamic :root variable tokens cleanly */
+  width: var(--back-dashboard-width);
+  height: var(--back-dashboard-height) !important;
+  transition:
+    width 0.25s ease-out,
+    height 0.15s ease-out;
+  bg-color: var(
+    --bg-color
+  ) !important; /* Forces priority over tailwind defaults */
+}
+
+.gcp-container .gcp-sub-container-gap {
+  gap: var(--sub-container-gap);
+}
+
+.gcp-container .gcp-data-container {
+  width: var(--data-container-width) !important;
+  height: var(--data-container-height) !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  direction: flex !important;
+  flex-direction: column !important;
+  gap: var(--workspace-gap) !important;
+  padding: var(--padding-y) var(--padding-x) !important;
+}
+
+.gcp-container .gcp-button-container {
+  width: var(--button-container-width);
+  height: var(--button-container-height);
+  overflow-x: auto;
+  scrollbar-width: thin; /* For Firefox */
+  transition:
+    width 0.25s ease-out,
+    height 0.15s ease-out;
+}
+
+.gcp-container .gcp-search-container {
+  width: var(--search-container-width);
+  height: var(--search-container-height);
+
+  /* transition: width 0.25s ease-out, height 0.15s ease-out; */
+}
+
+.gcp-container .gcp-button-wrapper {
+  width: var(--button-wrapper-width);
+  height: var(--button-wrapper-height);
+  /* transition: width 0.25s ease-out, height 0.15s ease-out; */
+}
+
+.gcp-container .gcp-layout-button {
+  width: var(--button-width);
+  height: var(--button-height);
+  transition:
+    width 0.25s ease-out,
+    height 0.15s ease-out;
+}
+
+.gcp-container .gcp-table-structure {
+  width: var(--table-structure-width);
+  height: var(--table-structure-height);
+  /* transition: width 0.25s ease-out, height 0.15s ease-out; */
+}
+
+.gcp-container .gcp-breadcrums-container {
+  width: var(--breadcrums-container-width);
+  height: var(--breadcrums-container-height);
+  /* transition: width 0.25s ease-out, height 0.15s ease-out; */
+}
+.gcp-container .gcp-layout-table {
+  width: var(--table-width);
+  height: var(--table-height);
+  /* transition: width 0.25s ease-out, height 0.15s ease-out; */
+}
+
+.gcp-container .gcp-table-data-container {
+  width: var(--data-width);
+  height: var(--data-height);
+  /* transition: width 0.25s ease-out, height 0.15s ease-out; */
+}
+.gcp-container .table-margin {
+  margin-top: var(--table-margin-top);
+}
+
+.gcp-container .gcp-breadcrums-container {
+  width: var(--breadcrums-container-width);
+  height: var(--breadcrums-container-height);
+  /* transition: width 0.25s ease-out, height 0.15s ease-out; */
+}
+.gcp-container .gcp-rows-container {
+  width: var(--table-data-width);
+  height: var(--table-data-height);
+  /* transition: width 0.25s ease-out, height 0.15s ease-out; */
+
+}
+.gcp-container .gcp-grid-container {
+  width: var(--grid-width);
+  height: var(--grid-height);
+  /* transition: width 0.25s ease-out, height 0.15s ease-out; */
+}
+
+.gcp-container .gcp-layout-grid {
+  width: var(--grid-data-width);
+  height: var(--grid-data-height);  
+}
+
+.gcp-container .chatbot-margin {
+  position: fixed !important;
+  z-index: 9999 !important;
+  
+  /* Maps exactly to what your style={{ right, bottom }} did, 
+     but reads the responsive numbers dynamically from the layout container 
+  */
+  right: var(--chatbot-right) !important;
+  bottom: var(--chatbot-bottom) !important;
+}

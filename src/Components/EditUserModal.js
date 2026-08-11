@@ -55,7 +55,9 @@ style={{
       {/* {showPreview && ( */}
         <div className="w-full h-[98%]"
         style={{scrollbarWidth:"thin"}}
-        >{renderEditUserGroup()}</div>
+        >
+          {renderEditUserGroup()}
+          </div>
       {/* )} */}
       {/* {!showPreview && <p>No metadata available</p>} */}
     </Modal>

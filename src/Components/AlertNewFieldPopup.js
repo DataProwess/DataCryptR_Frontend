@@ -13,7 +13,9 @@ const AlertNewFieldPopup = ({
     handleEmailChange,
     onCancel,
     handleAlertAccessDataSave,
-     handleStorageAccountNameChange
+     handleStorageAccountNameChange,
+     namePlaceholder = "File Pattern",
+    keyPlaceholder = "Alert Email",
   }) => {
 
     const [nameError, setNameError] = useState('');

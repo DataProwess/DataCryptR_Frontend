@@ -35,6 +35,8 @@ import { useUI } from "./Context/UIContext";
 
 import { Options_Config } from "./AdminPanel/OptionsConfig";
 import OptionsItems from "./AdminPanel/OptionsItems";
+import S3Accounts from "./AdminPanel/S3Accounts";
+import GCPAccounts from "./AdminPanel/GCPAccounts";
 
 
 // const API_URL = "http://127.0.0.1:8000";
@@ -6892,6 +6894,20 @@ const NewAdminPanel = () => {
                   {selectedOption === "Alert" && (
                     <div className="w-full h-full ">
                       {renderAlertNotification()}
+                    </div>
+                  )}
+                  {selectedOption === "S3 Storage" && (
+                    <div className={`w-full h-full  `}>
+                      <S3Accounts
+                      selectedOption= {selectedOption}
+                      />
+                    </div>
+                  )}
+                  {selectedOption === "GCP" && (
+                    <div className={`w-full h-full  `}>
+                      <GCPAccounts
+                      selectedOption= {selectedOption}
+                      />
                     </div>
                   )}
                   {selectedOption === "User Activity Report" && (

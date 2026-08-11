@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useUI } from "../Context/UIContext";
-import Navbar from "../Navbar";
-// import Navbar from "../Navbar/Navbar";
-import Sidebar from "../Sidebar";
-// import Sidebar from "../Sidebar/Sidebar";
+// import Navbar from "../Navbar";
+import Navbar from "../Navbar/Navbar";
+// import Sidebar from "../Sidebar";
+import Sidebar from "../Sidebar/Sidebar";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Chatbot from "../Chatbot";
 import { useAuth } from "../AuthContext";
@@ -11,7 +11,8 @@ import ErrorPopup from "../ErrorPopup";
 import { API_URL } from "../ApiConfig";
 import { apiRequest } from "../csrfUtils";
 import ContainerOptionsModal from "./ContainerOptionsModal";
-import S3BucketsData from "../S3BucketExplore/S3BucketsData"
+import S3BucketsData from "../S3BucketExplore/S3BucketsData";
+import GCPBucketsData from "../GCPDataExplore/GCPBucketsData";
 import "./containerdata.css";
 
 const ContainerData = () => {
@@ -42,11 +43,15 @@ const [selectedOption, setSelectedOption] = useState(() => {
   const [loadingStorageAccounts, setLoadingStorageAccounts] = useState(true);
   const [loadingFileShares, setLoadingFileShares] = useState(false);
   const [loadingS3Accounts, setLoadingS3Accounts] = useState(false);
+  const [loadinggcpdata, setLoadinggcpdata] = useState(false);
   const [storageAccountOptions, setStorageAccountOptions] = useState([]);
   const [selectedStorageAccountId, setSelectedStorageAccountId] =
     useState(null);
   const [fileShareData, setFileShareData] = useState([]);
   const [s3AccountData, setS3AccountData] = useState([]);
+  const [gcpData, setGcpData] = useState([]);
+  const [selectedS3storageAccountId, setSelectedS3storageAccountId] =
+    useState(null);
   const [showContainerOptions, setShowContainerOptions] = useState(false);
   const [showNoContainersPopup, setShowNoContainersPopup] = useState(false);
   const [containerOptions, setContainerOptions] = useState([]);
@@ -56,6 +61,7 @@ const [selectedOption, setSelectedOption] = useState(() => {
   //   const [showChatbot, setShowChatbot] = useState(false);
   const [selectedS3AccountName, setSelectedS3AccountName] = useState([]);
   const [selectedS3AccountId, setSelectedS3AccountId] = useState(null);
+  const [selectedgcpId, setSelectedgcpId] = useState(null);
   // Add these lines near the top of your component function
   const [selectedFileShareName, setSelectedFileShareName] = useState("");
   const [selectedGcpAccountName, setSelectedGcpAccountName] = useState("");
@@ -285,39 +291,107 @@ useEffect(() => {
     // Navigate to the appropriate route based on the fileShareId
   };
 
+  // const fetchS3AccountData = async () => {
+  //   try {
+  //     if (!token) return;
+
+  //     setLoadingS3Accounts(true);
+
+  //     const response = await apiRequest(
+  //       `${API_URL}/api/s3/accounts/`,
+  //       "GET",
+  //       null,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //         credentials: "include",
+  //       },
+  //     );
+
+  //     if (!response) return;
+
+  //     setS3AccountData(response.data);
+
+  //     if (response.data && response.data.length > 0) {
+  //     setSelectedS3AccountId(response.data[0].id); 
+  //   }
+
+  //     console.log("🏦 S3 accounts:", response.data);
+  //   } catch (error) {
+  //     console.error("Error fetching S3 accounts:", error.message);
+  //   } finally {
+  //     setLoadingS3Accounts(false);
+  //   }
+  // };
+
   const fetchS3AccountData = async () => {
-    try {
-      if (!token) return;
+  try {
+    if (!token) return;
 
-      setLoadingS3Accounts(true);
+    setLoadingS3Accounts(true);
 
-      const response = await apiRequest(
-        `${API_URL}/api/s3/accounts/`,
-        "GET",
-        null,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          credentials: "include",
+    const response = await apiRequest(
+      `${API_URL}/api/s3/accounts/`,
+      "GET",
+      null,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      );
+        credentials: "include",
+      },
+    );
 
-      if (!response) return;
+    if (!response) return;
 
-      setS3AccountData(response.data);
+    setS3AccountData(response.data || []);
 
-      if (response.data && response.data.length > 0) {
-      setSelectedS3AccountId(response.data[0].id); 
-    }
+    // 🛑 REMOVED AUTO-SELECTION CODE:
+    // Do NOT call setSelectedS3AccountId(response.data[0].id) here.
+    // Let the user manually select an account by clicking it.
 
-      console.log("🏦 S3 accounts:", response.data);
-    } catch (error) {
-      console.error("Error fetching S3 accounts:", error.message);
-    } finally {
-      setLoadingS3Accounts(false);
-    }
-  };
+    console.log("🏦 S3 accounts:", response.data);
+  } catch (error) {
+    console.error("Error fetching S3 accounts:", error.message);
+  } finally {
+    setLoadingS3Accounts(false);
+  }
+};
+
+
+const fetchGcpAccounts = async () => {
+  try {
+    if (!token) return;
+
+    setLoadinggcpdata(true);
+
+    const response = await apiRequest(
+      `${API_URL}/api/gcp/accounts/`,
+      "GET",
+      null,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        credentials: "include",
+      },
+    );
+
+    // Ensure response exists and contains data
+    const accounts = response?.data || [];
+    setGcpData(accounts);
+
+    // 🛑 FIX: Clear selected ID on fetch so no account is auto-selected
+    setSelectedgcpId(null);
+
+    console.log("🏦 GCP accounts:", accounts);
+  } catch (error) {
+    console.error("Error fetching GCP accounts:", error.message);
+  } finally {
+    setLoadinggcpdata(false);
+  }
+};
 
   const renderFolderIcon = (accountId) => {
     if (accountId === selectedStorageAccountId) {
@@ -359,8 +433,19 @@ useEffect(() => {
 //   };
 
 // 1. Keep tab click simple (just state assignment)
+// const handleTabClick = (tabValue) => {
+//   setSelectedOption(tabValue);
+// };
 const handleTabClick = (tabValue) => {
   setSelectedOption(tabValue);
+
+  // 🧹 Reset selected state so no account/bucket is active when changing tabs
+  setSelectedS3storageAccountId(null); // Or setSelectedS3AccountId based on your parent state name
+  setSelectedS3AccountName("");
+  setSelectedStorageAccountId(null);
+  setSelectedStorageAccountName("");
+  setSelectedgcpId(null);
+  setSelectedGcpAccountName("");
 };
 
 // 2. React to tab state changes automatically
@@ -388,7 +473,7 @@ useEffect(() => {
 
     case "gcp":
       // Replace with your actual GCP fetching function name
-    //   fetchGcpAccounts(); 
+      fetchGcpAccounts(); 
       break;
 
     default:
@@ -400,8 +485,17 @@ useEffect(() => {
     console.log("Selected S3 Account ID:", account.id, "Name:", account.name);
 
     // Updating these triggers a prop-change re-render for the child component
-    setSelectedStorageAccountId(account.id);
+    setSelectedS3storageAccountId(account.id);
     setSelectedS3AccountName(account.name);
+  };
+  console.log("i am",selectedS3storageAccountId,selectedS3AccountName)
+
+   const handlegcpDataClick = (gcpaccount) => {
+    console.log("Selected gcp Account ID:", gcpaccount.id, "Name:", gcpaccount.name);
+
+    // Updating these triggers a prop-change re-render for the child component
+    setSelectedgcpId(gcpaccount.id);
+    setSelectedGcpAccountName(gcpaccount.name);
   };
 
   const handleChatbotIconClick = () => {
@@ -436,7 +530,333 @@ useEffect(() => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
- 
+  const isInteractionDisabled =
+    isPopupOpen || showChatbot 
+
+ return(
+  <>
+  <div className="container-data">
+    <div className="app-container-data bg-primary">
+      <div className="w-full h-full flex flex-col items-center container-padding vertical-gap ">
+       <div
+                   className={` container-navbar-wrapper  flex ${isDisabled || isBlurred || isInteractionDisabled ? "  pointer-events-none" : ""}`}>
+                   <Navbar />
+                 </div>
+                 <div className={`container-wrapper flex layout-gap`}>
+                   <div
+                                className={`container-Sidebar-wrapper
+                                  ${isDisabled || isBlurred || isInteractionDisabled ? "pointer-events-none" : ""}`}>
+                                <Sidebar />
+                              </div>
+                               <div
+              className={`subcontainer-wrapper bg-newgray  padding rounded-lg shadow-xl shadow-slate-500/50 overflow-hidden sub-container-gap
+                ${isDisabled || isBlurred || isInteractionDisabled ? "pointer-events-none" : ""}`}
+            >
+              <div className={`container-back-dashboard flex items-center text-sm font-medium text-purpleshade1 `}>
+                 <div>
+                        <Link to="/home">Home</Link> &gt;&nbsp;
+                      </div>
+                       <span>
+                        {(() => {
+                          switch (selectedOption) {
+                            case "storageAccount":
+                              return "Storage Account";
+                            case "fileShares":
+                              return "File Shares";
+                            case "s3Storage":
+                              return "S3 Storage";
+                            case "gcp":
+                              return "GCP";
+                            default:
+                              return "Storage Platform"; // Fallback text
+                          }
+                        })()}
+                      </span>
+                       {/* Contextual Sub-Item: Check that it is a valid string with text */}
+                      {selectedOption === "storageAccount" &&
+                        typeof selectedStorageAccountName === "string" &&
+                        selectedStorageAccountName.trim() && (
+                          <span>&nbsp;&gt; {selectedStorageAccountName}</span>
+                        )}
+
+                      {selectedOption === "fileShares" &&
+                        typeof selectedFileShareName === "string" &&
+                        selectedFileShareName.trim() && (
+                          <span>&nbsp;&gt; {selectedFileShareName}</span>
+                        )}
+
+                      {selectedOption === "s3Storage" &&
+                        typeof selectedS3AccountName === "string" &&
+                        selectedS3AccountName.trim() && (
+                          <span>&nbsp;&gt; {selectedS3AccountName}</span>
+                        )}
+
+                      {selectedOption === "gcp" &&
+                        typeof selectedGcpAccountName === "string" &&
+                        selectedGcpAccountName.trim() && (
+                          <span>&nbsp;&gt; {selectedGcpAccountName}</span>
+                        )}
+
+              </div>
+              <div className={`tab-container flex bg-white shadow-md rounded-lg p-1 overflow-hidden tab-margin-bottom`}>
+                 {[
+                        { label: "Storage Account", value: "storageAccount" },
+                        { label: "File Shares", value: "fileShares" },
+                        { label: "S3 Storage", value: "s3Storage" },
+                        { label: "GCP", value: "gcp" },
+                      ].map((tab) => (
+                        <div
+                          key={tab.value}
+                          className={`flex-1 min-w-0 h-[40px] flex items-center justify-center cursor-pointer rounded-md 
+                            text-[12px] sm:text-[14px] md:text-[15px] font-medium truncate select-none transition-colors
+                            ${selectedOption === tab.value ? "bg-purpleshade1 text-white" : "bg-white text-black"}`}
+                          onClick={() => handleTabClick(tab.value)}
+                        >
+                          {tab.label}
+                        </div>
+                      ))}
+
+              </div>
+              <div className={` containers-view flex  overflow-hidden`}>
+                <div className={`container-accounts-wrapper bg-newgray shadow-md shadow-slate-500/30 flex flex-col rounded-l-xl  items-center justify-center border-l-2 border-slate-200/100 z-10 p-2`}>
+                       <div
+                          className="w-full  h-full overflow-y-visible"
+                          style={{ scrollbarWidth: "thin" }}
+                        >
+                          {/* Storage Accounts Loading / Mapping */}
+                          {loadingStorageAccounts &&
+                          selectedOption === "storageAccount" ? (
+                            <div className="w-full h-[85%] flex flex-col justify-center items-center space-y-4 mt-2 ml-2">
+                              <img
+                                src={process.env.PUBLIC_URL + "/loadergif.gif"}
+                                alt="logo"
+                                className="animate-spin w-6 h-6"
+                              />
+                              <p className="text-logintext font-[350] text-[11px] animate-pulse">
+                                Just a moment...
+                              </p>
+                            </div>
+                          ) : (
+                            selectedOption === "storageAccount" &&
+                             (storageAccountOptions.length === 0 ? (
+                              <div className="w-full text-center py-4 text-xs font-normal text-slate-400 italic">
+                                No Storage Account data found.
+                              </div>
+                            ) : (
+                            storageAccountOptions.map((account) => (
+                              <div
+                                key={account.id}
+                                className="flex flex-row w-full h-9 items-center font-normal text-xs cursor-pointer px-3 rounded-md transition-all duration-150 ease-in-out"
+                                style={{
+                                  background:
+                                    account.id === selectedStorageAccountId
+                                      ? "white"
+                                      : "transparent",
+                                  boxShadow:
+                                    account.id === selectedStorageAccountId
+                                      ? "0px 4px 10px rgba(0, 0, 0, 0.15)"
+                                      : "none",
+                                }}
+                                onClick={() =>
+                                  handleStorageAccountClick(account.id)
+                                }
+                              >
+                                {/* Folder Icon stays fixed shape */}
+                                <div className="flex-shrink-0">
+                                  {renderFolderIcon(account.id)}
+                                </div>
+
+                                {/* Text container fills space and truncates safely with an ellipse (...) */}
+                                <div className="truncate min-w-0 flex-1 select-none text-left">
+                                  {account.account_name}
+                                </div>
+                              </div>
+                            ))
+                            ))
+                          )}
+
+                          {/* File Shares Loading / Mapping */}
+                          {loadingFileShares &&
+                          selectedOption === "fileShares" ? (
+                            <div className="w-full h-[85%] flex flex-col justify-center items-center space-y-6 mt-10">
+                              <img
+                                src={process.env.PUBLIC_URL + "/loadergif.gif"}
+                                alt="logo"
+                                className="animate-spin w-8 h-8"
+                              />
+                              <p className="text-logintext font-[350] text-[13px] animate-pulse">
+                                Loading File Shares...
+                              </p>
+                            </div>
+                          ) : (
+                            selectedOption === "fileShares" &&
+                            (fileShareData.length === 0 ? (
+                              <div className="w-full text-center py-4 text-xs font-normal text-slate-400 italic">
+                                No File Share data found.
+                              </div>
+                            ) : (
+                              fileShareData.map((fileShare) => (
+                                <div
+                                  key={fileShare.id}
+                                  className="flex flex-row w-[200px] h-6 items-center text-black font-normal text-xs cursor-pointer p-2 rounded-lg"
+                                  onClick={() =>
+                                    handleFileShareClick(fileShare)
+                                  }
+                                >
+                                  <img
+                                    src={
+                                      process.env.PUBLIC_URL +
+                                      "/graystorageaccount-icon.png"
+                                    }
+                                    alt="icon"
+                                    className="w-4 h-4 mr-3"
+                                  />
+                                  {fileShare.name}
+                                </div>
+                              ))
+                            ))
+                          )}
+
+                          {/* S3 Storage Loading / Mapping */}
+                          {loadingS3Accounts &&
+                          selectedOption === "s3Storage" ? (
+                            
+                            <div className="w-full h-[85%] flex flex-col justify-center items-center space-y-4 mt-2 ml-2">
+                              <img
+                                src={process.env.PUBLIC_URL + "/loadergif.gif"}
+                                alt="logo"
+                                className="animate-spin w-6 h-6"
+                              />
+                              <p className="text-logintext font-[350] text-[11px] animate-pulse">
+                                Just a moment...
+                              </p>
+                            </div>
+                          ) : (
+                            selectedOption === "s3Storage" &&
+                             (s3AccountData.length === 0 ? (
+                              <div className="w-full text-center py-4 text-xs font-normal text-slate-400 italic">
+                                No S3 data found.
+                              </div>
+                            ) : (
+                            s3AccountData.map((account) => (
+                             
+                              <div
+                                key={account.id}
+                                className="flex flex-row w-full h-9 items-center font-normal text-xs cursor-pointer px-3 rounded-md transition-all duration-150 ease-in-out"
+                                style={{
+                                  background:
+                                    account.id === selectedS3storageAccountId
+                                      ? "white"
+                                      : "transparent",
+                                  boxShadow:
+                                    account.id === selectedS3storageAccountId
+                                      ? "0px 4px 10px rgba(0, 0, 0, 0.3)"
+                                      : "none",
+                                }}
+                                onClick={() => handleS3AccountClick(account)}
+                              >
+                                {renderFolderIcon(account.id)}
+                                <div className="truncate min-w-0 flex-1 select-none text-left">
+                                  {account.name}
+                                </div>
+                              </div>
+                            ))
+                            ))
+                          )}
+                          {loadinggcpdata &&
+                          selectedOption === "gcp" ? (
+                            <div className="w-full h-[85%] flex flex-col justify-center items-center space-y-4 mt-2 ml-2">
+                              <img
+                                src={process.env.PUBLIC_URL + "/loadergif.gif"}
+                                alt="logo"
+                                className="animate-spin w-6 h-6"
+                              />
+                              <p className="text-logintext font-[350] text-[11px] animate-pulse">
+                                Just a moment...
+                              </p>
+                            </div>
+                          ) : (
+                            selectedOption === "gcp" &&
+                             (gcpData.length === 0 ? (
+                              <div className="w-full text-center py-4 text-xs font-normal text-slate-400 italic">
+                                No GCP data found.
+                              </div>
+                            ) : (
+                            gcpData.map((account) => (
+                              <div
+                                key={account.id}
+                                className="flex flex-row w-full h-9 items-center font-normal text-xs cursor-pointer px-3 rounded-md transition-all duration-150 ease-in-out"
+                                style={{
+                                  background:
+                                    account.id === selectedgcpId
+                                      ? "white"
+                                      : "transparent",
+                                  boxShadow:
+                                    account.id === selectedgcpId
+                                      ? "0px 4px 10px rgba(0, 0, 0, 0.3)"
+                                      : "none",
+                                }}
+                                onClick={() => handlegcpDataClick(account)}
+                              >
+                                {renderFolderIcon(account.id)}
+                                <div className="truncate min-w-0 flex-1 select-none text-left">
+                                  {account.name}
+                                </div>
+                              </div>
+                            ))
+                            ))
+                          )}
+                        </div>
+                </div>
+                <div className={`container-data-wrapper bg-white rounded-r-xl shadow-md shadow-slate-500/30 flex flex-col justify-center items-center `}>
+                 <div className="w-full h-full flex justify-center items-center">
+                          {/* <div className="w-full h-9 bg-white rounded-lg shadow-md border-t border-slate-200/70"> */}
+                          {selectedOption === "storageAccount" && (
+                            <ContainerOptionsModal
+                              className={`${
+                                showChatbot ? "admin-blur-effect" : ""
+                              }`}
+                              containerOptions={containerOptions}
+                              //  selectedStorageAccount={storageAccountOptions.account_name}
+                              selectedStorageAccount={
+                                selectedStorageAccountName
+                              }
+                              selectedOption={selectedOption}
+                              fileShareData={fileShareData}
+                            />
+                          )}
+                          {selectedOption === "s3Storage" && (
+                            <S3BucketsData
+                              selectedOption={selectedOption}
+                              selectedS3storageAccountId={selectedS3storageAccountId}
+                              selectedS3AccountName={selectedS3AccountName}
+                              
+                            />
+                          )}
+                           {selectedOption === "gcp" && (
+                            <GCPBucketsData
+                              selectedgcpId={selectedgcpId}
+                              selectedGcpAccountName={selectedGcpAccountName}
+                              selectedOption={selectedOption}
+                              
+                            />
+                          )}
+                        </div>
+
+                </div>
+
+              </div>
+            </div>
+                 </div>
+
+
+      </div>
+
+    </div>
+
+  </div>
+  </>
+ )
 
   return (
     <>

@@ -1,5 +1,6 @@
 import React from "react";
 import Modal from "react-modal";
+import "./AdminPanel/modal.css"
 
 const AddUserGroupModal = ({
   isOpen,
@@ -42,11 +43,35 @@ style={{
         }
       }}
     >
+{/* <Modal
+      isOpen={isOpen}
+      onRequestClose={handleClose}
+      contentLabel="User Group Modal"
+      // ✅ Fix 1: Ensure overlay covers the entire screen above ALL sidebars
+      overlayClassName="fixed inset-0  z-[9999] flex justify-center items-center "
+      
+      // ✅ Fix 2: Center the modal panel and reset hardcoded offset positioning
+      className="bg-[#F0F4FB] rounded-xl shadow-2xl border border-gray-200 
+                 w-[75vw] max-w-[900px] h-[90vh] overflow-y-auto outline-none 
+                 p-6 relative z-[10000] scrollbar-thin"
+      style={{
+        scrollbarWidth: "thin",
+        scrollbarColor: "#a0a0a0 #f0f0f0",
+      }}
+    > */}
        
       {showPreview && (
         <div className="w-full h-[98%]"
         style={{scrollbarWidth:"thin"}}
         >{renderAddUserGroup()}</div>
+        // <>
+        // <div className="admin-data">
+        //   <div className="user-modal flex flex-col items-center bg-green-400">
+
+        //   </div>
+
+        // </div>
+        // </>
       )}
       {/* {!showPreview && <p>No metadata available</p>} */}
     </Modal>
@@ -54,3 +79,4 @@ style={{
 };
 
 export default AddUserGroupModal;
+

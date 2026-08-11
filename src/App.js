@@ -20,10 +20,15 @@ import Tasks from "./Components/Tasks/Tasks";
 import Explore from "./Components/Explore";
 import NewAdminPanel from "./Components/NewAdminPanel";
 import ProtectedRoute from "./Components/ProtectedRoute";
+import AdminPanel from "./Components/AdminPanel/AdminPanel";
 import FileExplore from "./Components/Explore/FileExplore";
 import Home from "./Components/Home";
 import ContainerData from "./Components/ContainerData/ContainerData";
 import S3BucketExplore from "./Components/S3BucketExplore/S3BucketExplore"
+import GcpBucketExplore from "./Components/GCPDataExplore/GcpBucketExplore";
+import { S3AccountProvider } from "./Components/Context/S3AccountContext";
+// import { useAuth } from "./Components/AuthContext";
+// import {API}
 
 
 function App() {
@@ -113,6 +118,11 @@ function App() {
               <S3BucketExplore/>
               {/* <FileExplore/> */}
               </ProtectedRoute>} />
+              <Route path="/gcp-files/:gcpbucketid" element={
+              <ProtectedRoute>
+              <GcpBucketExplore/>
+              {/* <FileExplore/> */}
+              </ProtectedRoute>} />
 
             <Route path="/container-data" element={<ProtectedRoute>
               {/* <NewContainerPage /> */}
@@ -124,7 +134,12 @@ function App() {
             />
             <Route path="/fixedwidth" element={<ProtectedRoute><Fixedwidthfile /></ProtectedRoute>} />
 
-            <Route path="/admin" element={<ProtectedRoute><NewAdminPanel /></ProtectedRoute>} />
+            <Route path="/admin" element={<ProtectedRoute>
+              {/* <S3AccountProvider> */}
+              {/* <NewAdminPanel /> */}
+              <AdminPanel/>
+              {/* </S3AccountProvider> */}
+              </ProtectedRoute>} />
             <Route path="/userreports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
             <Route path="/tasks" element={<ProtectedRoute><Tasks /></ProtectedRoute>} />
             <Route path="/logs" element={<ProtectedRoute><Logs /></ProtectedRoute>} />

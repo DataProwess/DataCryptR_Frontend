@@ -6,11 +6,11 @@ import { API_URL } from "../ApiConfig";
 import { useNavigate } from "react-router-dom";
 
 const S3BucketsData = ({
-  selectedS3AccountId,
+  selectedS3storageAccountId,
   selectedS3AccountName,
   selectedOption,
 }) => {
-  console.log(selectedS3AccountId)
+  console.log("1",selectedS3storageAccountId,selectedS3AccountName)
   const { token, csrfToken } = useAuth();
   const [buckets, setBuckets] = useState([]);
   const [loadingBuckets, setLoadingBuckets] = useState(false);
@@ -21,12 +21,12 @@ const S3BucketsData = ({
   const [error, setError] = useState();
 
   useEffect(() => {
-    if (selectedS3AccountId) {
-      fetchS3Buckets(selectedS3AccountId);
+    if (selectedS3storageAccountId) {
+      fetchS3Buckets(selectedS3storageAccountId);
     } else {
       setBuckets([]); // Clear out lists if no active selection exists
     }
-  }, [selectedS3AccountId, token]);
+  }, [selectedS3storageAccountId, token]);
 
   const fetchS3Buckets = async (accountId) => {
     console.log(accountId);
@@ -191,12 +191,12 @@ const S3BucketsData = ({
         bucketName: bucket.name,
         selectedOption,
         selectedS3AccountName,
-        selectedS3AccountId,
+        selectedS3storageAccountId,
         folders,
         blobs
       });
 
-      console.log(selectedS3AccountId)
+      console.log(selectedS3storageAccountId)
       navigate(`/s3-files/${bucket.id}`, {
         state: {
           bucketId: bucket.id,
@@ -205,7 +205,7 @@ const S3BucketsData = ({
           selectedS3AccountName: selectedS3AccountName,
           initialFiles: blobs,
           initialFolders: folders,
-         s3AccountId: selectedS3AccountId ||  1,
+         s3AccountId: selectedS3storageAccountId ||  1,
         },
       });
     }
