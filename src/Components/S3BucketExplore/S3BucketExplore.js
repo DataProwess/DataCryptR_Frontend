@@ -55,12 +55,15 @@ const S3BucketExplore = () => {
     initialFiles,
     initialFolders,
     s3AccountId,
+     isDownloadStorage,
   } = location.state || {};
   // Verify your tracking parameters
   console.log("🎯 S3 Context Loaded in Explorer:", {
     s3AccountId,
     bucketId,
     bucketName,
+    selectedS3AccountName,
+    isDownloadStorage
   });
 
   console.log("📁 Payload Files/Folders:", { initialFiles, initialFolders });
@@ -1063,6 +1066,8 @@ const S3BucketExplore = () => {
                           isModalOpen={isModalOpen}
                           isMetaDataModalOpen={isMetaDataModalOpen}
                           isColumnDataModalOpen={isColumnDataModalOpen}
+                          selectedS3AccountName={selectedS3AccountName}
+                           isDownloadStorage={isDownloadStorage}
                         />
                       ) : (
                         /* This loader handles the async delay smoothly while previewData mounts */

@@ -17,6 +17,10 @@ const GcpTabularPreview = ({
   handleDynamicPreview,
   gcpPreviewData,
   isGcpModalOpen,
+  selectedGcpAccountName,
+  isDownloadStorageState,
+  handleCheckboxChange,
+  isDownloadStorage,
 }) => {
   const processPreviewData = (data) => {
     if (!data) return [];
@@ -414,11 +418,39 @@ const GcpTabularPreview = ({
         </button>
       </div>
 
-      <div className="w-[60vw] h-10 flex flex-row mt-3 font-poppins px-5 text-black text-xs font-medium">
+      {/* <div className="w-[60vw] h-10 flex flex-row mt-3 font-poppins px-5 text-black text-xs font-medium">
         {gcpSelectedFiles && gcpSelectedFiles.split(/[\\/]/).pop()}
-      </div>
+      </div> */}
+       <div className="w-[60vw] h-16  py-1 flex flex-between px-2  items-center text-black text-xs font-medium">
+            <div className="w-1/2 h-10  flex space-x-1 items-center">
+            {/* <input
+                            type="checkbox"
+                            onChange={() => handleCheckboxChange(account)}
+                            // checked={!!account.is_download_storage}
+                            checked={Boolean(account?.is_download_storage)}
+                            className="ml-2"
+                          /> */}
+                          <div className="flex items-center">
+                            <input
+                type="checkbox"
+                onChange={handleCheckboxChange}
+                checked={isDownloadStorageState}
+                className="ml-2 cursor-pointer"
+              />
+                          </div>
+                          <div className="">{selectedGcpAccountName || "Loading..."}</div>
+               
+            </div>
+            <div className="w-1/2 flex justify-end">
+               {/* {gcpSelectedFiles &&
+              gcpSelectedFiles[0] &&
+              gcpSelectedFiles[0].split(/[\\/]/).pop()} */}
+              {gcpSelectedFiles && gcpSelectedFiles.split(/[\\/]/).pop()}
+            </div>
+           
+          </div>
 
-      <div className="w-[60vw] h-[70vh] bg-white flex justify-center mt-3 border border-lightgray-300 border-t-0 rounded-md shadow-md shadow-slate-500/30">
+      <div className="w-[60vw] h-[70vh] bg-white flex justify-center  border border-lightgray-300 border-t-0 rounded-md shadow-md shadow-slate-500/30">
         {isLoading ? (
           <div className="w-[60vw] h-[58vh] flex flex-col justify-center items-center">
             <img

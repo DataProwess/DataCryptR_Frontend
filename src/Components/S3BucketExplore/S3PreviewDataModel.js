@@ -3,9 +3,9 @@ import { useLocation } from "react-router-dom";
 import FullScreenPreview from "../FullScreenPreview";
 import { useAuth } from "../AuthContext";
 import TabularPreview from "./TabularPreview";
-import { apiRequest,makeAuthenticatedRequest } from "../csrfUtils";
+import { apiRequest, makeAuthenticatedRequest } from "../csrfUtils";
 import { API_URL } from "../ApiConfig";
-
+import ErrorPopup from "../ErrorPopup";
 
 const S3PreviewDataModel = ({
   selectedFiles,
@@ -15,15 +15,17 @@ const S3PreviewDataModel = ({
   previewData,
   isModalOpen,
   s3AccountId,
-  bucketId
+  bucketId,
+  selectedS3AccountName,
+  isDownloadStorage,
 }) => {
   console.log(
     "Current Preview Data Container State:",
-    previewData,
+
     selectedFiles,
   );
 
- const { token, csrfToken, permissions } = useAuth();
+  const { token, csrfToken, permissions } = useAuth();
   const location = useLocation();
   const [itemOffset, setItemOffset] = useState(0);
   const [isOpenRows, setIsOpenRows] = useState(false);
@@ -35,7 +37,8 @@ const S3PreviewDataModel = ({
   );
   const containerData = location.state?.containerData;
   const fileShareId = location.state?.fileShareId;
-
+  const [s3Error, setS3Error] = useState("");
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [currentMatchIndex, setCurrentMatchIndex] = useState(-1);
   const [matchedIndexes, setMatchedIndexes] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(20);
@@ -50,7 +53,7 @@ const S3PreviewDataModel = ({
   );
 
   const canSeeRealData = permissions?.includes("SeeRealData");
-const [downlloading,setDownloading] = useState(true)
+  const [downlloading, setDownloading] = useState(true);
   const containerRef = useRef(null);
   const matchRefs = useRef([]);
 
@@ -322,131 +325,143 @@ const [downlloading,setDownloading] = useState(true)
     setMaskedData((prevMaskedData) => !prevMaskedData);
   };
 
+  // const handleDownloadFile = async () => {
+  //   // Guard Clause: Ensure a valid file index exists
+  //   if (!selectedFiles || !selectedFiles[0]) {
+  //     alert("⚠️ No files selected for download compilation.");
+  //     return;
+  //   }
 
+  //   try {
+  //     setDownloading(true);
 
-// const handleDownloadFile = async () => {
-//   // Guard Clause: Ensure a valid file index exists
-//   if (!selectedFiles || !selectedFiles[0]) {
-//     alert("⚠️ No files selected for download compilation.");
-//     return;
-//   }
+  //     const fileKey = selectedFiles[0];
 
-//   try {
-//     setDownloading(true);
+  //     // Construct strict explicit integer structures for Django models
+  //     const payload = {
+  //       s3_account_id: parseInt(s3AccountId, 10),
+  //       s3_bucket_id: parseInt(bucketId, 10),
+  //       file_key: fileKey,
+  //       is_masked: Boolean(maskedData)
+  //     };
 
-//     const fileKey = selectedFiles[0];
-    
-//     // Construct strict explicit integer structures for Django models
-//     const payload = {
-//       s3_account_id: parseInt(s3AccountId, 10),
-//       s3_bucket_id: parseInt(bucketId, 10),
-//       file_key: fileKey,
-//       is_masked: Boolean(maskedData)
-//     };
+  //     console.log("[S3 Download Pipeline] Dispatching task request payload...", payload);
 
-//     console.log("[S3 Download Pipeline] Dispatching task request payload...", payload);
+  //     /* * 🚀 `apiRequest` naturally handles auth headers, checks CSRF validity,
+  //      * stringifies data, and returns the raw parsed JSON object automatically.
+  //      */
+  //    const responseData = await apiRequest(
+  //       `${API_URL}/api/s3/files/download/`,
+  //       "POST",
+  //       payload,
+  //       {
+  //         headers: {
+  //           "Authorization": `Bearer ${token}`,
+  //           "X-CSRFToken": csrfToken
+  //         }
+  //       }
+  //     );
 
-//     /* * 🚀 `apiRequest` naturally handles auth headers, checks CSRF validity,
-//      * stringifies data, and returns the raw parsed JSON object automatically.
-//      */
-//    const responseData = await apiRequest(
-//       `${API_URL}/api/s3/files/download/`,
-//       "POST",
-//       payload,
-//       {
-//         headers: {
-//           "Authorization": `Bearer ${token}`,
-//           "X-CSRFToken": csrfToken
-//         }
-//       }
-//     );
+  //     // Guard Clause: Validate that the backend returned a successful message
+  //     if (responseData && responseData.message) {
+  //       alert(`✅ ${responseData.message}! You can monitor progress inside your Tasks profile tab.`);
+  //     } else if (responseData && responseData.error) {
+  //       throw new Error(responseData.error);
+  //     } else {
+  //       throw new Error("No validation acknowledgment received from cloud task engine.");
+  //     }
 
-//     // Guard Clause: Validate that the backend returned a successful message
-//     if (responseData && responseData.message) {
-//       alert(`✅ ${responseData.message}! You can monitor progress inside your Tasks profile tab.`);
-//     } else if (responseData && responseData.error) {
-//       throw new Error(responseData.error);
-//     } else {
-//       throw new Error("No validation acknowledgment received from cloud task engine.");
-//     }
+  //   } catch (error) {
+  //     console.error("[S3 Download Pipeline Error]:", error);
 
-//   } catch (error) {
-//     console.error("[S3 Download Pipeline Error]:", error);
-    
-//     // Graceful production alert system parsing
-//     if (error.message.includes("504") || error.message.toLowerCase().includes("timeout")) {
-//       alert(
-//         "⚠️ Gateway Timeout (504):\nThe server took too long to queue this task. " +
-//         "Please check your Celery broker terminal logs to see if workers are hanging."
-//       );
-//     } else {
-//       alert(`Failed to compile cloud download streams: ${error.message}`);
-//     }
-//   } finally {
-//     setDownloading(false);
-//   }
-// };
+  //     // Graceful production alert system parsing
+  //     if (error.message.includes("504") || error.message.toLowerCase().includes("timeout")) {
+  //       alert(
+  //         "⚠️ Gateway Timeout (504):\nThe server took too long to queue this task. " +
+  //         "Please check your Celery broker terminal logs to see if workers are hanging."
+  //       );
+  //     } else {
+  //       alert(`Failed to compile cloud download streams: ${error.message}`);
+  //     }
+  //   } finally {
+  //     setDownloading(false);
+  //   }
+  // };
 
-// Helper to safely extract CSRF token directly from cookies if state is empty
-const getCookie = (name) => {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
-  return null;
-};
+  // Helper to safely extract CSRF token directly from cookies if state is empty
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+    return null;
+  };
 
-const handleDownloadFile = async () => {
-  if (!selectedFiles || !selectedFiles[0]) {
-    alert("⚠️ No files selected for download compilation.");
-    return;
-  }
-
-  try {
-    setDownloading(true);
-
-    const fileKey = selectedFiles[0];
-
-    const payload = {
-      s3_account_id: parseInt(s3AccountId, 10),
-      s3_bucket_id: parseInt(bucketId, 10),
-      file_key: fileKey,
-      is_masked: Boolean(maskedData)
-    };
-
-    console.log("[S3 Download Pipeline] Dispatching task request payload...", payload);
-
-    // Get active CSRF token (fallback to reading cookie directly)
-    const activeCsrfToken = csrfToken || getCookie("csrftoken");
-
-    const responseData = await apiRequest(
-      `${API_URL}/api/s3/files/download/`,
-      "POST",
-      payload,
-      {
-        credentials: "include", // 👈 CRITICAL: Sends session cookies required by @csrf_protect_api
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-          "X-CSRFToken": activeCsrfToken || "" // 👈 Ensured token value
-        }
-      }
-    );
-
-    if (responseData && responseData.message) {
-      alert(`✅ ${responseData.message}! You can monitor progress inside your Tasks profile tab.`);
-    } else if (responseData && responseData.error) {
-      throw new Error(responseData.error);
-    } else {
-      throw new Error("No validation acknowledgment received from cloud task engine.");
+  const handleDownloadFile = async () => {
+    if (!selectedFiles || !selectedFiles[0]) {
+      alert("⚠️ No files selected for download compilation.");
+      return;
     }
 
-  } catch (error) {
-    console.error("[S3 Download Pipeline Error]:", error);
-    alert(`Failed to compile cloud download streams: ${error.message}`);
-  } finally {
-    setDownloading(false);
-  }
-};
+    try {
+      setDownloading(true);
+
+      const fileKey = selectedFiles[0];
+
+      const payload = {
+        s3_account_id: parseInt(s3AccountId, 10),
+        s3_bucket_id: parseInt(bucketId, 10),
+        file_key: fileKey,
+        is_masked: Boolean(maskedData),
+      };
+
+      console.log(
+        "[S3 Download Pipeline] Dispatching task request payload...",
+        payload,
+      );
+
+      // Get active CSRF token (fallback to reading cookie directly)
+      const activeCsrfToken = csrfToken || getCookie("csrftoken");
+
+      const responseData = await apiRequest(
+        `${API_URL}/api/s3/files/download/`,
+        "POST",
+        payload,
+        {
+          credentials: "include", // 👈 CRITICAL: Sends session cookies required by @csrf_protect_api
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+            "X-CSRFToken": activeCsrfToken || "", // 👈 Ensured token value
+          },
+        },
+      );
+
+      // if (responseData && responseData.message) {
+      if (responseData && (responseData.task_id || responseData.message)) {
+        const taskIdMsg = responseData.task_id
+          ? ` (Task ID: ${responseData.task_id})`
+          : "";
+        // alert(`✅ ${responseData.message}! You can monitor progress inside your Tasks profile tab.`);
+        setS3Error(
+          `✅ ${responseData.message || "Download task queued successfully"}${taskIdMsg}! Check your Tasks tab for progress.`,
+        );
+        setIsPopupOpen(true);
+      } else if (responseData && responseData.error) {
+        throw new Error(responseData.error);
+      } else {
+        throw new Error(
+          "No validation acknowledgment received from cloud task engine.",
+        );
+      }
+    } catch (error) {
+      console.error("[S3 Download Pipeline Error]:", error);
+      // alert(`Failed to compile cloud download streams: ${error.message}`);
+      setS3Error(`Failed to compile cloud download streams: ${error.message}`);
+      setIsPopupOpen(true);
+    } finally {
+      setDownloading(false);
+    }
+  };
 
   // useEffect(() => {
   //   if (
@@ -480,6 +495,19 @@ const handleDownloadFile = async () => {
   const toggleRowsDropdown = () => {
     setIsOpenRows((prev) => !prev);
   };
+
+  const handleCheckboxChange = (event) => {};
+
+  const [isDownloadStorageState, setIsDownloadStorageState] = useState(
+    Boolean(isDownloadStorage),
+  );
+
+  // Keep state synced if prop updates from parent
+  useEffect(() => {
+    setIsDownloadStorageState(Boolean(isDownloadStorage));
+  }, [isDownloadStorage]);
+
+  console.log("downloadingstate", isDownloadStorageState);
 
   // Selection handler for setting rows per page
   const selectOption = (value) => {
@@ -592,10 +620,30 @@ const handleDownloadFile = async () => {
             </button>
           </div>
 
-          <div className="w-[60vw] h-10 flex flex-row px-2 items-center text-black text-xs font-medium">
+          {/* <div className="w-[60vw] h-10 flex flex-row px-2 items-center text-black text-xs font-medium">
             {selectedFiles &&
               selectedFiles[0] &&
               selectedFiles[0].split(/[\\/]/).pop()}
+          </div> */}
+          <div className="w-[60vw] h-10 flex flex-row px-2 items-center text-black text-xs font-medium">
+            <div className="w-1/2 flex ">
+              {selectedFiles &&
+                selectedFiles[0] &&
+                selectedFiles[0].split(/[\\/]/).pop()}
+            </div>
+            {canSeeRealData && (
+              <div className="w-1/2 h-10  flex space-x-1 items-center justify-end">
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    onChange={handleCheckboxChange}
+                    checked={isDownloadStorageState}
+                    className="ml-2 cursor-pointer"
+                  />
+                </div>
+                <div className="">{selectedS3AccountName || "Loading..."}</div>
+              </div>
+            )}
           </div>
 
           {/* Flat Plain CSV View Text Area */}
@@ -669,6 +717,11 @@ const handleDownloadFile = async () => {
           <div className="h-8 w-1 flex-shrink-0" aria-hidden="true" />
         </div>
       )}
+      <ErrorPopup
+        isOpen={isPopupOpen}
+        message={s3Error}
+        onClose={() => setIsPopupOpen(false)}
+      />
     </div>
   );
 };

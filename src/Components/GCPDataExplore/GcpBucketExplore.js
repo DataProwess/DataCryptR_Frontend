@@ -42,8 +42,10 @@ const GcpBucketExplore = () => {
     initialFiles,
     initialFolders,
     gcpAccountId,
+    isDownloadStorage,
   } = location.state || {};
   console.log("here", gcpbucketId);
+  console.log("isDownloadStorage", isDownloadStorage);
   const gcpnewFieldRef = useRef(null);
   const [selectedNavbarOption, setSelectedNavbarOption] = useState(null);
   const [isGcpdropdownOpen, setIsGcpDropdownOpen] = useState(false);
@@ -1343,6 +1345,8 @@ gcpPreviewData ? (
     gcpbucketId={gcpbucketId}
     isGcpMetaDataModalOpen={isGcpMetaDataModalOpen}
     isGcpColumnDataModalOpen={isGcpColumnDataModalOpen}
+    selectedGcpAccountName={selectedGcpAccountName}
+    isDownloadStorage={isDownloadStorage}
   />
 ) : (
   <div className="w-full h-48 flex flex-col justify-center items-center text-black">

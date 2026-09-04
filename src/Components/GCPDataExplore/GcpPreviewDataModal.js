@@ -3,9 +3,10 @@ import { useLocation } from "react-router-dom";
 import FullScreenPreview from "../FullScreenPreview";
 import { useAuth } from "../AuthContext";
 import GcpTabularPreview from "./GcpTabularPreview";
-import { apiRequest,makeAuthenticatedRequest } from "../csrfUtils";
+import { apiRequest, makeAuthenticatedRequest } from "../csrfUtils";
 import { API_URL } from "../ApiConfig";
-
+import { secureApiCall } from "../csrfUtils";
+import ErrorPopup from "../ErrorPopup";
 
 const GcpPreviewDataModal = ({
   gcpSelectedFiles,
@@ -18,24 +19,42 @@ const GcpPreviewDataModal = ({
   gcpAccountId,
   gcpbucketId,
   isGcpMetaDataModalOpen,
-  isGcpColumnDataModalOpen
+  isGcpColumnDataModalOpen,
+  selectedGcpAccountName,
+  isDownloadStorage,
 }) => {
   console.log(
     "Current Preview Data Container State:",
-    gcpPreviewData,
-    gcpSelectedFiles,
+    // gcpPreviewData,
+    // gcpSelectedFiles,
+    selectedGcpAccountName,
+    isDownloadStorage,
   );
 
- const { token, csrfToken, permissions } = useAuth();
+  const { token, csrfToken, permissions } = useAuth();
   const location = useLocation();
+  const [isDownloadStorageState, setIsDownloadStorageState] = useState(
+    Boolean(isDownloadStorage),
+  );
+
+  // Keep state synced if prop updates from parent
+  useEffect(() => {
+    setIsDownloadStorageState(Boolean(isDownloadStorage));
+  }, [isDownloadStorage]);
+
+  console.log(
+    "Current Preview Data Container State:",
+    selectedGcpAccountName,
+    "isDownloadStorage:",
+    isDownloadStorageState,
+  );
   const [itemOffset, setItemOffset] = useState(0);
   const [isOpenRows, setIsOpenRows] = useState(false);
   const [selectedFormat, setSelectedFormat] = useState("plain_text");
   const [showInput, setShowInput] = useState(false);
   const [showTableInput, setShowTableInput] = useState(true);
-  const [selectedStorageAccount, setSelectedStorageAccount] = useState(
-    location.state?.selectedStorageAccount || null,
-  );
+  const [gcpError, setGcpError] = useState("");
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const containerData = location.state?.containerData;
   const fileShareId = location.state?.fileShareId;
 
@@ -51,9 +70,9 @@ const GcpPreviewDataModal = ({
   const [isMasked, setIsMasked] = useState(
     localStorage.getItem("isMasked") === "true" || true,
   );
-
+  const [gcpAccountsData, setGcpAccountsData] = useState([]);
   const canSeeRealData = permissions?.includes("SeeRealData");
-const [downlloading,setDownloading] = useState(true)
+  const [downlloading, setDownloading] = useState(true);
   const containerRef = useRef(null);
   const matchRefs = useRef([]);
 
@@ -85,166 +104,166 @@ const [downlloading,setDownloading] = useState(true)
   }, []); // Keep empty safely now because it doesn't read state; if it reads state later, add them here!
 
   // Updated table data formatter that correctly un-nests manifest/inventory JSON payloads
-// const getFormattedTableData = (data) => {
-//   if (!data) return [];
-//   if (Array.isArray(data)) return data;
+  // const getFormattedTableData = (data) => {
+  //   if (!data) return [];
+  //   if (Array.isArray(data)) return data;
 
-//   let parsedPayload = null;
+  //   let parsedPayload = null;
 
-//   // Step 1: Unwrap top-level string if data is a raw JSON string
-//   if (typeof data === "string") {
-//     try {
-//       parsedPayload = JSON.parse(data);
-//     } catch (e) {
-//       // Fallback CSV string parser
-//       const lines = data.split("\n").filter((line) => line.trim() !== "");
-//       if (lines.length === 0) return [];
-//       const headers = lines[0].split(",");
-//       return lines.slice(1).map((line) => {
-//         const values = line.split(",");
-//         const obj = {};
-//         headers.forEach((header, index) => {
-//           obj[header.trim()] = values[index]?.trim() || "";
-//         });
-//         return obj;
-//       });
-//     }
-//   } else if (typeof data === "object") {
-//     parsedPayload = data;
-//   }
+  //   // Step 1: Unwrap top-level string if data is a raw JSON string
+  //   if (typeof data === "string") {
+  //     try {
+  //       parsedPayload = JSON.parse(data);
+  //     } catch (e) {
+  //       // Fallback CSV string parser
+  //       const lines = data.split("\n").filter((line) => line.trim() !== "");
+  //       if (lines.length === 0) return [];
+  //       const headers = lines[0].split(",");
+  //       return lines.slice(1).map((line) => {
+  //         const values = line.split(",");
+  //         const obj = {};
+  //         headers.forEach((header, index) => {
+  //           obj[header.trim()] = values[index]?.trim() || "";
+  //         });
+  //         return obj;
+  //       });
+  //     }
+  //   } else if (typeof data === "object") {
+  //     parsedPayload = data;
+  //   }
 
-//   // Step 2: Extract nested stringified JSON inside `parsedPayload.data`
-//   let innerData = parsedPayload;
-//   if (parsedPayload && parsedPayload.data) {
-//     if (typeof parsedPayload.data === "string") {
-//       try {
-//         innerData = JSON.parse(parsedPayload.data);
-//       } catch (e) {
-//         innerData = parsedPayload.data;
-//       }
-//     } else {
-//       innerData = parsedPayload.data;
-//     }
-//   }
+  //   // Step 2: Extract nested stringified JSON inside `parsedPayload.data`
+  //   let innerData = parsedPayload;
+  //   if (parsedPayload && parsedPayload.data) {
+  //     if (typeof parsedPayload.data === "string") {
+  //       try {
+  //         innerData = JSON.parse(parsedPayload.data);
+  //       } catch (e) {
+  //         innerData = parsedPayload.data;
+  //       }
+  //     } else {
+  //       innerData = parsedPayload.data;
+  //     }
+  //   }
 
-//   if (!innerData) return [];
+  //   if (!innerData) return [];
 
-//   // Step 3: Handle direct arrays (e.g. standard tabular API outputs)
-//   if (Array.isArray(innerData)) return innerData;
-//   if (Array.isArray(innerData.rows)) return innerData.rows;
+  //   // Step 3: Handle direct arrays (e.g. standard tabular API outputs)
+  //   if (Array.isArray(innerData)) return innerData;
+  //   if (Array.isArray(innerData.rows)) return innerData.rows;
 
-//   // Step 4: Handle GeoJSON Features
-//   if (innerData.features && Array.isArray(innerData.features)) {
-//     return innerData.features.map((feature) => {
-//       let rawCoords = feature.geometry?.coordinates
-//         ? JSON.stringify(feature.geometry.coordinates)
-//         : "";
-//       let cleanedCoordinates = rawCoords
-//         .replace(/[\[\]]/g, "")
-//         .split(/,(?=-?\d+\.)/)
-//         .map((coord) => coord.trim())
-//         .filter(Boolean)
-//         .join(" | ");
+  //   // Step 4: Handle GeoJSON Features
+  //   if (innerData.features && Array.isArray(innerData.features)) {
+  //     return innerData.features.map((feature) => {
+  //       let rawCoords = feature.geometry?.coordinates
+  //         ? JSON.stringify(feature.geometry.coordinates)
+  //         : "";
+  //       let cleanedCoordinates = rawCoords
+  //         .replace(/[\[\]]/g, "")
+  //         .split(/,(?=-?\d+\.)/)
+  //         .map((coord) => coord.trim())
+  //         .filter(Boolean)
+  //         .join(" | ");
 
-//       return {
-//         ID: feature.id || "N/A",
-//         Type: feature.type || "Feature",
-//         Name: feature.properties?.name || "N/A",
-//         "Geometry Type": feature.geometry?.type || "N/A",
-//         Coordinates: cleanedCoordinates || "N/A",
-//       };
-//     });
-//   }
+  //       return {
+  //         ID: feature.id || "N/A",
+  //         Type: feature.type || "Feature",
+  //         Name: feature.properties?.name || "N/A",
+  //         "Geometry Type": feature.geometry?.type || "N/A",
+  //         Coordinates: cleanedCoordinates || "N/A",
+  //       };
+  //     });
+  //   }
 
-//   // Step 5: Handle Blob Inventory / Manifest JSON structures (e.g. files array)
-//   if (Array.isArray(innerData.files)) {
-//     return innerData.files.map((fileObj, idx) => ({
-//       Rule_Name: innerData.ruleName || "N/A",
-//       Destination_Container: innerData.destinationContainer || "N/A",
-//       File_Blob: fileObj.blob || "N/A",
-//       File_Size_Bytes: fileObj.size || 0,
-//       Status: innerData.status || "N/A",
-//       Inventory_Start: innerData.inventoryStartTime || "N/A",
-//       Inventory_Completion: innerData.inventoryCompletionTime || "N/A",
-//       Schema_Fields: innerData.ruleDefinition?.schemaFields
-//         ? innerData.ruleDefinition.schemaFields.join(", ")
-//         : "N/A",
-//     }));
-//   }
+  //   // Step 5: Handle Blob Inventory / Manifest JSON structures (e.g. files array)
+  //   if (Array.isArray(innerData.files)) {
+  //     return innerData.files.map((fileObj, idx) => ({
+  //       Rule_Name: innerData.ruleName || "N/A",
+  //       Destination_Container: innerData.destinationContainer || "N/A",
+  //       File_Blob: fileObj.blob || "N/A",
+  //       File_Size_Bytes: fileObj.size || 0,
+  //       Status: innerData.status || "N/A",
+  //       Inventory_Start: innerData.inventoryStartTime || "N/A",
+  //       Inventory_Completion: innerData.inventoryCompletionTime || "N/A",
+  //       Schema_Fields: innerData.ruleDefinition?.schemaFields
+  //         ? innerData.ruleDefinition.schemaFields.join(", ")
+  //         : "N/A",
+  //     }));
+  //   }
 
-//   // Step 6: Fallback for generic metadata Key-Value Object mapping
-//   if (typeof innerData === "object") {
-//     const flattenedObj = {};
-//     Object.keys(innerData).forEach((key) => {
-//       const val = innerData[key];
-//       if (typeof val === "object" && val !== null) {
-//         flattenedObj[key] = JSON.stringify(val);
-//       } else {
-//         flattenedObj[key] = String(val);
-//       }
-//     });
-//     return [flattenedObj];
-//   }
+  //   // Step 6: Fallback for generic metadata Key-Value Object mapping
+  //   if (typeof innerData === "object") {
+  //     const flattenedObj = {};
+  //     Object.keys(innerData).forEach((key) => {
+  //       const val = innerData[key];
+  //       if (typeof val === "object" && val !== null) {
+  //         flattenedObj[key] = JSON.stringify(val);
+  //       } else {
+  //         flattenedObj[key] = String(val);
+  //       }
+  //     });
+  //     return [flattenedObj];
+  //   }
 
-//   return [];
-// };
+  //   return [];
+  // };
 
-const getFormattedTableData = (data) => {
-  if (!data) return [];
-  if (Array.isArray(data)) return data;
+  const getFormattedTableData = (data) => {
+    if (!data) return [];
+    if (Array.isArray(data)) return data;
 
-  let parsedPayload = data;
+    let parsedPayload = data;
 
-  // Step 1: If top-level data is a JSON string, parse it
-  if (typeof data === "string") {
-    try {
-      parsedPayload = JSON.parse(data);
-    } catch (e) {
-      // Return raw text string formatted as fallback
-      return [{ content: data }];
-    }
-  }
-
-  // Step 2: Unwrap nested 'data' string/object if present (ignoring file_key)
-  let innerData = parsedPayload;
-  if (parsedPayload && parsedPayload.data) {
-    if (typeof parsedPayload.data === "string") {
+    // Step 1: If top-level data is a JSON string, parse it
+    if (typeof data === "string") {
       try {
-        innerData = JSON.parse(parsedPayload.data);
+        parsedPayload = JSON.parse(data);
       } catch (e) {
+        // Return raw text string formatted as fallback
+        return [{ content: data }];
+      }
+    }
+
+    // Step 2: Unwrap nested 'data' string/object if present (ignoring file_key)
+    let innerData = parsedPayload;
+    if (parsedPayload && parsedPayload.data) {
+      if (typeof parsedPayload.data === "string") {
+        try {
+          innerData = JSON.parse(parsedPayload.data);
+        } catch (e) {
+          innerData = parsedPayload.data;
+        }
+      } else {
         innerData = parsedPayload.data;
       }
-    } else {
-      innerData = parsedPayload.data;
     }
-  }
 
-  if (!innerData) return [];
+    if (!innerData) return [];
 
-  // Step 3: Handle standard arrays
-  if (Array.isArray(innerData)) return innerData;
-  if (Array.isArray(innerData.rows)) return innerData.rows;
+    // Step 3: Handle standard arrays
+    if (Array.isArray(innerData)) return innerData;
+    if (Array.isArray(innerData.rows)) return innerData.rows;
 
-  // Step 4: Map all key-value pairs from the inner 'data' object directly
-  if (typeof innerData === "object" && innerData !== null) {
-    const flattenedObj = {};
+    // Step 4: Map all key-value pairs from the inner 'data' object directly
+    if (typeof innerData === "object" && innerData !== null) {
+      const flattenedObj = {};
 
-    Object.keys(innerData).forEach((key) => {
-      const val = innerData[key];
+      Object.keys(innerData).forEach((key) => {
+        const val = innerData[key];
 
-      if (typeof val === "object" && val !== null) {
-        // Stringify nested objects/arrays (e.g., ruleDefinition, summary, files) for clean display
-        flattenedObj[key] = JSON.stringify(val);
-      } else {
-        flattenedObj[key] = String(val ?? "N/A");
-      }
-    });
+        if (typeof val === "object" && val !== null) {
+          // Stringify nested objects/arrays (e.g., ruleDefinition, summary, files) for clean display
+          flattenedObj[key] = JSON.stringify(val);
+        } else {
+          flattenedObj[key] = String(val ?? "N/A");
+        }
+      });
 
-    return [flattenedObj];
-  }
+      return [flattenedObj];
+    }
 
-  return [];
-};
+    return [];
+  };
 
   const handleButtonClick = () => {
     setSelectedFormat(selectedFormat === "tabular" ? "plain_text" : "tabular");
@@ -419,99 +438,274 @@ const getFormattedTableData = (data) => {
     setMaskedData((prevMaskedData) => !prevMaskedData);
   };
 
-
-
-const handleDownloadFile = async () => {
-  // Guard Clause: Ensure a valid file index exists
-  if (!gcpSelectedFiles || !gcpSelectedFiles[0]) {
-    alert("⚠️ No files selected for download compilation.");
-    return;
-  }
-
-  try {
-    setDownloading(true);
-
-    const fileKey = gcpSelectedFiles[0];
-    
-    // Construct strict explicit integer structures for Django models
-    const payload = {
-      gcp_account_id: parseInt(gcpAccountId, 10),
-      gcp_bucket_id: parseInt(gcpbucketId, 10),
-      file_key: fileKey,
-      is_masked: Boolean(maskedData)
-    };
-
-    console.log("[S3 Download Pipeline] Dispatching task request payload...", payload);
-
-    /* * 🚀 `apiRequest` naturally handles auth headers, checks CSRF validity,
-     * stringifies data, and returns the raw parsed JSON object automatically.
-     */
-   const responseData = await apiRequest(
-      `${API_URL}/api/s3/files/download/`,
-      "POST",
-      payload,
-      {
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "X-CSRFToken": csrfToken
-        }
-      }
-    );
-
-    // Guard Clause: Validate that the backend returned a successful message
-    if (responseData && responseData.message) {
-      alert(`✅ ${responseData.message}! You can monitor progress inside your Tasks profile tab.`);
-    } else if (responseData && responseData.error) {
-      throw new Error(responseData.error);
-    } else {
-      throw new Error("No validation acknowledgment received from cloud task engine.");
-    }
-
-  } catch (error) {
-    console.error("[S3 Download Pipeline Error]:", error);
-    
-    // Graceful production alert system parsing
-    if (error.message.includes("504") || error.message.toLowerCase().includes("timeout")) {
-      alert(
-        "⚠️ Gateway Timeout (504):\nThe server took too long to queue this task. " +
-        "Please check your Celery broker terminal logs to see if workers are hanging."
-      );
-    } else {
-      alert(`Failed to compile cloud download streams: ${error.message}`);
-    }
-  } finally {
-    setDownloading(false);
-  }
-};
-
-  // useEffect(() => {
-  //   if (
-  //     selectionId &&
-  //     selectionType &&
-  //     selectedStorageAccount &&
-  //     selectedFormat
-  //   ) {
-  //     setDataLoading(true);
-  //     handleDynamicPreview(
-  //       selectionId,
-  //       selectionType,
-  //       selectedStorageAccount,
-  //       selectedFormat,
-  //       maskedData,
-  //     )
-  //       .then(() => setDataLoading(false))
-  //       .catch((error) => {
-  //         setDataLoading(false);
-  //         console.error("Error fetching data:", error);
-  //       });
+  // const handleDownloadFile = async () => {
+  //   // Guard Clause: Ensure a valid file index exists
+  //   if (!gcpSelectedFiles || !gcpSelectedFiles[0]) {
+  //     alert("⚠️ No files selected for download compilation.");
+  //     return;
   //   }
-  // }, [
-  //   maskedData,
-  //   selectionId,
-  //   selectionType,
-  //   selectedStorageAccount,
-  //   selectedFormat,
-  // ]);
+
+  //   try {
+  //     setDownloading(true);
+
+  //     const fileKey = gcpSelectedFiles[0];
+
+  //     // Construct strict explicit integer structures for Django models
+  //     const payload = {
+  //       gcp_account_id: parseInt(gcpAccountId, 10),
+  //       gcp_bucket_id: parseInt(gcpbucketId, 10),
+  //       file_key: fileKey,
+  //       is_masked: Boolean(maskedData)
+  //     };
+
+  //     console.log("[S3 Download Pipeline] Dispatching task request payload...", payload);
+
+  //     /* * 🚀 `apiRequest` naturally handles auth headers, checks CSRF validity,
+  //      * stringifies data, and returns the raw parsed JSON object automatically.
+  //      */
+  //    const responseData = await apiRequest(
+  //       `${API_URL}/api/gcp/files/download/`,
+  //       "POST",
+  //       payload,
+  //       {
+  //         headers: {
+  //           "Authorization": `Bearer ${token}`,
+  //           "X-CSRFToken": csrfToken
+  //         }
+  //       }
+  //     );
+
+  //     // Guard Clause: Validate that the backend returned a successful message
+  //     if (responseData && responseData.message) {
+  //       alert(`✅ ${responseData.message}! You can monitor progress inside your Tasks profile tab.`);
+  //     } else if (responseData && responseData.error) {
+  //       throw new Error(responseData.error);
+  //     } else {
+  //       throw new Error("No validation acknowledgment received from cloud task engine.");
+  //     }
+
+  //   } catch (error) {
+  //     console.error("[S3 Download Pipeline Error]:", error);
+
+  //     // Graceful production alert system parsing
+  //     if (error.message.includes("504") || error.message.toLowerCase().includes("timeout")) {
+  //       alert(
+  //         "⚠️ Gateway Timeout (504):\nThe server took too long to queue this task. " +
+  //         "Please check your Celery broker terminal logs to see if workers are hanging."
+  //       );
+  //     } else {
+  //       alert(`Failed to compile cloud download streams: ${error.message}`);
+  //     }
+  //   } finally {
+  //     setDownloading(false);
+  //   }
+  // };
+
+  // const handleDownloadFile = async () => {
+  //   // Guard Clause: Ensure a valid file index exists
+  //   if (!gcpSelectedFiles || !gcpSelectedFiles[0]) {
+  //     alert("⚠️ No files selected for download compilation.");
+  //     return;
+  //   }
+
+  //   try {
+  //     setDownloading(true);
+
+  //     const fileKey = gcpSelectedFiles[0];
+
+  //     // Construct strict explicit integer structures for Django models
+  //     const payload = {
+  //       gcp_account_id: parseInt(gcpAccountId, 10),
+  //       gcp_bucket_id: parseInt(gcpbucketId, 10),
+  //       file_key: fileKey,
+  //       is_masked: Boolean(maskedData)
+  //     };
+
+  //     console.log("[S3 Download Pipeline] Dispatching task request payload...", payload);
+
+  //     const responseData = await apiRequest(
+  //       `${API_URL}/api/gcp/files/download/`,
+  //       "POST",
+  //       payload,
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json", // 👈 ADD THIS HEADER
+  //           "Authorization": `Bearer ${token}`,
+  //           "X-CSRFToken": csrfToken
+  //         }
+  //       }
+  //     );
+
+  //     // Guard Clause: Validate that the backend returned a successful message
+  //     if (responseData && responseData.message) {
+  //       alert(`✅ ${responseData.message}! You can monitor progress inside your Tasks profile tab.`);
+  //     } else if (responseData && responseData.error) {
+  //       throw new Error(responseData.error);
+  //     } else {
+  //       throw new Error("No validation acknowledgment received from cloud task engine.");
+  //     }
+
+  //   } catch (error) {
+  //     console.error("[S3 Download Pipeline Error]:", error);
+
+  //     // Graceful production alert system parsing
+  //     if (error.message.includes("504") || error.message.toLowerCase().includes("timeout")) {
+  //       alert(
+  //         "⚠️ Gateway Timeout (504):\nThe server took too long to queue this task. " +
+  //         "Please check your Celery broker terminal logs to see if workers are hanging."
+  //       );
+  //     } else {
+  //       alert(`Failed to compile cloud download streams: ${error.message}`);
+  //     }
+  //   } finally {
+  //     setDownloading(false);
+  //   }
+  // };
+
+  // const handleDownloadFile = async () => {
+  //   // Guard Clause 1: Ensure download storage checkbox is selected
+  //   if (!isDownloadStorageState) {
+  //     alert("⚠️ Please click the checkbox to enable download storage before downloading.");
+  //     return;
+  //   }
+
+  //   // Guard Clause 2: Ensure a valid file index exists
+  //   if (!gcpSelectedFiles || !gcpSelectedFiles[0]) {
+  //     alert("⚠️ No files selected for download compilation.");
+  //     return;
+  //   }
+
+  //   try {
+  //     setDownloading(true);
+
+  //     const fileKey = gcpSelectedFiles[0];
+
+  //     // Construct strict explicit integer structures for Django models
+  //     const payload = {
+  //       gcp_account_id: parseInt(gcpAccountId, 10),
+  //       gcp_bucket_id: parseInt(gcpbucketId, 10),
+  //       file_key: fileKey,
+  //       is_masked: Boolean(maskedData)
+  //     };
+
+  //     console.log("[GCP Download Pipeline] Dispatching task request payload...", payload);
+
+  //     const responseData = await apiRequest(
+  //       `${API_URL}/api/gcp/files/download/`,
+  //       "POST",
+  //       payload,
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           "Authorization": `Bearer ${token}`,
+  //           "X-CSRFToken": csrfToken
+  //         }
+  //       }
+  //     );
+
+  //     // Guard Clause: Validate that the backend returned a successful message
+  //     if (responseData && responseData.message) {
+  //       alert(`✅ ${responseData.message}! You can monitor progress inside your Tasks profile tab.`);
+  //     } else if (responseData && responseData.error) {
+  //       throw new Error(responseData.error);
+  //     } else {
+  //       throw new Error("No validation acknowledgment received from cloud task engine.");
+  //     }
+
+  //   } catch (error) {
+  //     console.error("[GCP Download Pipeline Error]:", error);
+
+  //     // Graceful production alert system parsing
+  //     if (error.message.includes("504") || error.message.toLowerCase().includes("timeout")) {
+  //       alert(
+  //         "⚠️ Gateway Timeout (504):\nThe server took too long to queue this task. " +
+  //         "Please check your Celery broker terminal logs to see if workers are hanging."
+  //       );
+  //     } else {
+  //       alert(`Failed to compile cloud download streams: ${error.message}`);
+  //     }
+  //   } finally {
+  //     setDownloading(false);
+  //   }
+  // };
+
+  const handleDownloadFile = async () => {
+    // Guard Clause 1: Check storage checkbox
+    if (!isDownloadStorageState) {
+      alert(
+        "⚠️ Please click the checkbox to enable download storage before downloading.",
+      );
+      return;
+    }
+
+    // Guard Clause 2: Ensure a file is selected
+    if (!gcpSelectedFiles || !gcpSelectedFiles[0]) {
+      alert("⚠️ No files selected for download compilation.");
+      return;
+    }
+
+    // Guard Clause 3: Ensure numeric IDs are clean numbers
+    const parsedAccountId = Number(gcpAccountId);
+    const parsedBucketId = Number(gcpbucketId);
+
+    if (
+      !parsedAccountId ||
+      isNaN(parsedAccountId) ||
+      !parsedBucketId ||
+      isNaN(parsedBucketId)
+    ) {
+      alert("⚠️ Invalid GCP Account ID or Bucket ID.");
+      return;
+    }
+
+    try {
+      setDownloading(true);
+
+      const selectedFile = gcpSelectedFiles[0];
+
+      // Payload strictly matching the required keys
+      const payload = {
+        gcp_account_id: parsedAccountId,
+        gcp_bucket_id: parsedBucketId,
+        file_key: selectedFile,
+        is_masked: Boolean(maskedData),
+      };
+
+      console.log("[GCP Download Pipeline] Sending payload:", payload);
+
+      const targetUrl = `${API_URL.replace(/\/$/, "")}/api/gcp/files/download/`;
+
+      const responseData = await apiRequest(targetUrl, "POST", payload, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+          "X-CSRFToken": csrfToken,
+        },
+      });
+
+      if (responseData && (responseData.task_id || responseData.message)) {
+        const taskIdMsg = responseData.task_id
+          ? ` (Task ID: ${responseData.task_id})`
+          : "";
+        // alert(`✅ ${responseData.message || "Download task queued successfully"}${taskIdMsg}! Check your Tasks tab for progress.`);
+        setGcpError(
+          `✅ ${responseData.message || "Download task queued successfully"}${taskIdMsg}! Check your Tasks tab for progress.`,
+        );
+        setIsPopupOpen(true);
+      } else if (responseData && responseData.error) {
+        throw new Error(responseData.error);
+      } else {
+        throw new Error("No response received from cloud task engine.");
+      }
+    } catch (error) {
+      console.error("[GCP Download Pipeline Error]:", error);
+      // alert(`Download task failed: ${error.message}`);
+      setGcpError(`Download task failed: ${error.message}`);
+      setIsPopupOpen(true);
+    } finally {
+      setDownloading(false);
+    }
+  };
 
   const toggleRowsDropdown = () => {
     setIsOpenRows((prev) => !prev);
@@ -523,9 +717,88 @@ const handleDownloadFile = async () => {
     setIsOpenRows(false);
   };
 
+  // const handleCheckboxChange = (selectedaccount) => {
+  //   const updatedaccountData = gcpAccountsData.map((account) => {
+  //     if (account === selectedaccount) {
+  //       return {
+  //         ...account,
+  //         is_download_storage: !account.is_download_storage,
+  //       };
+  //     } else {
+  //       return { ...account, is_download_storage: false };
+  //     }
+  //   });
+
+  //   setGcpAccountsData(updatedaccountData);
+  // };
+
+  const handleCheckboxChange = async () => {
+    // Only trigger API call when the checkbox is currently unchecked (false)
+    if (!isDownloadStorageState) {
+      try {
+        const payload = {
+          is_download_storage: true,
+        };
+
+        const response = await apiRequest(
+          `${API_URL}/api/core/gcp-accounts/${gcpAccountId}/`,
+          "PUT",
+          payload,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+              "X-CSRFToken": csrfToken,
+            },
+            credentials: "include",
+          },
+        );
+
+        // Extract updated value from response payload
+        if (response && response.data) {
+          setIsDownloadStorageState(Boolean(response.data.is_download_storage));
+        } else if (response && response.is_download_storage !== undefined) {
+          setIsDownloadStorageState(Boolean(response.is_download_storage));
+        }
+      } catch (error) {
+        console.error("Failed to set download storage state:", error);
+        alert(`Error updating storage setting: ${error.message || error}`);
+      }
+    } else {
+      // If clicking an already checked box to uncheck it
+      try {
+        const payload = {
+          is_download_storage: false,
+        };
+
+        const response = await apiRequest(
+          `${API_URL}/api/core/gcp-accounts/${gcpAccountId}/`,
+          "PUT",
+          payload,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+              "X-CSRFToken": csrfToken,
+            },
+            credentials: "include",
+          },
+        );
+
+        if (response && response.data) {
+          setIsDownloadStorageState(Boolean(response.data.is_download_storage));
+        } else if (response && response.is_download_storage !== undefined) {
+          setIsDownloadStorageState(Boolean(response.is_download_storage));
+        }
+      } catch (error) {
+        console.error("Failed to uncheck download storage state:", error);
+      }
+    }
+  };
+
   return (
     <div
-      className="w-[65vw] h-[80vh] flex flex-col px-6 z-1000"
+      className="w-[65vw] h-[87vh] flex flex-col px-6 z-1000 "
       style={{ userSelect: "none", WebkitUserSelect: "none" }}
     >
       {selectedFormat === "tabular" ? (
@@ -550,6 +823,10 @@ const handleDownloadFile = async () => {
               handleRowsPerPageChange={handleRowsPerPageChange}
               tableHeaders={tableHeaders}
               paginatedRows={paginatedRows}
+              selectedGcpAccountName={selectedGcpAccountName}
+              isDownloadStorageState={isDownloadStorageState}
+              handleCheckboxChange={handleCheckboxChange}
+              isDownloadStorage={isDownloadStorage}
             />
           </div>
         ) : (
@@ -558,7 +835,7 @@ const handleDownloadFile = async () => {
           </div>
         )
       ) : (
-        <div className="w-[60vw] h-[70vh] flex flex-col items-center mt-1 px-3 ">
+        <div className="w-[60vw] h-[70vh] flex flex-col  items-center mt-1 px-3 ">
           {/* Header Action Menu strip */}
           <div className="w-[60vw] h-[10vh] flex flex-row gap-4 px-2 items-center ">
             <div className="flex flex-row bg-white justify-between items-center w-72 h-9 rounded shadow-md shadow-slate-500/30 px-3">
@@ -620,18 +897,54 @@ const handleDownloadFile = async () => {
               </div>
             )}
             <div className="flex-grow"></div>
-            <button
+            {/* <button
               className="w-28 h-8 flex rounded-md cursor-pointer justify-center items-center font-medium text-[13px] bg-purpleshade1 text-white"
               onClick={handleDownloadFile}
             >
               Download
-            </button>
+            </button> */}
+            <div
+              title={
+                !isDownloadStorageState
+                  ? "Please click the checkbox to enable download"
+                  : ""
+              }
+              className="inline-block"
+            >
+              <button
+                className={`w-28 h-8 flex rounded-md justify-center items-center font-medium text-[13px] text-white transition-colors ${
+                  !isDownloadStorageState
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-purpleshade1 cursor-pointer hover:opacity-90"
+                }`}
+                onClick={handleDownloadFile}
+                disabled={!isDownloadStorageState}
+              >
+                Download
+              </button>
+            </div>
           </div>
 
-          <div className="w-[60vw] h-10 flex flex-row px-2 items-center text-black text-xs font-medium">
-            {gcpSelectedFiles &&
-              gcpSelectedFiles[0] &&
-              gcpSelectedFiles[0].split(/[\\/]/).pop()}
+          <div className="w-[60vw] h-16  py-1 flex flex-between px-2  items-center text-black text-xs font-medium">
+            <div className="w-1/2 flex">
+              {gcpSelectedFiles &&
+                gcpSelectedFiles[0] &&
+                gcpSelectedFiles[0].split(/[\\/]/).pop()}
+            </div>
+            {canSeeRealData && (
+              <div className="w-1/2 h-10  flex space-x-1 items-center justify-end">
+                
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    onChange={handleCheckboxChange}
+                    checked={isDownloadStorageState}
+                    className="ml-2 cursor-pointer"
+                  />
+                </div>
+                <div className="">{selectedGcpAccountName || "Loading..."}</div>
+              </div>
+            )}
           </div>
 
           {/* Flat Plain CSV View Text Area */}
@@ -689,7 +1002,7 @@ const handleDownloadFile = async () => {
       )}
 
       {gcpSelectedFiles && gcpSelectedFiles[0] && (
-        <div className="w-[60vw] h-14 flex flex-row items-center justify-between mt-4 px-2">
+        <div className="w-[60vw] h-14 flex flex-row items-center  justify-between mt-4 px-2">
           <div className="w-32 h-8 flex items-center justify-center flex-shrink-0">
             <button
               className="w-full h-full flex rounded-md cursor-pointer justify-center items-center font-medium text-[12px] bg-purpleshade1 text-white shadow-sm hover:opacity-90 transition-opacity"
@@ -705,8 +1018,13 @@ const handleDownloadFile = async () => {
           <div className="h-8 w-1 flex-shrink-0" aria-hidden="true" />
         </div>
       )}
+      <ErrorPopup
+        isOpen={isPopupOpen}
+        onClose={() => setIsPopupOpen(false)}
+        message={gcpError}
+      />
     </div>
   );
-}
+};
 
-export default GcpPreviewDataModal
+export default GcpPreviewDataModal;

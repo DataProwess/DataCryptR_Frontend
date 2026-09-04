@@ -13,6 +13,9 @@ const ContainerOptionsModal = ({
   onClose,
   selectedStorageAccount,
   containerName,
+  isDownloadStorage,
+  selectedStorageAccountId,
+  selectedAccountKey,
 }) => {
   const { token, csrfToken } = useAuth();
   const [error, setError] = useState("");
@@ -156,8 +159,11 @@ const ContainerOptionsModal = ({
         state: {
           containerData: container.id,
           selectedStorageAccount: selectedStorageAccount,
+          selectedStorageAccountId: selectedStorageAccountId, // Pass the prop here
           containerName: container.name,
           selectedOption: selectedOption,
+          isDownloadStorage: isDownloadStorage, // Pass the prop here
+          selectedAccountKey: selectedAccountKey, // Pass the prop here
         },
       });
     }

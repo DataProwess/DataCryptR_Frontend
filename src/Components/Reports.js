@@ -15,6 +15,7 @@ import ErrorPopup from "./ErrorPopup";
 import { apiRequest } from "./csrfUtils";
 import "./reports.css";
 import { useUI } from "./Context/UIContext";
+import { useAuth } from "./AuthContext";
 
 // const API_URL = "http://74.235.117.56:80"
 // const API_URL = "http://127.0.0.1:8000";
@@ -25,7 +26,8 @@ const getViewportDimensions = () => ({
 });
 
 const Reports = () => {
-  const {isDisabled,isBlurred } =useUI()
+  const { token, csrfToken, permissions } = useAuth();
+  const { isDisabled, isBlurred } = useUI();
   const [filteredStartDate, setFilteredStartDate] = useState("");
   const [filteredEndDate, setFilteredEndDate] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -33,8 +35,8 @@ const Reports = () => {
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [selectedNavbarOption, setSelectedNavbarOption] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [token, setToken] = useState(null);
-  const [csrfToken, setCsrfToken] = useState(null);
+  // const [token, setToken] = useState(null);
+  // const [csrfToken, setCsrfToken] = useState(null);
   const [data, setData] = useState([]);
   const [pageSize, setPageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
@@ -53,7 +55,7 @@ const Reports = () => {
   const [totalPages, setTotalPages] = useState(1);
   // eslint-disable-next-line
   const [isDataArray, setIsDataArray] = useState(false);
- 
+
   // eslint-disable-next-line
   const [columnData, setColumnData] = useState([]);
   const [selectedOption, setSelectedOption] = useState("Global Column Config");
@@ -65,7 +67,7 @@ const Reports = () => {
   const [showDownloadPopup, setShowDownloadPopup] = useState(false);
   // eslint-disable-next-line
   const [showDownloadOptions, setShowDownloadOptions] = useState(false);
-  const [permissions, setPermissions] = useState([]);
+  // const [permissions, setPermissions] = useState([]);
 
   // eslint-disable-next-line
   const [isZoomedIn, setIsZoomedIn] = useState(false);
@@ -82,7 +84,7 @@ const Reports = () => {
 
   // eslint-disable-next-line
   const [viewportDimensions, setViewportDimensions] = useState(
-    getViewportDimensions()
+    getViewportDimensions(),
   );
 
   // Update dimensions when the window is resized
@@ -93,11 +95,11 @@ const Reports = () => {
     // Set CSS variables dynamically
     document.documentElement.style.setProperty(
       "--vw",
-      `${window.innerWidth}px`
+      `${window.innerWidth}px`,
     );
     document.documentElement.style.setProperty(
       "--vh",
-      `${window.innerHeight}px`
+      `${window.innerHeight}px`,
     );
 
     // Add event listener
@@ -109,8 +111,6 @@ const Reports = () => {
     };
   }, []);
 
-
-
   // useEffect(() => {
   //   // Simulate a delay of 1000ms (1 second)
   //   const timer = setTimeout(() => {
@@ -121,28 +121,28 @@ const Reports = () => {
   //   return () => clearTimeout(timer);
   // }, []);
 
-  useEffect(() => {
-    // Fetch the token and set it in the state
-    const fetchToken = async () => {
-      try {
-        const fetchedToken = await authService.getToken();
-        const dataObject = JSON.parse(fetchedToken);
+  // useEffect(() => {
+  //   // Fetch the token and set it in the state
+  //   const fetchToken = async () => {
+  //     try {
+  //       const fetchedToken = await authService.getToken();
+  //       const dataObject = JSON.parse(fetchedToken);
 
-        // Access the token property from the data object
-        const token = dataObject.data.token;
-        const permissions = dataObject.data.permissions;
-        setToken(token);
-        setPermissions(permissions);
-        const csrfToken = authService.getCsrfToken();
-        setCsrfToken(csrfToken)
-      } catch (error) {
-        console.error("Token error:", error);
-      }
-    };
+  //       // Access the token property from the data object
+  //       const token = dataObject.data.token;
+  //       const permissions = dataObject.data.permissions;
+  //       setToken(token);
+  //       setPermissions(permissions);
+  //       const csrfToken = authService.getCsrfToken();
+  //       setCsrfToken(csrfToken)
+  //     } catch (error) {
+  //       console.error("Token error:", error);
+  //     }
+  //   };
 
-    // Call the fetchToken
-    fetchToken();
-  }, []);
+  //   // Call the fetchToken
+  //   fetchToken();
+  // }, []);
 
   const SeeUserReports = permissions.includes("SeeUserReports");
 
@@ -200,6 +200,7 @@ const Reports = () => {
 
   // eslint-disable-next-line
   const handlePopupClose = () => {
+    
     setShowDownloadPopup(false);
   };
   // eslint-disable-next-line
@@ -231,7 +232,7 @@ const Reports = () => {
       const response = await apiRequest(
         `${API_URL}/api/admin/download-column/`,
         "POST",
-        requestBody
+        requestBody,
       );
 
       // ✅ response is already a Blob
@@ -252,7 +253,6 @@ const Reports = () => {
     }
   };
 
-
   // eslint-disable-next-line
   const handleAddNewField = () => {
     if (!newFieldName.trim()) {
@@ -261,7 +261,7 @@ const Reports = () => {
 
     // Check if there is an existing row being edited
     const existingRowIndex = downloadConfigApiData.findIndex(
-      (column) => column.isEditing
+      (column) => column.isEditing,
     );
 
     if (existingRowIndex !== -1) {
@@ -328,8 +328,8 @@ const Reports = () => {
           headers: {
             // Don't set Content-Type for FormData, let browser set it
             Authorization: `Bearer ${token}`,
-          }
-        }
+          },
+        },
       );
 
       // Handle successful upload
@@ -345,7 +345,7 @@ const Reports = () => {
     size = pageSize,
     start = startDate,
     end = endDate,
-    query = userInputQuery
+    query = userInputQuery,
   ) => {
     try {
       setLoading(true);
@@ -361,7 +361,7 @@ const Reports = () => {
           start_date: start,
           end_date: end,
           search_query: query,
-        }
+        },
       );
 
       const data = responseData.data || [];
@@ -388,7 +388,7 @@ const Reports = () => {
   const handlePageSizeChange = (newSize) => {
     setPageSize(newSize);
     setCurrentPage(1); // Reset to the first page when changing page size
-    fetchUserReport(1, newSize, startDate, endDate,userInputQuery); // Pass newSize to fetchUserReport
+    fetchUserReport(1, newSize, startDate, endDate, userInputQuery); // Pass newSize to fetchUserReport
   };
 
   const fetchDownloadConfigData = async (searchQuery = "") => {
@@ -401,7 +401,7 @@ const Reports = () => {
       const downloadConfigData = await apiRequest(
         `${API_URL}/api/admin/list-global-column/`,
         "POST",
-        { search_query: searchQuery }
+        { search_query: searchQuery },
       );
 
       const data = downloadConfigData.data || [];
@@ -427,6 +427,7 @@ const Reports = () => {
     }
     // eslint-disable-next-line
   }, [token, selectedOption]);
+  
   // Ensure the page is updated when page size changes
   useEffect(() => {
     const newTotalPages = Math.ceil(data.length / pageSize);
@@ -444,7 +445,7 @@ const Reports = () => {
         pageSize,
         filteredStartDate,
         filteredEndDate,
-        userInputQuery
+        userInputQuery,
       );
       return nextPage;
     });
@@ -459,7 +460,7 @@ const Reports = () => {
         pageSize,
         filteredStartDate,
         filteredEndDate,
-        userInputQuery
+        userInputQuery,
       );
       return previousPage;
     });
@@ -486,65 +487,240 @@ const Reports = () => {
     if (window.confirm(`Are you sure you want to delete "${fieldName}"?`)) {
       // Remove the field from the state
       setDownloadConfigApiData((prevData) =>
-        prevData.filter((field) => field.id !== fieldId)
+        prevData.filter((field) => field.id !== fieldId),
       );
     }
   };
 
-  const handleDownload = async () => {
+  // const handleDownload = async () => {
+  //   setIsDownloaded(false);
+  //   const formattedStartDate = startDate ? startDate.format("YYYY-MM-DD") : "";
+  //   const formattedEndDate = endDate ? endDate.format("YYYY-MM-DD") : "";
+
+  //   let payloadStartDate = formattedStartDate;
+  //   let payloadEndDate = formattedEndDate;
+
+  //   if (formattedStartDate === formattedEndDate) {
+  //     payloadStartDate = "";
+  //     payloadEndDate = "";
+  //   }
+
+  //   try {
+  //     // ✅ SECURE - Using apiRequest utility with automatic CSRF handling
+  //     const apiResponse = await apiRequest(
+  //       `${API_URL}/api/admin/download-csv/`,
+  //       "POST",
+  //       {
+  //         start_date: payloadStartDate,
+  //         end_date: payloadEndDate,
+  //         search_query: searchQuery,
+  //       }
+  //     );
+
+  //     // Extracting keys ["user", "activity", "activity_time"] from the objects
+  //     const headers = Object.keys(apiResponse.data[0]).filter(
+  //       (key) => key !== "id"
+  //     );
+
+  //     const rowData = Object.values(apiResponse.data).map((obj) => {
+  //       return headers.map((key) => obj[key]);
+  //     });
+
+  //     // Create CSV content
+  //     const csvContent = [
+  //       headers.join(","), // Header row
+  //       ...rowData.map((row) => row.join(",")), // Data rows
+  //     ].join("\n");
+
+  //     // Create a Blob containing the CSV data
+  //     const blob = new Blob([csvContent], { type: "text/csv" });
+
+  //     // Create a download link
+  //     const link = document.createElement("a");
+  //     link.href = window.URL.createObjectURL(blob);
+  //     link.download = "user_report.csv";
+
+  //     // Trigger a click event to start the download
+  //     link.click();
+  //   } catch (error) {
+  //     console.error("Error downloading CSV:", error);
+  //   }
+  //   setIsDownloaded(true);
+  // };
+
+  //   const handleDownload = async () => {
+  //   setIsDownloaded(false);
+
+  //   const payload = {
+  //     start_date: filteredStartDate || "",
+  //     end_date: filteredEndDate || "",
+  //     search_query: userInputQuery || "",
+  //   };
+
+  //   console.log("Download payload:", payload);
+
+  //   try {
+  //     // const csrfToken = await getCSRFToken();
+  //     // const token = localStorage.getItem("token");
+
+  //     const response = await fetch(
+  //       `${API_URL}/api/admin/download-csv/`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${token}`,
+  //           "X-CSRFToken": csrfToken,
+  //         },
+  //         body: JSON.stringify(payload),
+  //       }
+  //     );
+
+  //     console.log("Download response status:", response.status);
+  //     console.log(
+  //       "Download response content-type:",
+  //       response.headers.get("content-type")
+  //     );
+
+  //     if (!response.ok) {
+  //       const errorText = await response.text();
+  //       console.error("Download failed:", errorText);
+  //       throw new Error(`Download failed: ${response.status}`);
+  //     }
+
+  //     // Backend is returning CSV/file data
+  //     const blob = await response.blob();
+
+  //     console.log("Downloaded blob size:", blob.size);
+  //     console.log("Downloaded blob type:", blob.type);
+
+  //     if (!blob.size) {
+  //       throw new Error("Downloaded file is empty.");
+  //     }
+
+  //     const url = window.URL.createObjectURL(blob);
+
+  //     const link = document.createElement("a");
+  //     link.href = url;
+  //     link.download = "user_report.csv";
+
+  //     document.body.appendChild(link);
+  //     link.click();
+
+  //     document.body.removeChild(link);
+
+  //     // Give browser time to start download before cleanup
+  //     setTimeout(() => {
+  //       window.URL.revokeObjectURL(url);
+  //     }, 1000);
+
+  //   } catch (error) {
+  //     console.error("Error downloading user report:", error);
+  //   } finally {
+  //     setIsDownloaded(true);
+  //   }
+  // };
+
+  const handleDownload = async (event) => {
+    // Prevent form submission/navigation if the button is inside a form
+    event?.preventDefault();
+    event?.stopPropagation();
+
+    // if (isDownloaded === false) {
+    //   return;
+    // }
+
     setIsDownloaded(false);
-    const formattedStartDate = startDate ? startDate.format("YYYY-MM-DD") : "";
-    const formattedEndDate = endDate ? endDate.format("YYYY-MM-DD") : "";
 
-    let payloadStartDate = formattedStartDate;
-    let payloadEndDate = formattedEndDate;
+    const payload = {
+      start_date: filteredStartDate || "",
+      end_date: filteredEndDate || "",
+      search_query: userInputQuery || "",
+    };
 
-    if (formattedStartDate === formattedEndDate) {
-      payloadStartDate = "";
-      payloadEndDate = "";
-    }
+    console.log("========== DOWNLOAD START ==========");
+    console.log("Download payload:", payload);
 
     try {
-      // ✅ SECURE - Using apiRequest utility with automatic CSRF handling
-      const apiResponse = await apiRequest(
-        `${API_URL}/api/admin/download-csv/`,
-        "POST",
-        {
-          start_date: payloadStartDate,
-          end_date: payloadEndDate,
-          search_query: searchQuery,
-        }
-      );
+      // const csrfToken = await getCSRFToken();
+      // const token = localStorage.getItem("token");
 
-      // Extracting keys ["user", "activity", "activity_time"] from the objects
-      const headers = Object.keys(apiResponse.data[0]).filter(
-        (key) => key !== "id"
-      );
+      console.log("CSRF token available:", !!csrfToken);
+      console.log("Auth token available:", !!token);
 
-      const rowData = Object.values(apiResponse.data).map((obj) => {
-        return headers.map((key) => obj[key]);
+      const response = await fetch(`${API_URL}/api/admin/download-csv/`, {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+          "X-CSRFToken": csrfToken,
+        },
+
+        credentials: "include",
+
+        cache: "no-store",
+
+        body: JSON.stringify(payload),
       });
 
-      // Create CSV content
-      const csvContent = [
-        headers.join(","), // Header row
-        ...rowData.map((row) => row.join(",")), // Data rows
-      ].join("\n");
+      console.log("Download response received");
+      console.log("Status:", response.status);
+      console.log("OK:", response.ok);
+      console.log("Content-Type:", response.headers.get("content-type"));
+      console.log(
+        "Content-Disposition:",
+        response.headers.get("content-disposition"),
+      );
 
-      // Create a Blob containing the CSV data
-      const blob = new Blob([csvContent], { type: "text/csv" });
+      if (!response.ok) {
+        const errorText = await response.text();
 
-      // Create a download link
+        console.error("Download API failed:", response.status, errorText);
+
+        throw new Error(`Download failed with status ${response.status}`);
+      }
+
+      console.log("Reading CSV response...");
+
+      const blob = await response.blob();
+
+      console.log("Blob received:", blob.size, blob.type);
+
+      if (!blob || blob.size === 0) {
+        throw new Error("Downloaded CSV is empty.");
+      }
+
+      const downloadUrl = window.URL.createObjectURL(blob);
+
       const link = document.createElement("a");
-      link.href = window.URL.createObjectURL(blob);
-      link.download = "user_report.csv";
 
-      // Trigger a click event to start the download
+      link.href = downloadUrl;
+      link.download = "user_activity_report.csv";
+
+      link.style.display = "none";
+
+      document.body.appendChild(link);
+
+      console.log("Triggering browser download...");
+
       link.click();
+
+      document.body.removeChild(link);
+
+      setTimeout(() => {
+        window.URL.revokeObjectURL(downloadUrl);
+        console.log("Download URL revoked");
+      }, 2000);
+
+      console.log("========== DOWNLOAD COMPLETE ==========");
     } catch (error) {
-      console.error("Error downloading CSV:", error);
+      console.error("========== DOWNLOAD ERROR ==========", error);
+
+      toast.error("Failed to download user activity report.");
+    } finally {
+      setIsDownloaded(true);
     }
-    setIsDownloaded(true);
   };
 
   const handleInputChange = (e) => {
@@ -669,14 +845,14 @@ const Reports = () => {
   const handleSearchClick = async () => {
     try {
       // Log the search query and parameters to debug
-setCurrentPage(1);
+      setCurrentPage(1);
       // Fetch the data based on the search query
       const result = await fetchUserReport(
         1, // Fetch data from the first page
         10, // Page size
         startDate, // Use the start date from state
         endDate, // Use the end date from state
-        userInputQuery // Use the current search input value
+        userInputQuery, // Use the current search input value
       );
 
       // Check if the result has any valid data
@@ -687,7 +863,7 @@ setCurrentPage(1);
           item &&
           Object.values(item).some(
             (value) =>
-              typeof value === "string" && value.includes(userInputQuery)
+              typeof value === "string" && value.includes(userInputQuery),
           )
         );
       });
@@ -738,7 +914,7 @@ setCurrentPage(1);
         value,
         filteredStartDate,
         filteredEndDate,
-        userInputQuery
+        userInputQuery,
       );
     }
     setIsOpen(false);
@@ -832,7 +1008,7 @@ setCurrentPage(1);
       pageSize,
       formattedStartDate,
       formattedEndDate,
-      userInputQuery
+      userInputQuery,
     );
     setShowDateFilter(false); // Close the date filter modal
   };
@@ -857,7 +1033,7 @@ setCurrentPage(1);
     setEndDate(""); // Clear end date
     setFilteredStartDate("");
     setFilteredEndDate("");
-    setCurrentPage(1)
+    setCurrentPage(1);
     // Reset the selection range to a default (e.g., current date)
     setSelectionRange({
       startDate: new Date(), // Reset to current date
@@ -871,12 +1047,11 @@ setCurrentPage(1);
       10, // Default page size
       "", // Pass empty string for start date (no date filter)
       "", // Pass empty string for end date (no date filter)
-      userInputQuery // Keep the user input query if it exists
+      userInputQuery, // Keep the user input query if it exists
     );
 
     setShowDateFilter(false); // Hide date filter modal
     setPageSize(10);
-   
   };
   // Open the date filter modal
   const openDateFilter = () => {
@@ -967,7 +1142,7 @@ setCurrentPage(1);
     (parseFloat(navHeight) + parseFloat(navMarginTop))
   ).toFixed(2)}`;
   const sidebarWidth = `${(width * 0.06).toFixed(2)}`;
- 
+
   const sidebarLMargin = `${(width * 0.01).toFixed(2)}`;
   const containerMarginLeft = `${(width * 0.081).toFixed(2)}`;
   const cMarginLeft = `${(
@@ -976,24 +1151,26 @@ setCurrentPage(1);
   ).toFixed(2)}px`;
   const subContainerWidth = `${(containerWidth * 0.95).toFixed(2)}`;
   const subContainerHeight = `${(containerHeight * 0.8).toFixed(2)}`;
- 
+
   const listItemsContainerWidth = `${(subContainerWidth * 0.2).toFixed(2)}`;
   const listItemsContainerHeight = `${(containerHeight * 0.8).toFixed(2)}`;
   const dataContainerWidth = `${subContainerWidth - listItemsContainerWidth}`;
   const subDataContainerWidth = `${(dataContainerWidth * 0.99).toFixed(2)}`;
- 
+
   const tableContainerWidth = `${(subDataContainerWidth * 0.98).toFixed(2)}`;
   const tableContainerHight = `${(subContainerHeight * 0.84).toFixed(2)}`;
 
-  
   return (
     <div
       className="bg-primary"
-      style={{ width: `${width}px`, height: `${height}px`,
-      userSelect: "none",
-      WebkitUserSelect: "none" /* Safari */,
-      MozUserSelect: "none" /* Firefox */,
-      msUserSelect: "none", }}
+      style={{
+        width: `${width}px`,
+        height: `${height}px`,
+        userSelect: "none",
+        WebkitUserSelect: "none" /* Safari */,
+        MozUserSelect: "none" /* Firefox */,
+        msUserSelect: "none",
+      }}
     >
       <div
         className="flex flex-col items-center "
@@ -1031,7 +1208,7 @@ setCurrentPage(1);
           >
             <Sidebar />
           </div>
-         
+
           <div
             className=" bg-newgray flex flex-col  rounded-lg items-center  shadow-md shadow-slate-500/30 "
             style={{
@@ -1216,12 +1393,12 @@ setCurrentPage(1);
                       <div
                         className={`flex flex-row mt-2 justify-between p-4 items-center bg-newgray rounded-lg shadow-md shadow-slate-500/30 
         ${showChatbot ? "blur-effect" : ""} ${
-                          showProfileModal ? "blur-effect" : ""
-                        }${isTimezoneModalOpen ? "blur-effect" : ""}
+          showProfileModal ? "blur-effect" : ""
+        }${isTimezoneModalOpen ? "blur-effect" : ""}
         ${showDownloadPopup ? "blur-effect" : ""}`}
                         style={{
                           width: `${(subDataContainerWidth * 0.95).toFixed(
-                            2
+                            2,
                           )}px`,
                           height: `${(subContainerHeight * 0.11).toFixed(2)}px`,
                         }}
@@ -1389,10 +1566,10 @@ setCurrentPage(1);
         ${showDownloadPopup ? "blur-effect" : ""}`}
                           style={{
                             width: `${(tableContainerWidth * 0.97).toFixed(
-                              2
+                              2,
                             )}px`,
                             height: `${(tableContainerHight * 0.09).toFixed(
-                              2
+                              2,
                             )}px`,
                             position: "relative",
                           }}
@@ -1419,10 +1596,10 @@ setCurrentPage(1);
                           className="flex flex-col rounded-b-xl shadow-md shadow-slate-500/30 bg-white"
                           style={{
                             width: `${(tableContainerWidth * 0.97).toFixed(
-                              2
+                              2,
                             )}px`,
                             height: `${(tableContainerHight * 0.8).toFixed(
-                              2
+                              2,
                             )}px`,
                             overflow: "hidden",
                           }}
@@ -1436,10 +1613,10 @@ setCurrentPage(1);
           ${showDownloadPopup ? "blur-effect" : ""}`}
                             style={{
                               width: `${(tableContainerWidth * 0.97).toFixed(
-                                2
+                                2,
                               )}px`,
                               height: `${(tableContainerHight * 0.7).toFixed(
-                                2
+                                2,
                               )}px`,
                               scrollbarWidth: "thin",
                             }}
@@ -1476,7 +1653,7 @@ setCurrentPage(1);
                                             handleDownloadConfigFieldChange(
                                               index,
                                               "name",
-                                              e.target.value
+                                              e.target.value,
                                             )
                                           }
                                           readOnly
@@ -1493,7 +1670,7 @@ setCurrentPage(1);
                                               handleDownloadConfigFieldChange(
                                                 index,
                                                 "is_masked",
-                                                isChecked ? "true" : "false"
+                                                isChecked ? "true" : "false",
                                               )
                                             }
                                             disabled={true}
@@ -1524,7 +1701,7 @@ setCurrentPage(1);
                         className=" flex flex-row mt-2 rounded-t-md items-center px-4 bg-newgray rounded-lg shadow-md shadow-slate-500/30"
                         style={{
                           width: `${(subDataContainerWidth * 0.95).toFixed(
-                            2
+                            2,
                           )}px`,
                           height: `${(subContainerHeight * 0.11).toFixed(2)}px`,
                         }}
@@ -1554,13 +1731,7 @@ setCurrentPage(1);
                                 setUserInputQuery(""); // Clear the input field
                                 setPageSize(10);
                                 setCurrentPage(1);
-                                fetchUserReport(
-                                  1,
-                                  10,
-                                  startDate,
-                                  endDate,
-                                  ""
-                                );
+                                fetchUserReport(1, 10, startDate, endDate, "");
                                 // fetchUserReport();
                               }}
                             >
@@ -1624,6 +1795,7 @@ setCurrentPage(1);
                         <div className="flex-grow"></div>
 
                         <button
+                          type="button"
                           className={`w-24 h-7 flex flex-row px-4 rounded-md cursor-pointer justify-center items-center font-medium text-xs bg-purpleshade1 text-white
         ${showChatbot ? "blur-effect pointer-events-none" : ""} 
         ${showProfileModal ? "blur-effect pointer-events-none" : ""}
@@ -1726,10 +1898,10 @@ setCurrentPage(1);
         ${isTimezoneModalOpen ? "blur-effect pointer-events-none" : ""}`}
                           style={{
                             width: `${(tableContainerWidth * 0.97).toFixed(
-                              2
+                              2,
                             )}px`,
                             height: `${(tableContainerHight * 0.1).toFixed(
-                              2
+                              2,
                             )}px`,
                           }}
                         >
@@ -1756,27 +1928,25 @@ setCurrentPage(1);
                           className="flex flex-col adjusted-margin-top  rounded-b-xl shadow-md shadow-slate-500/30 "
                           style={{
                             width: `${(tableContainerWidth * 0.97).toFixed(
-                              2
+                              2,
                             )}px`,
                             height: `${(tableContainerHight * 0.8).toFixed(
-                              2
+                              2,
                             )}px`,
                           }}
                         >
                           <div
                             className={`overflow -y-auto overflow-x-hidden
         ${showChatbot ? "blur-effect pointer-events-none" : ""} ${
-                              showProfileModal
-                                ? "blur-effect pointer-events-none"
-                                : ""
-                            }
+          showProfileModal ? "blur-effect pointer-events-none" : ""
+        }
         ${isTimezoneModalOpen ? "blur-effect pointer-events-none" : ""}`}
                             style={{
                               width: `${(tableContainerWidth * 0.97).toFixed(
-                                2
+                                2,
                               )}px`,
                               height: `${(tableContainerHight * 0.74).toFixed(
-                                2
+                                2,
                               )}px`,
                               scrollbarWidth: "thin",
                             }}
@@ -1812,19 +1982,20 @@ setCurrentPage(1);
                                         <td className="w-[14%] font-light text-left text-[11px] px-3 overflow-ellipsis whitespace-nowrap overflow-hidden">
                                           {item.activity}
                                         </td>
-                                          <td className="w-[40%] font-light text-left text-[11px] px-3 overflow-ellipsis whitespace-nowrap overflow-hidden">
-                                            {item.activity_info && typeof item.activity_info === "object"
-                                              ? Object.entries(item.activity_info)
+                                        <td className="w-[40%] font-light text-left text-[11px] px-3 overflow-ellipsis whitespace-nowrap overflow-hidden">
+                                          {item.activity_info &&
+                                          typeof item.activity_info === "object"
+                                            ? Object.entries(item.activity_info)
                                                 .map(([k, v]) => `${k}: ${v}`)
                                                 .join(", ")
-                                              : item.activity_info}
-                                          </td>
+                                            : item.activity_info}
+                                        </td>
 
                                         <td className="w-[13%] font-light text-left text-[11px]  overflow-ellipsis whitespace-nowrap overflow-hidden">
                                           {item.activity_time}
                                         </td>
                                       </tr>
-                                    ) : null
+                                    ) : null,
                                   )
                                 )}
                               </tbody>
@@ -1918,7 +2089,7 @@ setCurrentPage(1);
                         />
                       </svg>
                     </button> */}
-                     <div className="relative inline-block ">
+                  <div className="relative inline-block ">
                     <button
                       id="pageSizeDropdownButton"
                       onClick={toggleDropdown}

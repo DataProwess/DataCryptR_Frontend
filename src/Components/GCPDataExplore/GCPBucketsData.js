@@ -10,6 +10,7 @@ const GCPBucketsData = ({
   selectedOption,
   selectedgcpId,
   selectedGcpAccountName,
+  isDownloadStorage,
  
 }) => {
     console.log("gcp",selectedgcpId,selectedGcpAccountName)
@@ -121,6 +122,7 @@ const handleGcpBucketClick = async(gcpbucket) => {
             gcpbucketName: gcpbucket.name,
             selectedOption,
             selectedGcpAccountName,
+            isDownloadStorage,
             selectedgcpId,
             folders,
             blobs
@@ -133,6 +135,7 @@ const handleGcpBucketClick = async(gcpbucket) => {
               gcpbucketName: gcpbucket.name,
               selectedOption: selectedOption,
               selectedGcpAccountName: selectedGcpAccountName,
+              isDownloadStorage: isDownloadStorage,
               initialFiles: blobs,
               initialFolders: folders,
              gcpAccountId: selectedgcpId ||  1,

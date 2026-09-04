@@ -9,6 +9,7 @@ const S3BucketsData = ({
   selectedS3storageAccountId,
   selectedS3AccountName,
   selectedOption,
+  isDownloadStorage,
 }) => {
   console.log("1",selectedS3storageAccountId,selectedS3AccountName)
   const { token, csrfToken } = useAuth();
@@ -191,6 +192,7 @@ const S3BucketsData = ({
         bucketName: bucket.name,
         selectedOption,
         selectedS3AccountName,
+        isDownloadStorage,
         selectedS3storageAccountId,
         folders,
         blobs
@@ -203,6 +205,7 @@ const S3BucketsData = ({
           bucketName: bucket.name,
           selectedOption: selectedOption,
           selectedS3AccountName: selectedS3AccountName,
+          isDownloadStorage: isDownloadStorage,
           initialFiles: blobs,
           initialFolders: folders,
          s3AccountId: selectedS3storageAccountId ||  1,

@@ -1,0 +1,227 @@
+ .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color: #269900;
+        --container-padding:0.5rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width: 100%;
+       --conainer-gap:0.25rem;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:1.5rem;
+    --container-padding-y:0.5rem;
+    --data-container-width:100%;
+    --data-container-height:90%;
+    --reports-options-width:20%;
+    /* --reports-options-width:20rem; */
+    /* --reports-options-height:28rem; */
+    --reports-options-height:96%;
+    
+    --options-data-width: 98%;
+    --options-data-height:95%;
+    /* --options-data-width:14rem; */
+    /* --options-data-height:27rem; */
+    --options-wrapper-padding-x:1rem;
+    --options-wrapper-padding-y:1.25rem;
+    --options-data-view-width:100%;
+    --options-data-view-height:96%;
+    /* --options-data-view-width:80rem; */
+   /* --options-data-view-height:28rem; */
+   /* --global-column-config-container-height:27rem; */
+   --global-column-config-container-height:98%;
+   --global-column-config-container-width:100%;
+   --global-search-container-width:96%;
+   --global-search-container-height:3rem;
+    --box-width:14rem;
+    --box-height:2rem;
+    --options-item-width:100%;
+    --options-item-height:2.25rem;
+   --global-Column-config-data-container-width:98%;
+    --global-Column-config-data-container-height:83%;
+    --global-Column-config-table-header-width:98%;
+    --global-Column-config-table-header-height:9.5%;
+    --global-Column-config-table-container-width:98%;
+    --global-Column-config-table-container-height:83%;
+     --global-Column-config-table-data-width:100%;
+    --global-Column-config-table-data-height:95%;
+    --adjusted-margin-top:0.5rem;
+    --search-bar-width:17rem;
+    --search-bar-height:2rem;
+    --button-width:8rem;
+    --button-height:2rem;
+    --button-container-width: 100%;
+    --button-container-height: 3rem;
+    --page-button-container-width:100%;
+    --page-button-container-height:2rem;
+
+
+    
+   
+
+ }
+
+ .reports-container .reports-container-data {
+ @apply w-screen h-screen flex flex-col overflow-hidden;
+ /* background-color: var(--bg-color) !important; */
+}
+
+.reports-container .vertical-gap{
+    gap: var(--vertical-gap);
+}
+.reports-container .container-padding{
+    padding: var(--container-padding);
+}
+.reports-container .options-wrapper-padding{
+    padding: var( --options-wrapper-padding-y) var(--options-wrapper-padding-x) !important;
+}
+
+.reports-container .reports-navbar-wrapper {
+  @apply w-full flex-shrink-0; 
+  height: var(--navbar-height); 
+  transition: height 0.15s ease-out;
+}
+
+
+
+.reports-container .reports-container-wrapper {
+  display: flex !important;
+  flex-direction: row !important;
+  /* Forces components to inherit vertical heights evenly */
+  width: 100%;
+  flex: 1 1 0%;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  /* background-color: var(--bg-color) !important; */
+}
+.reports-container .layout-gap{
+    gap: var(--layout-gap);
+}
+
+.reports-container .reports-Sidebar-wrapper {
+   @apply flex-shrink-0 ;
+  width: var(--sidebar-width);
+  height:99%;
+  /* background-color: var(--bg-color) !important;  */
+  transition: width 0.15s ease-out, background-color 0.15s ease-out;
+}
+
+ .reports-container .subcontainer-wrapper{
+  display: flex !important;
+  flex-direction: column !important;  
+  flex: 1 !important;            
+   width: 100% !important;               
+  height: 99% !important;             
+  min-width: 0 !important;            
+  padding: var(--padding-y) var(--padding-x) !important;       
+  /* background-color: var(--bg-color) !important;  */
+  border-radius: 0.5rem;              
+  overflow: hidden;
+  transition: background-color 0.15s ease-out;
+}
+
+.reports-container .reports-back-dashboard{
+ width: var(--back-dashboard-width);
+  height: var(--back-dashboard-height) !important;
+  transition: width 0.25s ease-out, height 0.15s ease-out;
+}
+
+.reports-container .padding{
+    padding: var(--container-padding-y) var(--container-padding-x) !important;
+}
+
+.reports-container .reports-options-view{
+    display: flex !important;
+  flex-direction: column !important;
+  width: 100%;
+  flex: 1 1 0%;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+.reports-container .reports-options-wrapper{
+    min-width: 0;
+    width: var(--reports-options-width);
+    height: var(--reports-options-height);
+}
+
+.reports-container .options-data-wrapper{
+    width: var(--options-data-width);
+    height: var(--options-data-height);
+    /* background-color: var(--bg-color) !important;  */
+}
+
+.reports-container .options-data-view{
+    width: var(--options-data-view-width);
+    height: var(--options-data-view-height);
+     flex: 1 1 0%;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.reports-container .box-layout{
+    width: var(--box-width);
+    height: var(--box-height);
+}
+
+.reports-container .options-data-container{
+    width: var(--options-data-container-width);
+    height: var(--options-data-container-height);
+}
+.reports-container .reports-data-container{
+    width: var(--data-container-width);
+    height: var(--data-container-height);
+}
+.reports-container .options-item{
+    width: var(--options-item-width);
+    height: var(--options-item-height);
+}
+.reports-container .global-column-config-container{
+    width: var(--global-column-config-container-width);
+    height: var(--global-column-config-container-height);
+}
+.reports-container .global-search-container{
+    width: var(--global-search-container-width);
+    height: var(--global-search-container-height);
+}
+ .reports-container .global-Column-config-data-container{
+    width: var( --global-Column-config-data-container-width);
+    height: var( --global-Column-config-data-container-height);
+ }
+ .reports-container .global-Column-config-table-container{
+    width: var(--global-Column-config-table-container-width);
+    height: var(--global-Column-config-table-container-height);
+ }
+
+ .reports-container .global-Column-config-table-header{
+    width: var( --global-Column-config-table-header-width);
+    height: var( --global-Column-config-table-header-height);
+ }
+
+.reports-container .global-Column-config-table-data{
+    width: var(--global-Column-config-table-data-width);
+    height: var(--global-Column-config-table-data-height);
+ }
+ .reports-container .adjusted-margin-top{
+    margin-top: var(--adjusted-margin-top);
+ }
+ .reports-container .search-bar{
+    width: var(--search-bar-width);
+    height: var(--search-bar-height);
+ }
+ .reports-container .button{
+    width: var(--button-width);
+    height: var(--button-height);
+ }
+ 
+ .reports-container .layout-page-container {
+  width: var(--button-container-width);
+  height: var(--button-container-height);
+   /* overflow-x: auto;
+   scrollbar-width: thin;  */
+    /* background-color: var(--bg-color) !important;  */
+  transition: width 0.25s ease-out, height 0.15s ease-out;
+}
+.reports-container .page-button-container {
+width: var(--page-button-container-width);
+height: var(--page-button-container-height);
+}

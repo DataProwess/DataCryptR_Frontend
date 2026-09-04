@@ -528,9 +528,9 @@ input:checked {
 
 .modal-custom-dimensions {
   width: 65vw;
-  height: 87vh;
+  height: 95vh;
   /* margin-left: 2vw; */
-  margin-top: 6vh;
+  margin-top: 2vh;
 }
 .addedit-user-dimensions {
   width: 66vw;

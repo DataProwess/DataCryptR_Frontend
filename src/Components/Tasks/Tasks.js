@@ -495,6 +495,7 @@ const Tasks = () => {
                               </tr>
                             ) : (
                               data.map((task) =>
+                                
                                 task.task_name || task.status ? (
                                   <tr key={task.id} title={task.help_text}>
                                     <td className="w-[55%] font-light text-[11px] text-center px-10 overflow-ellipsis whitespace-nowrap overflow-hidden">

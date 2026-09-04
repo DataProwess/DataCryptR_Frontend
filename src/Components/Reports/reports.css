@@ -1,0 +1,3308 @@
+/* 25% */
+@media (min-height: 2000px) and (max-height: 5000px) {
+    .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --conainer-gap:0.25rem;
+        --back-dashboard-width:100%;
+        --column1-width:60%;
+        --column2-width:40%;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:40rem;
+    --reports-options-height:145rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1.25rem;
+    --box-width:36rem;
+    --box-height:2rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:20%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.25rem;
+    --options-data-width:38rem;
+   --options-data-height:145rem;
+   --options-data-view-width:100%;
+   --options-data-view-height:145rem;
+   --options-item-width:13rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:140rem;
+    --button-container-width:100%;
+    --button-container-height:3rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:135rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:130rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:110rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:100rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:20rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 15rem;
+    --bg-color: #00cc
+} 
+}
+/* 33% */
+ @media (min-height: 1400px) and (max-height: 2000px) {
+      .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --conainer-gap:0.25rem;
+        --back-dashboard-width:100%;
+        --column1-width:60%;
+        --column2-width:40%;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:20rem;
+    --reports-options-height:900rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1.25rem;
+    --box-width:14rem;
+    --box-height:2rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:20%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.25rem;
+    --options-data-width:14rem;
+   --options-data-height:100rem;
+   --options-data-view-width:100%;
+   --options-data-view-height:110rem;
+   --options-item-width:13rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:100rem;
+    --button-container-width:100%;
+    --button-container-height:3rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:100rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:95rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:80rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:78rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:20rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 15rem;
+    --bg-color: #00cccc;
+}
+ }
+ /* 50% */
+
+@media (min-height: 1050px) and (max-height: 1400px) {
+    .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --conainer-gap:0.25rem;
+        --back-dashboard-width:100%;
+        --column1-width:60%;
+        --column2-width:40%;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:22rem;
+    --reports-options-height:70rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1.25rem;
+    --box-width:15rem;
+    --box-height:2rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:20%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.25rem;
+    --options-data-width:16rem;
+   --options-data-height:65rem;
+   --options-data-view-width:100%;
+   --options-data-view-height:70rem;
+   --options-item-width:18rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:70rem;
+    --button-container-width:100%;
+    --button-container-height:3rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:65rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:60rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:20rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:18rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:20rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+    --bg-color: #00cccc;
+}
+
+}
+/* 67% */
+@media (min-height: 950px) and (max-height: 1050px) and (min-width: 1201px) and (max-width: 2500px) {
+      .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --conainer-gap:0.25rem;
+        --back-dashboard-width:100%;
+        --column1-width:60%;
+        --column2-width:40%;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:23rem;
+    --reports-options-height:48rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1.25rem;
+    --box-width:15rem;
+    --box-height:2rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:20%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.25rem;
+    --options-data-width:17rem;
+   --options-data-height:45rem;
+   --options-data-view-width:100%;
+   --options-data-view-height:48rem;
+   --options-item-width:13rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:48rem;
+    --button-container-width:100%;
+    --button-container-height:3rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:45rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:40rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:38rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:36rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:20rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+    --bg-color: #333399;
+}
+
+}
+
+@media (min-height: 950px) and (max-height: 1050px) and (min-width: 500px) and (max-width: 1200px) {
+      .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --container-gap:0.25rem;
+        --back-dashboard-width:100%;
+        --column1-width:60%;
+        --column2-width:40%;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+     --reports-options-width:20rem;
+    --reports-options-height:48rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1.25rem;
+    --box-width:13rem;
+    --box-height:2rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:20%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.25rem;
+    --options-data-width:14rem;
+   --options-data-height:45rem;
+   --options-data-view-width:100%;
+   --options-data-view-height:48rem;
+   --options-item-width:13rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:48rem;
+    --button-container-width:100%;
+    --button-container-height:3rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:45rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:40rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:38rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:36rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:20rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+    --bg-color: #bf00ff;
+}
+
+}
+@media (min-height: 950px) and (max-height: 1050px) and (min-width: 200px) and (max-width: 500px) {
+      .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width:100%;
+      --conainer-gap:0.25rem;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:20rem;
+    --reports-options-height:52rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1.25rem;
+    --box-width:14rem;
+    --box-height:2rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:20%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.25rem;
+    --options-data-width:14rem;
+   --options-data-height:50rem;
+   --options-data-view-width:100%;
+   --options-data-view-height:52rem;
+   --options-item-width:13rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:40rem;
+    --button-container-width:100%;
+    --button-container-height:3rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:45rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:40rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:38rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:36rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:20rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+    --bg-color: #bf00ff;
+}
+
+}
+
+/* 75% */
+@media (min-height: 900px) and (max-height: 950px) and (min-width: 1200px) and (max-width: 2000px) {
+
+    .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width:100%;
+       --conainer-gap:0.25rem;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:22rem;
+    --reports-options-height:42rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1.25rem;
+    --box-width:16rem;
+    --box-height:2rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:20%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.25rem;
+    --options-data-width:18rem;
+   --options-data-height:42rem;
+   --options-data-view-width:100%;
+   --options-data-view-height:42rem;
+   --options-item-width:17rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:38rem;
+    --button-container-width:100%;
+    --button-container-height:3rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:40rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:35rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:33rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:31rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:20rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+     --bg-color: #e60000;
+}
+
+}
+@media (min-height: 900px) and (max-height: 950px) and (min-width: 700px) and (max-width: 1200px) {
+
+
+    .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width:100%;
+        --conainer-gap:0.25rem;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:20rem;
+    --reports-options-height:42rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1.25rem;
+    --box-width:14rem;
+    --box-height:2.25rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:30%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.25rem;
+    --options-data-width:15rem;
+   --options-data-height:40rem;
+   --options-data-view-width:100%;
+   --options-data-view-height:42rem;
+   --options-item-width:14rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:38rem;
+    --button-container-width:100%;
+    --button-container-height:3rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:38rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:38rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:35rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:35rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:20rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+    
+    --bg-color: #d56000;
+    }
+}
+
+@media (min-height: 900px) and (max-height: 950px) and (min-width: 300px) and (max-width: 700px) {
+    .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width:100%;
+       --conainer-gap:0.25rem;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:15rem;
+    --reports-options-height:45rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1.25rem;
+    --box-width:8rem;
+    --box-height:3rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:20%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:1rem;
+    --header-padding-y:0.25rem;
+    --options-data-width:8rem;
+   --options-data-height:45rem;
+   --options-data-view-width:100%;
+   --options-data-view-height:45rem;
+   --options-item-width:13rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:40rem;
+    --button-container-width:100%;
+    --button-container-height:3rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:38rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:38rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:38rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:36rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:20rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+    --bg-color: #d56;
+    }
+}
+/* 80% */
+@media (min-height: 800px) and (max-height: 900px) and (min-width: 1000px) and (max-width: 1920px) {
+    .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width:100%;
+        --conainer-gap:0.25rem;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:20rem;
+    --reports-options-height:42rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1.25rem;
+    --box-width:14rem;
+    --box-height:2rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:20%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.25rem;
+    --options-data-width:14rem;
+   --options-data-height:40rem;
+   --options-data-view-width:100%;
+   --options-data-view-height:42rem;
+   --options-item-width:13rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:40rem;
+    --button-container-width:100%;
+    --button-container-height:3rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:35rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:35rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:33rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:31rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:20rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+     --bg-color: #990099;
+}
+
+}
+@media (min-height: 800px) and (max-height: 900px) and (min-width: 300px) and (max-width: 1000px) {
+      .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width:100%;
+       --conainer-gap:0.25rem;
+        
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:14rem;
+    --reports-options-height:42rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1.25rem;
+    --box-width:10rem;
+    --box-height:2.25rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:40%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.25rem;
+    --options-data-width:10rem;
+   --options-data-height:40rem;
+   --options-data-view-width:100%;
+   --options-data-view-height:42rem;
+   --options-item-width:10rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:40rem;
+    --button-container-width:100%;
+    --button-container-height:3rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:35rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:35rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:33rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:31rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:20rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+    --bg-color: #7399;
+}
+    
+}
+/* 90% */
+@media (min-height: 750px) and (max-height: 800px) and (min-width: 1200px) and (max-width: 1920px) {
+    .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width:100%;
+       --conainer-gap:0.25rem;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:20rem;
+    --reports-options-height:35rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1.25rem;
+    --box-width:14rem;
+    --box-height:2rem;
+    --container-padding-y:0.5rem;
+    --edit-button-width:2rem;
+    --edit-button-height:1rem;
+     --column1-width:40%;
+        --column2-width:40%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.25rem;
+    --options-data-width:14rem;
+   --options-data-height:35rem;
+   --options-data-view-width:100%;
+   --options-data-view-height:35rem;
+   --options-item-width:13rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:33rem;
+    --button-container-width:100%;
+    --button-container-height:3rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:28rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:26rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:24rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:22rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:20rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+    --bg-color: #ff1a75;
+}
+}
+
+@media (min-height: 750px) and (max-height: 800px) and (min-width: 1000px) and (max-width: 1200px) {
+     .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width:100%;
+        --conainer-gap:0.25rem;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:20rem;
+    --reports-options-height:35rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1.25rem;
+    --box-width:14rem;
+    --box-height:2rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:40%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.25rem;
+    --options-data-width:14rem;
+   --options-data-height:35rem;
+   --options-data-view-width:100%;
+   --options-data-view-height:35rem;
+   --options-item-width:13rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:33rem;
+    --button-container-width:100%;
+    --button-container-height:3rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:28rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:26rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:24rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:22rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:20rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+    --bg-color: #ff4d94;
+}
+}
+
+@media (min-height: 750px) and (max-height: 800px) and (min-width: 750px) and (max-width: 1000px) {
+     .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width:100%;
+       --conainer-gap:0.25rem;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:15rem;
+    --reports-options-height:35rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1.25rem;
+    --box-width:14rem;
+    --box-height:2rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:40%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.25rem;
+    --options-data-width:14rem;
+   --options-data-height:35rem;
+   --options-data-view-width:100%;
+   --options-data-view-height:35rem;
+   --options-item-width:13rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:33rem;
+    --button-container-width:100%;
+    --button-container-height:3rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:28rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:26rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:24rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:22rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:20rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+     --bg-color: #ff80b3;
+}
+}
+@media (min-height: 750px) and (max-height: 800px) and (min-width: 700px) and (max-width: 750px) {
+    .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width:100%;
+       --conainer-gap:0.25rem;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:12rem;
+    --reports-options-height:35rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1.25rem;
+    --box-width:10rem;
+    --box-height:2.25rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:40%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.25rem;
+    --options-data-width:10rem;
+   --options-data-height:35rem;
+   --options-data-view-width:100%;
+   --options-data-view-height:35rem;
+   --options-item-width:10rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:33rem;
+    --button-container-width:100%;
+    --button-container-height:3rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:28rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:26rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:24rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:22rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:20rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+    --bg-color: #ffcce0;
+}
+}
+@media (min-height: 750px) and (max-height: 800px) and (min-width: 300px) and (max-width: 700px) {
+      .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width:100%;
+       --conainer-gap:0.25rem;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:10rem;
+    --reports-options-height:35rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1.25rem;
+    --box-width:8rem;
+    --box-height:2.75rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:40%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.25rem;
+    --options-data-width:8rem;
+   --options-data-height:35rem;
+   --options-data-view-width:100%;
+   --options-data-view-height:35rem;
+   --options-item-width:8rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:33rem;
+    --button-container-width:100%;
+    --button-container-height:3rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:28rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:26rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:24rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:22rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:20rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+    --bg-color: #99003d;
+      }
+}
+
+/* 100% */
+@media (min-height: 650px) and (max-height: 750px) and (min-width: 1200px) and (max-width: 1920px) { 
+.reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width: 100%;
+       --conainer-gap:0.25rem;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:20rem;
+    --reports-options-height:29rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1rem;
+    --box-width:13rem;
+    --box-height:2rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:20%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.25rem;
+    --options-data-width:14rem;
+   --options-data-height:27rem;
+   --options-data-view-width:80rem;
+   --options-data-view-height:29rem;
+   --options-item-width:12rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:29rem;
+    --button-container-width:100%;
+    --button-container-height:3rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:25rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:21rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:20rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:18rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:20rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+    --bg-color: #269900;
+}
+ }
+ @media (min-height: 650px) and (max-height: 750px) and (min-width: 1000px) and (max-width: 1200px) {
+    .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width: 100%;
+         --conainer-gap:0.25rem;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:20rem;
+    --reports-options-height:29rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1rem;
+    --box-width:13rem;
+    --box-height:2rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:20%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:1rem;
+    --header-padding-y:0.25rem;
+    --options-data-width:14rem;
+   --options-data-height:27rem;
+   --options-data-view-width:80rem;
+   --options-data-view-height:29rem;
+   --options-item-width:13rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:29rem;
+    --button-container-width:100%;
+    --button-container-height:3rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:25rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:21rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:20rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:18rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:20rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+     --bg-color: #87da00;
+    }
+ }
+
+ @media (min-height: 650px) and (max-height: 750px) and (min-width: 750px) and (max-width: 1000px) {
+      .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+       --conainer-gap:0.25rem;
+        --back-dashboard-width: 100%;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:20rem;
+     --reports-options-height:29rem;
+    --options-data-width:13rem;
+    --options-wrapper-padding-x:1.25rem;
+   --options-data-height:28rem;
+   --options-data-view-width:80rem;
+   --options-data-view-height:29rem;
+   --container-padding-x:2rem;
+    --box-width:12rem;
+    --box-height:2rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:20%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:1rem;
+    --header-padding-y:0.25rem;
+   --options-item-width:11rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:29rem;
+    --button-container-width:100%;
+    --button-container-height:3rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:25rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:21rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:20rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:18rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:20rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+    --bg-color: #00cc00;
+    }
+ }
+
+ @media (min-height: 650px) and (max-height: 750px) and (min-width: 700px) and (max-width: 750px) {
+    .reports-container {
+        --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --conainer-gap:0.25rem;
+        --back-dashboard-width: 100%;
+       --container-padding-x:2rem;
+       --options-wrapper-padding-x:0.75rem;
+    --box-width:11rem;
+    --box-height:2rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:20%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:1rem;
+    --header-padding-y:0.25rem;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:20rem;
+    --reports-options-height:29rem;
+    --options-data-width:11rem;
+   --options-data-height:27rem;
+   --options-data-view-width:80rem;
+   --options-data-view-height:29rem;
+   --options-item-width:13rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:30rem;
+    --button-container-width:100%;
+    --button-container-height:3rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:25rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:21rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:20rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:18rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:20rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+     --bg-color: #b3f3;
+    }
+
+ }
+
+ @media (min-height: 650px) and (max-height: 750px) and (min-width: 300px) and (max-width: 700px) {
+    .reports-container {
+        --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --conainer-gap:0.25rem;
+        --back-dashboard-width: 100%;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --options-wrapper-padding-x:1rem;
+    --box-width:7.5rem;
+    --box-height:3rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:20%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+      --header-padding-x:1rem;
+    --header-padding-y:0.25rem;
+    --reports-options-width:20rem;
+    --reports-options-height:29rem;
+    --options-data-width:8rem;
+   --options-data-height:27rem;
+   --options-data-view-width:80rem;
+   --options-data-view-height:29rem;
+   --options-item-width:13rem;
+   --options-item-height:3rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:29rem;
+    --button-container-width:100%;
+    --button-container-height:3rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+  
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:25rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:21rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:20rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:18rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:20rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+     --bg-color: #b3ffb3;
+    }
+ }
+ /* 110% */
+ @media (min-height: 600px) and (max-height: 650px) and (min-width: 1201px) and (max-width: 1920px)  {
+    .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width: 100%;
+       --conainer-gap:0.25rem;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:20rem;
+    --reports-options-height:28rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1.25rem;
+    --box-width:14rem;
+    --box-height:2rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:20%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.75rem;
+    --options-data-width:14rem;
+   --options-data-height:25rem;
+   --options-data-view-width:80rem;
+   --options-data-view-height:28rem;
+   --options-item-width:13rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:28rem;
+    --button-container-width:100%;
+    --button-container-height:3rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:28rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:20rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:18rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:16rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:14rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+    --bg-color: #03fc;
+}
+
+ }
+ @media (min-height: 600px) and (max-height: 650px) and (min-width: 1000px) and (max-width: 1200px)  {
+     .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width: 100%;
+       --conainer-gap:0.25rem;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:20rem;
+    --reports-options-height:28rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1.25rem;
+    --box-width:14rem;
+    --box-height:2rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:20%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+    --header-padding:0.75rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.5rem;
+    --options-data-width:14rem;
+   --options-data-height:25rem;
+   --options-data-view-width:80rem;
+   --options-data-view-height:28rem;
+   --options-item-width:13rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:28rem;
+    --button-container-width:100%;
+    --button-container-height:3rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:28rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:20rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:18rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:16rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:14rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+     --bg-color: #003399;
+}
+ }
+
+ @media (min-height: 600px) and (max-height: 650px) and (min-width: 750px) and (max-width: 1000px)  {
+      .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width: 100%;
+       
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:20rem;
+    --reports-options-height:28rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1.25rem;
+    --box-width:14rem;
+    --box-height:2rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:20%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.25rem;
+    --options-data-width:14rem;
+   --options-data-height:25rem;
+   --options-data-view-width:80rem;
+   --options-data-view-height:28rem;
+   --options-item-width:13rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:28rem;
+    --button-container-width:100%;
+    --button-container-height:3rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:23rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:20rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:18rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:16rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:20rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+    --bg-color: #00cc00;
+}
+
+ }
+ @media (min-height: 600px) and (max-height: 650px)  and (min-width: 700px) and (max-width: 750px)  { 
+    .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width: 100%;
+       
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:18rem;
+    --reports-options-height:28rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1.25rem;
+    --box-width:12rem;
+    --box-height:2rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:20%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.25rem;
+    --options-data-width:12rem;
+   --options-data-height:25rem;
+   --options-data-view-width:80rem;
+   --options-data-view-height:28rem;
+   --options-item-width:13rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:28rem;
+    --button-container-width:100%;
+    --button-container-height:3rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:23rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:20rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:18rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:16rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:20rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+    --bg-color: #1a75ff;
+}
+ }
+ @media (min-height: 600px) and (max-height: 650px)  and (min-width: 300px) and (max-width: 700px)  {
+    .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width: 100%;
+       
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:10rem;
+    --reports-options-height:28rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1.25rem;
+    --box-width:8rem;
+    --box-height:3rem;
+    --container-padding-y:0.5rem;
+     --column1-width:50%;
+        --column2-width:50%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.25rem;
+    --options-data-width:8rem;
+   --options-data-height:25rem;
+   --options-data-view-width:80rem;
+   --options-data-view-height:28rem;
+   --options-item-width:13rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:28rem;
+    --button-container-width:100%;
+    --button-container-height:3rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:23rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:20rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:18rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:16rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:20rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+    --bg-color: #1a75;
+}
+ }
+
+ @media (min-height: 500px) and (max-height: 600px) and (min-width: 900px) and (max-width: 1200px) {
+    .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width: 100%;
+       --conainer-gap:0.25rem;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:20rem;
+    --reports-options-height:23rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1.25rem;
+    --box-width:14rem;
+    --box-height:2rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:40%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.1rem;
+    --options-data-width:14rem;
+   --options-data-height:25rem;
+   --options-data-view-width:80rem;
+   --options-data-view-height:23rem;
+   --options-item-width:13rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:20rem;
+    --button-container-width:100%;
+    --button-container-height:5rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:18rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:16rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:14rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:16rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:14rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+    --bg-color: #a11570;
+}
+
+ }
+
+ @media (min-height: 500px) and (max-height: 600px) and (min-width: 700px) and (max-width: 900px) {
+    .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width: 100%;
+       --conainer-gap:0.25rem;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:15rem;
+    --reports-options-height:23rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1.25rem;
+    --box-width:10rem;
+    --box-height:2.5rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:40%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.1rem;
+    --options-data-width:13rem;
+   --options-data-height:25rem;
+   --options-data-view-width:80rem;
+   --options-data-view-height:23rem;
+   --options-item-width:10rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:20rem;
+    --button-container-width:100%;
+    --button-container-height:5rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:18rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:16rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:14rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:16rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:14rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+    --bg-color: #ff1ac6;
+}
+ }
+
+ @media (min-height: 500px) and (max-height: 600px) and (min-width: 300px) and (max-width: 700px) {
+     .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width: 100%;
+       --conainer-gap:0.25rem;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:10rem;
+    --reports-options-height:23rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1.75rem;
+    --box-width:8rem;
+    --box-height:2.75rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:40%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.1rem;
+    --options-data-width:9rem;
+   --options-data-height:25rem;
+   --options-data-view-width:80rem;
+   --options-data-view-height:23rem;
+   --options-item-width:10rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:20rem;
+    --button-container-width:100%;
+    --button-container-height:5rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:18rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:16rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:14rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:16rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:14rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+    --bg-color: #ff66d9;
+}
+ }
+ @media (min-height: 400px) and (max-height: 549px) and (min-width: 700px) and (max-width: 1000px) {
+     .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width: 100%;
+       --conainer-gap:0.25rem;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:18rem;
+    --reports-options-height:19rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1rem;
+    --box-width:9rem;
+    --box-height:2.5rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:40%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.1rem;
+    --options-data-width:10rem;
+   --options-data-height:19rem;
+   --options-data-view-width:80rem;
+   --options-data-view-height:19rem;
+   --options-item-width:8rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:16rem;
+    --button-container-width:100%;
+    --button-container-height:5rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:14rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:12rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:10rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:8rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:14rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+    --bg-color: #ff9900;
+}
+
+ }
+ @media (min-height: 400px) and (max-height: 549px) and (min-width: 300px) and (max-width: 700px) {
+     .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width: 100%;
+       --conainer-gap:0.25rem;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:15rem;
+    --reports-options-height:19rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1rem;
+    --box-width:7.5rem;
+    --box-height:2.75rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:40%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.1rem;
+    --options-data-width:8rem;
+   --options-data-height:19rem;
+   --options-data-view-width:80rem;
+   --options-data-view-height:19rem;
+   --options-item-width:8rem;
+   --options-item-height:2rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:16rem;
+    --button-container-width:100%;
+    --button-container-height:5rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:14rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:12rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:10rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:8rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:14rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 5rem;
+   --bg-color: #66ffff;
+}
+
+ }
+ /* 175% */
+ @media (min-height: 351px) and (max-height: 400px) and (min-width: 700px) and (max-width: 900px) {
+    .reports-container {
+     --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width: 100%;
+       --conainer-gap:0.25rem;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:18rem;
+    --reports-options-height:15rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1rem;
+    --box-width:9rem;
+    --box-height:2.5rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:40%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.1rem;
+    --options-data-width:10rem;
+   --options-data-height:12rem;
+   --options-data-view-width:80rem;
+   --options-data-view-height:15rem;
+   --options-item-width:10rem;
+   --options-item-height:2.5rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:10rem;
+    --button-container-width:100%;
+    --button-container-height:5rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:10rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:8rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:7rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:6rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:14rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 3rem;
+     --bg-color: #2c2e2c;
+}
+
+ }
+
+ @media (min-height: 351px) and (max-height: 400px) and (min-width: 500px) and (max-width: 700px) {
+     .reports-container {
+    --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width: 100%;
+       --conainer-gap:0.25rem;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:15rem;
+    --reports-options-height:15rem;
+     --container-padding-x:2rem;
+     --options-wrapper-padding-x:1rem;
+    --box-width:7rem;
+    --box-height:2.75rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:40%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.1rem;
+    --options-data-width:8rem;
+   --options-data-height:12rem;
+   --options-data-view-width:80rem;
+   --options-data-view-height:15rem;
+   --options-item-width:10rem;
+   --options-item-height:2.5rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:10rem;
+    --button-container-width:100%;
+    --button-container-height:5rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:10rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:8rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:7rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:6rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:14rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 3rem;
+     --bg-color: #2c2e;
+}
+
+ }
+ @media (min-height: 351px) and (max-height: 400px) and (min-width: 300px) and (max-width: 500px) {
+     .reports-container {
+    --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width: 100%;
+       --conainer-gap:0.25rem;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:8rem;
+    --reports-options-height:15rem;
+     --container-padding-x:1rem;
+     --options-wrapper-padding-x:1rem;
+    --box-width:10rem;
+    --box-height:2.75rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:40%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.1rem;
+    --options-data-width:6rem;
+   --options-data-height:12rem;
+   --options-data-view-width:80rem;
+   --options-data-view-height:15rem;
+   --options-item-width:6rem;
+   --options-item-height:2.5rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:10rem;
+    --button-container-width:100%;
+    --button-container-height:5rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:10rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:8rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:7rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:6rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:14rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 3rem;
+     --bg-color: #2c2fde;
+}
+
+ }
+ @media (min-height: 300px) and (max-height: 350px) and (min-width: 300px) and (max-width: 1000px) {
+      .reports-container {
+    --vertical-gap:0.5rem; 
+        --bg-color:blue;
+        --container-padding:0.75rem;
+        --layout-gap:0.5rem;
+        --back-dashboard-width: 100%;
+       --conainer-gap:0.25rem;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:2rem;
+    --container-padding-y:0.5rem;
+    --sub-container-gap:0.5;
+    --tab-container-width:40rem;
+    --tab-container-height:3rem;
+    --tab-padding:0.5rem;
+    --containers-width:100%;
+    --containers-height:20rem;
+    --reports-options-width:8rem;
+    --reports-options-height:12rem;
+     --container-padding-x:1rem;
+     --options-wrapper-padding-x:1rem;
+    --box-width:10rem;
+    --box-height:2.75rem;
+    --container-padding-y:0.5rem;
+     --column1-width:40%;
+        --column2-width:40%;
+         --edit-button-width:2rem;
+    --edit-button-height:1rem;
+         --header-padding-x:2rem;
+    --header-padding-y:0.1rem;
+    --options-data-width:6rem;
+   --options-data-height:10rem;
+   --options-data-view-width:80rem;
+   --options-data-view-height:12rem;
+   --options-item-width:6rem;
+   --options-item-height:2.5rem;
+    --options-data-container-width:100%;
+    --options-data-container-height:8rem;
+    --button-container-width:100%;
+    --button-container-height:5rem;
+    --globalbutton-container-width:100%;
+    --globalbutton-container-height:6rem;
+    --add-button-width:8.5rem;
+    --add-button-height:2.25rem;
+    --usergroup-data-container-width:100%;
+    --usergroup-data-container-height:10rem;
+    --usergroup-data-header-width:100%;
+    --usergroup-data-header-height:2rem;
+    --usergroup-tabular-data-width:100%;
+    --usergroup-tabular-data-height:5rem;
+    --usergroup-tabular-rows-width:100%;
+    --usergroup-tabular-rows-height:4rem;
+    --usergroup-tabular-design-width:100%;
+    --usergroup-tabular-design-height:4rem;
+    --globalcolumn-data-container-width:100%;
+    --globalcolumn-data-container-height:14rem;
+    --globalcolumn-data-header-width:100%;
+    --globalcolumn-data-header-height:2rem;
+    --globalcolumn-tabular-data-width:100%;
+    --globalcolumn-tabular-data-height:17.5rem;
+    --globalcolumn-tabular-rows-width:100%;
+    --globalcolumn-tabular-rows-height:18rem;
+    --globalcolumn-tabular-design-width:100%;
+    --globalcolumn-tabular-design-height:16rem;
+    --globalcolumn-search-wrapper-height:2.5rem;
+    --globalcolumn-button-wrapper-height:2.5rem;
+    --globalcolumn-search-container-width:18rem;
+    --globalcolumn-search-container-height:2.25rem;
+    --globalcolumn-searchbar-width:14rem;
+    --globalcolumn-searchbar-height:2rem;
+     --miscellaneous-data-container-height:25.5rem;
+     --miscellaneous-tabular-data-width:100%;
+    --miscellaneous-tabular-data-height:23.5rem;
+    --miscellaneous-tabular-rows-width:100%;
+    --miscellaneous-tabular-rows-height:23rem;
+    --miscellaneous-tabular-design-width:100%;
+    --miscellaneous-tabular-design-height:22rem;
+    
+    --download-popup-width:25rem;
+    --download-popup-height:25rem;
+    --download-popup-margin:2rem;
+    --chatbot-right: 2rem;
+    --chatbot-bottom: 1rem;
+     --bg-color: #2c2fde;
+}
+
+ }
+
+
+
+
+ 
+.reports-container .reports-container-data {
+ @apply w-screen h-screen flex flex-col overflow-hidden;
+ background-color: var(--bg-color) !important;
+}
+
+.reports-container .vertical-gap{
+    gap: var(--vertical-gap);
+}
+.reports-container .container-padding{
+    padding: var(--container-padding);
+}
+
+.reports-container .reports-navbar-wrapper {
+  @apply w-full flex-shrink-0; 
+  height: var(--navbar-height); 
+  transition: height 0.15s ease-out;
+}
+
+
+
+.reports-container .reports-container-wrapper {
+  display: flex !important;
+  flex-direction: row !important;
+  /* Forces components to inherit vertical heights evenly */
+  width: 100%;
+  flex: 1 1 0%;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  /* background-color: var(--bg-color) !important; */
+}
+.reports-container .layout-gap{
+    gap: var(--layout-gap);
+}
+
+.reports-container .reports-Sidebar-wrapper {
+  @apply flex-shrink-0 ;
+  width: var(--sidebar-width);
+  height:99%;
+  /* background-color: var(--bg-color) !important;  */
+  transition: width 0.15s ease-out, background-color 0.15s ease-out;
+}
+.reports-container .subcontainer-wrapper{
+ display: flex !important;
+  flex-direction: column !important;  
+  flex: 1 !important;            
+   width: 100% !important;               
+  height: 99% !important;             
+  min-width: 0 !important;            
+  padding: var(--padding-y) var(--padding-x) !important;       
+  /* background-color: var(--bg-color) !important;  */
+  border-radius: 0.5rem;              
+  overflow: hidden;
+  transition: background-color 0.15s ease-out;
+}
+
+.reports-container .reports-back-dashboard{
+ width: var(--back-dashboard-width);
+  height: var(--back-dashboard-height) !important;
+  transition: width 0.25s ease-out, height 0.15s ease-out;
+}
+
+.reports-container .padding{
+    padding: var(--container-padding-y) var(--container-padding-x) !important;
+}
+
+.reports-container .reports-options-view{
+    display: flex !important;
+  flex-direction: row !important;
+  /* Forces components to inherit vertical heights evenly */
+  width: 100%;
+  flex: 1 1 0%;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+.reports-container .reports-options-wrapper{
+    width: var(--reports-options-width);
+    height: var(--reports-options-height);
+}
+
+.reports-container .options-data-wrapper{
+    width: var(--options-data-width);
+    height: var(--options-data-height);
+}
+
+.reports-container .options-data-view{
+    width: var(--options-data-view-width);
+    height: var(--options-data-view-height);
+}
+
+.reports-container .options-data-container{
+    width: var(--options-data-container-width);
+    height: var(--options-data-container-height);
+}
+.reports-container .options-item{
+    width: var(--options-item-width);
+    height: var(--options-item-height);
+}
+
+.reports-container .button-container{
+    width: var(--button-container-width);
+    height: var(--button-container-height);
+}
+
+.reports-container .global-button-container{
+    width: var(--globalbutton-container-width);
+    height: var(--globalbutton-container-height);
+}
+.reports-container .add-new-button{
+    width: var(--add-button-width);
+    height: var(--add-button-height);
+}
+.reports-container .usergroup-data-container{
+width: var(--usergroup-data-container-width);
+height: var(--usergroup-data-container-height);
+}
+.reports-container .usergroup-data-header{
+width: var(--usergroup-data-header-width);
+height: var(--usergroup-data-header-height);
+}
+.reports-container .usergroup-tabular-data{
+width: var(--usergroup-tabular-data-width);
+height: var(--usergroup-tabular-data-height);
+}
+
+.reports-container .usergroup-tabular-rows{
+width: var(--usergroup-tabular-rows-width);
+height: var(--usergroup-tabular-rows-height);
+}
+
+.reports-container .chatbot-margin {
+  position: fixed !important;
+  z-index: 9999 !important;
+  
+  /* Maps exactly to what your style={{ right, bottom }} did, 
+     but reads the responsive numbers dynamically from the layout container 
+  */
+  right: var(--chatbot-right) !important;
+  bottom: var(--chatbot-bottom) !important;
+}
+
+.reports-container .usergroup-tabular-design{
+width: var(--usergroup-tabular-design-width);
+/* height: var(--usergroup-tabular-design-height); */
+height:auto;
+}
+.reports-container .globalbutton-container{
+width: var(--globalbutton-container-width);
+height: var(--globalbutton-container-height);
+}
+.reports-container .globalcolumn-data-container{
+width: var(--globalcolumn-data-container-width);
+height: var(--globalcolumn-data-container-height);
+}
+.reports-container .usergglobalcolumnroup-data-header{
+width: var(--globalcolumn-data-header-width);
+height: var(--globalcolumn-data-header-height);
+}
+.reports-container .globalcolumn-tabular-data{
+width: var(--globalcolumn-tabular-data-width);
+height: var(--globalcolumn-tabular-data-height);
+}
+
+.reports-container .globalcolumn-tabular-rows{
+width: var(--globalcolumn-tabular-rows-width);
+height: var(--globalcolumn-tabular-rows-height);
+}
+
+.reports-container .download-popup{
+    width: var(--download-popup-width);
+    height: var(--download-popup-height);
+    margin-left: var(--download-popup-margin);
+
+}
+.reports-container .miscellaneous-data-container{
+width: var(--miscellaneous-data-container-width);
+height: var(--usermiscellaneousgroup-data-container-height);
+}
+
+.reports-container .miscellaneous-tabular-data{
+width: var(--miscellaneous-tabular-data-width);
+height: var(--miscellaneous-tabular-data-height);
+}
+
+.reports-container .miscellaneous-tabular-rows{
+width: var(--miscellaneous-tabular-rows-width);
+height: var(--miscellaneous-tabular-rows-height);
+}
+.reports-container .globalcolumn-search-container{
+width: var(--globalcolumn-search-container-width);
+height: var(--globalcolumn-search-container-height);
+}
+.reports-container .globalcolumn-searchbar{
+width: var(--globalcolumn-searchbar-width);
+height: var(--globalcolumn-searchbar-height);
+}
+.reports-container .globalcolumn-search-wrapper{
+width: 100%;
+height: var(--globalcolumn-search-wrapper-height);
+}
+.reports-container .globalcolumn-button-wrapper{
+width: 100%;
+height: var(--globalcolumn-button-wrapper-height);
+}
+.reports-container .column1{
+    width: var(--column1-width);
+}
+.reports-container .column2{
+    width: var(--column2-width);
+}
+.reports-container .box{
+    width: var(--box-width);
+    height: var(--box-height);
+}
+.reports-container .container-padding{
+    padding: var(--container-padding-y) !important;
+}
+.reports-container .header-padding{
+    padding: var(--header-padding-y) var(--header-padding-x) !important;
+}
+.reports-container .options-wrapper-padding{
+    padding: var(--options-wrapper-padding-x) !important;
+}
+.reports-container .edit-button{
+    width: var(--edit-button-width);
+    height: var(--edit-button-height);
+}
+.reports-container .container-gap{
+    gap: var(--conainer-gap);
+}
+.reports-container .header-height{
+    padding: var(--header-padding);
+}

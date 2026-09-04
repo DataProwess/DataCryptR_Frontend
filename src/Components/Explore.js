@@ -21,10 +21,14 @@ import ProfileModal from "./ProfileModal";
 import ErrorPopup from "./ErrorPopup";
 import FolderNoDataPopup from "./FolderNoDataPopup";
 import SubFolderSearchErrorPopup from "./SubFloderSearchErrorPopup";
-import debounce from 'lodash/debounce';
-import { secureApiCall, apiRequest, getCSRFToken, getAuthToken } from "./csrfUtils";
+import debounce from "lodash/debounce";
+import {
+  secureApiCall,
+  apiRequest,
+  getCSRFToken,
+  getAuthToken,
+} from "./csrfUtils";
 import { useUI } from "./Context/UIContext";
-
 
 const getViewportDimensions = () => ({
   width: window.innerWidth,
@@ -33,38 +37,37 @@ const getViewportDimensions = () => ({
 
 const Explore = (props) => {
   // Assuming you're using React hooks
-   const {
-      isDisabled,
-      isBlurred,
-      // isTimezoneModalOpen,
-      // showProfileModal,
-      // setIsTimezoneModalOpen,
-      // setShowProfileModal,
-      // showChatbot,
-      // setShowChatbot,
-    } = useUI();
-
+  const {
+    isDisabled,
+    isBlurred,
+    // isTimezoneModalOpen,
+    // showProfileModal,
+    // setIsTimezoneModalOpen,
+    // setShowProfileModal,
+    // showChatbot,
+    // setShowChatbot,
+  } = useUI();
 
   const { width, height } = getViewportDimensions();
   const folderId = "";
   const containerRef = useRef(null);
   const [showChatbot, setShowChatbot] = useState(false);
-   // eslint-disable-next-line
+  // eslint-disable-next-line
   const [noDataMessage, setNoDataMessage] = useState("");
-   // eslint-disable-next-line
+  // eslint-disable-next-line
   const [noFolderDataMessage, setNoFolderDataMessage] = useState(false);
-   // eslint-disable-next-line
+  // eslint-disable-next-line
   const [noSubFolderDataMessage, setNoSubFolderDataMessage] = useState(false);
   const [noPattern, setNoPattern] = useState("");
   // eslint-disable-next-line
   const [matchedElements, setMatchedElements] = useState([]);
   const [matchedIndexes, setMatchedIndexes] = useState([]);
   const [currentMatchIndex, setCurrentMatchIndex] = useState(-1);
-   // eslint-disable-next-line
+  // eslint-disable-next-line
   const [subfolders, setSubfolders] = useState([]);
-   // eslint-disable-next-line
+  // eslint-disable-next-line
   const [files, setFiles] = useState([]);
-   // eslint-disable-next-line
+  // eslint-disable-next-line
   const [sortedItems, setSortedItems] = useState([]);
   // eslint-disable-next-line
   const [currentMatchTableIndex, setCurrentMatchTableIndex] = useState(-1);
@@ -77,6 +80,14 @@ const Explore = (props) => {
   const containerData = location.state?.containerData;
   const containerName = location.state?.containerName;
   const fileShareId = location.state?.fileShareId;
+  const isDownloadStorage = location.state?.isDownloadStorage;
+  const selectedStorageAccountId = location.state?.selectedStorageAccountId;
+  const selectedAccountKey = location.state?.selectedAccountKey;
+
+  console.log(
+    "Explore component received selectedAccountKey:",
+    selectedAccountKey,
+  );
 
   // const fileShareName = location.state?.fileShareName;
   const initialFileShareName =
@@ -90,18 +101,18 @@ const Explore = (props) => {
   const [fileShareName, setFileShareName] = useState(initialFileShareName);
   // eslint-disable-next-line
   const [selectedStorageAccountName, setSelectedStorageAccountName] = useState(
-    initialSelectedStorageAccountName
+    initialSelectedStorageAccountName,
   );
 
   // eslint-disable-next-line
   const [permissions, setPermissions] = useState([]);
   /* eslint-disable no-unused-vars */
   const [selectionId, setSelectionId] = useState(
-    containerData ? containerData : fileShareId
+    containerData ? containerData : fileShareId,
   );
   // eslint-disable-next-line
   const [selectionType, setSelectionType] = useState(
-    containerData ? "container" : "fileShare"
+    containerData ? "container" : "fileShare",
   );
   const [showPopup, setShowPopup] = useState(false);
   const [isAscending, setIsAscending] = useState(true);
@@ -160,7 +171,7 @@ const Explore = (props) => {
   });
   // const [isMasked, setIsMasked] = useState(true);
   const [isMasked, setIsMasked] = useState(
-    localStorage.getItem("isMasked") === "true" || true
+    localStorage.getItem("isMasked") === "true" || true,
   );
   const [searchResults, setSearchResults] = useState(null);
   // const indexOfLastRow = currentTablePage * rowsPerPage;
@@ -188,7 +199,7 @@ const Explore = (props) => {
   const [saveButtonClicked, setSaveButtonClicked] = useState(false);
   // const [selectedStorageAccount, setSelectedStorageAccount] = useState("");
   const [selectedStorageAccount, setSelectedStorageAccount] = useState(
-    location.state?.selectedStorageAccount || null
+    location.state?.selectedStorageAccount || null,
   );
   const [subFoldersAndFiles, setSubFoldersAndFiles] = useState({});
   // const [selectedTimeZone, setSelectedTimeZone] = useState({
@@ -239,6 +250,17 @@ const Explore = (props) => {
   const [folderNoMatchingData, setFolderNoMatchingData] = useState(false);
   const [noFolderData, setNoFolderData] = useState(false);
 
+  const [isDownloadStorageState, setIsDownloadStorageState] = useState(
+    Boolean(isDownloadStorage),
+  );
+
+  // 3. Keep local state in sync if the incoming prop updates
+  useEffect(() => {
+    setIsDownloadStorageState(Boolean(isDownloadStorage));
+  }, [isDownloadStorage]);
+
+  console.log("selectedStorageAccount:", selectedStorageAccount);
+
   // Add this at the top of the component (after hooks)
   const debouncedSaveMasking = useRef();
   if (!debouncedSaveMasking.current) {
@@ -262,30 +284,32 @@ const Explore = (props) => {
           const data = await secureApiCall(
             `${API_URL}/api/blob/update_prefix_column_defination/`,
             "POST",
-            payload
+            payload,
           );
 
           if (data.message !== "success") {
             // Optionally revert UI if failed
             setColumnData((prev) =>
               prev.map((col) =>
-                col.field_id === fieldId ? { ...col, is_masked: !value } : col
-              )
+                col.field_id === fieldId ? { ...col, is_masked: !value } : col,
+              ),
             );
-            setError("Failed to update masking: " + (data.message || "Unknown error"));
+            setError(
+              "Failed to update masking: " + (data.message || "Unknown error"),
+            );
             setIsPopupOpen(true);
           }
         } catch (error) {
           setColumnData((prev) =>
             prev.map((col) =>
-              col.field_id === fieldId ? { ...col, is_masked: !value } : col
-            )
+              col.field_id === fieldId ? { ...col, is_masked: !value } : col,
+            ),
           );
           setError("Error updating masking: " + error.message);
           setIsPopupOpen(true);
         }
       },
-      500 // 500ms debounce
+      500, // 500ms debounce
     );
   }
 
@@ -312,7 +336,10 @@ const Explore = (props) => {
         const token = dataObject.data.token;
         const email = dataObject.data.email;
         const permissions = dataObject.data.permissions;
-        console.log("🔑 Token fetched successfully:", token ? "Token available" : "No token");
+        console.log(
+          "🔑 Token fetched successfully:",
+          token ? "Token available" : "No token",
+        );
         console.log("📧 Email:", email);
         console.log("🔐 Permissions:", permissions);
         setUserEmail(email);
@@ -321,7 +348,7 @@ const Explore = (props) => {
         setUserGroups(userGroup);
         setUserEmail(email);
         const csrfToken = authService.getCsrfToken();
-        setCsrfToken(csrfToken)
+        setCsrfToken(csrfToken);
       } catch (error) {
         console.error("Token error:", error);
       }
@@ -338,7 +365,10 @@ const Explore = (props) => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    console.log("🔄 Token changed, current token:", token ? "Available" : "Not available");
+    console.log(
+      "🔄 Token changed, current token:",
+      token ? "Available" : "Not available",
+    );
 
     if (!token) {
       console.log("⏳ Waiting for token to be available...");
@@ -359,7 +389,9 @@ const Explore = (props) => {
     // Get CSRF token
     getCsrfTokenFromCookie();
 
-    console.log("🚀 Token available, fetching storage accounts and containers...");
+    console.log(
+      "🚀 Token available, fetching storage accounts and containers...",
+    );
     fetchStorageAccountOptions();
     fetchContainerOptions();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -374,7 +406,7 @@ const Explore = (props) => {
 
       const storageAccountDetails = await secureApiCall(
         `${API_URL}/api/admin/list-storage-accounts/`,
-        "GET"
+        "GET",
       );
 
       if (storageAccountDetails && storageAccountDetails.data) {
@@ -392,7 +424,7 @@ const Explore = (props) => {
 
     // Find the storage account id based on the selected name
     const selectedStorageAccountObject = storageAccountOptions.find(
-      (account) => account.account_name === storageAccountName
+      (account) => account.account_name === storageAccountName,
     );
 
     if (selectedStorageAccountObject) {
@@ -429,7 +461,7 @@ const Explore = (props) => {
       const responsemsg = await secureApiCall(
         `${API_URL}/api/blob/download_blob/`,
         "POST",
-        requestBody
+        requestBody,
       );
 
       setError("Download has been moved to My Task");
@@ -454,7 +486,7 @@ const Explore = (props) => {
         "POST",
         {
           storage_account_id: storageAccountId,
-        }
+        },
       );
 
       if (data) {
@@ -490,7 +522,7 @@ const Explore = (props) => {
       const data = await secureApiCall(
         `${API_URL}/api/blob/list_blob_folders/`,
         "POST",
-        requestBody
+        requestBody,
       );
 
       setLoading(false);
@@ -556,14 +588,11 @@ const Explore = (props) => {
     setCurrentPage(1);
   };
 
- 
   const timeoutPromise = (ms) => {
     return new Promise((_, reject) =>
-      setTimeout(() => reject(new Error("Request timed out")), ms)
+      setTimeout(() => reject(new Error("Request timed out")), ms),
     );
   };
-
-  
 
   /* This function is designed to fetch files from an API based on the provided parameters 
 like searchInput as pattern, SelectedFolder as folderPattern, Current page number for pagination as page ,
@@ -583,7 +612,7 @@ processes the response data, handles pagination,sets state variables for files a
     pageSize = selectedPageSize,
     selectionType,
     selectionId,
-    selectedStorageAccount
+    selectedStorageAccount,
   ) => {
     if (!token) {
       console.error("Token is not available.");
@@ -597,7 +626,7 @@ processes the response data, handles pagination,sets state variables for files a
       pageSize,
       selectionType,
       selectionId,
-      selectedStorageAccount
+      selectedStorageAccount,
     });
 
     try {
@@ -624,7 +653,7 @@ processes the response data, handles pagination,sets state variables for files a
       const data = await secureApiCall(
         `${API_URL}/api/blob/list_blobs/`,
         "POST",
-        requestBody
+        requestBody,
       );
 
       console.log("📥 API response data:", data);
@@ -645,7 +674,7 @@ processes the response data, handles pagination,sets state variables for files a
       if (!folderPattern && pattern && isEmpty) {
         const parentFolderPattern = folderPattern.substring(
           0,
-          folderPattern.lastIndexOf("/")
+          folderPattern.lastIndexOf("/"),
         );
         setNoPattern("No matching folders or files found.");
         setIsNoDataPopupOpen(true); // Open the folder no data popup
@@ -655,7 +684,7 @@ processes the response data, handles pagination,sets state variables for files a
       if (folderPattern && pattern && isEmpty) {
         const parentFolderPattern = folderPattern.substring(
           0,
-          folderPattern.lastIndexOf("/")
+          folderPattern.lastIndexOf("/"),
         );
         setNoFolderDataMessage("No subfolders or files found.");
         setNoFolderData(true); // Open the subfolder error popup
@@ -678,7 +707,7 @@ processes the response data, handles pagination,sets state variables for files a
       const sortedFiles = sortData(
         data.blob_list,
         selectedSortCriteria,
-        selectedSortOrder
+        selectedSortOrder,
       );
       const sortedFolders = sortData(
         data.folder_list.map((folder, index) => ({
@@ -686,7 +715,7 @@ processes the response data, handles pagination,sets state variables for files a
           name: folder,
         })),
         selectedSortCriteria,
-        selectedSortOrder
+        selectedSortOrder,
       );
 
       setFilteredFilesFolders(sortedFiles);
@@ -840,7 +869,7 @@ accordingly to fetch the files and folders for the selected container or file sh
         containerData,
         selectedStorageAccount,
         selectedSortCriteria,
-        selectedSortOrder
+        selectedSortOrder,
       );
     } else if (fileShareId) {
       fetchFilesFromApi(
@@ -852,7 +881,7 @@ accordingly to fetch the files and folders for the selected container or file sh
         fileShareId,
         selectedStorageAccount,
         selectedSortCriteria,
-        selectedSortOrder
+        selectedSortOrder,
       );
     } else {
       console.error("No containerData or fileShareId available");
@@ -904,14 +933,13 @@ accordingly to fetch the files and folders for the selected container or file sh
         selectionId,
         selectedStorageAccount,
         selectedSortCriteria,
-        selectedSortOrder
+        selectedSortOrder,
       );
     } catch (error) {
       console.error("Error fetching Files:", error);
     }
   };
 
-  
   const handleFolderInputChange = async (e, folderId) => {
     const inputText = e.target.value.toLowerCase();
     setSearchInput(inputText);
@@ -931,7 +959,7 @@ accordingly to fetch the files and folders for the selected container or file sh
         inputText,
         folderId,
         pageNumber,
-        pageSize
+        pageSize,
       );
 
       if (!response) {
@@ -970,7 +998,7 @@ accordingly to fetch the files and folders for the selected container or file sh
       currentPage,
       containerData ? "container" : "fileShare",
       containerData ? containerData : fileShareId,
-      selectedStorageAccount
+      selectedStorageAccount,
     );
   };
 
@@ -980,8 +1008,6 @@ Calculates the next page number.Updates the component state to reflect the new c
 Calls fetchFilesFromApi to fetch the files for the next page based on the current search input, selected folder path, 
 page size, selection type, selection ID, selected storage account, and sort criteria
 Handles the data response and updates any other state variables if necessary,Catches and logs any errors that occur during the API call*/
-
-  
 
   const handlePrevious = async () => {
     if (currentPage > 1) {
@@ -1000,7 +1026,7 @@ Handles the data response and updates any other state variables if necessary,Cat
               searchPattern,
               selectedFolder,
               previousPage,
-              selectedPageSize
+              selectedPageSize,
             );
           } else {
             // Fetch files with the search pattern and other parameters
@@ -1013,7 +1039,7 @@ Handles the data response and updates any other state variables if necessary,Cat
               selectionId,
               selectedStorageAccount,
               selectedSortCriteria,
-              selectedSortOrder
+              selectedSortOrder,
             );
           }
         } else {
@@ -1023,7 +1049,7 @@ Handles the data response and updates any other state variables if necessary,Cat
               "",
               selectedFolder,
               previousPage,
-              selectedPageSize
+              selectedPageSize,
             ); // Use empty string for pattern
           } else {
             response = await fetchFilesFromApi(
@@ -1035,7 +1061,7 @@ Handles the data response and updates any other state variables if necessary,Cat
               selectionId,
               selectedStorageAccount,
               selectedSortCriteria,
-              selectedSortOrder
+              selectedSortOrder,
             ); // Use empty string for pattern
           }
         }
@@ -1055,10 +1081,7 @@ Handles the data response and updates any other state variables if necessary,Cat
         console.error("Error fetching data:", error);
       }
     }
-   
   };
-
- 
 
   const handleNext = async () => {
     if (currentPage < totalPages) {
@@ -1078,7 +1101,7 @@ Handles the data response and updates any other state variables if necessary,Cat
               searchPattern,
               selectedFolder,
               nextPage,
-              selectedPageSize
+              selectedPageSize,
             );
           } else {
             // Fetch files with the search pattern and other parameters
@@ -1091,7 +1114,7 @@ Handles the data response and updates any other state variables if necessary,Cat
               selectionId,
               selectedStorageAccount,
               selectedSortCriteria,
-              selectedSortOrder
+              selectedSortOrder,
             );
           }
         } else {
@@ -1101,7 +1124,7 @@ Handles the data response and updates any other state variables if necessary,Cat
               "",
               selectedFolder,
               nextPage,
-              selectedPageSize
+              selectedPageSize,
             ); // Use empty string for pattern
           } else {
             response = await fetchFilesFromApi(
@@ -1113,7 +1136,7 @@ Handles the data response and updates any other state variables if necessary,Cat
               selectionId,
               selectedStorageAccount,
               selectedSortCriteria,
-              selectedSortOrder
+              selectedSortOrder,
             ); // Use empty string for pattern
           }
         }
@@ -1138,7 +1161,7 @@ Handles the data response and updates any other state variables if necessary,Cat
 
   useEffect(() => {
     handleNext();
-     // eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   const handleTableNext = async () => {
@@ -1152,7 +1175,7 @@ Handles the data response and updates any other state variables if necessary,Cat
             pattern,
             selectedFolder,
             nextPage,
-            selectedPageSize
+            selectedPageSize,
           );
         } else {
           await fetchFilesFromApi(
@@ -1164,7 +1187,7 @@ Handles the data response and updates any other state variables if necessary,Cat
             selectionId,
             selectedStorageAccount,
             selectedSortCriteria,
-            selectedSortOrder
+            selectedSortOrder,
           );
         }
 
@@ -1186,8 +1209,6 @@ Updates the component state to reflect the new current page number Calls fetchFi
  on the current search input, selected folder path, page size, selection type, selection ID, selected storage account, and sort criteria. 
  Handles the data response and updates any other state variables if necessary,Catches and logs any errors that occur during the API call. */
 
- 
-
   const handleTablePrevious = async () => {
     if (currentPage > 1) {
       const previousPage = currentPage - 1;
@@ -1198,7 +1219,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
             pattern,
             selectedFolder,
             previousPage,
-            10
+            10,
           ); // Pass previousPage
         } else {
           await fetchFilesFromApi(
@@ -1210,7 +1231,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
             selectionId,
             selectedStorageAccount,
             selectedSortCriteria,
-            selectedSortOrder
+            selectedSortOrder,
           );
         }
         setCurrentPage(previousPage);
@@ -1255,7 +1276,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
           return await secureApiCall(
             `${API_URL}/api/blob/column_defination/`,
             "POST",
-            requestBody
+            requestBody,
           );
         });
 
@@ -1311,7 +1332,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
   const handleDynamicPreview = (
     selectionId,
     selectionType,
-    selectedStorageAccount
+    selectedStorageAccount,
   ) => {
     setApiLoading(true);
     return new Promise(async (resolve, reject) => {
@@ -1347,7 +1368,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
         const data = await secureApiCall(
           `${API_URL}/api/blob/blob_content/`,
           "POST",
-          requestBody
+          requestBody,
         );
 
         if (data) {
@@ -1398,7 +1419,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
         "container",
         selectedStorageAccount,
         selectedFormat,
-        maskedData
+        maskedData,
       ) // Pass selectedFormat
         .then((response) => {
           // Handle response data
@@ -1412,7 +1433,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
         "fileShare",
         null,
         selectedFormat,
-        maskedData
+        maskedData,
       ) // Pass selectedFormat
         .then((response) => {
           // Handle response data
@@ -1456,7 +1477,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
       const data = await secureApiCall(
         `${API_URL}/api/blob/get_blob_prefix/`,
         "POST",
-        requestBody
+        requestBody,
       );
 
       if (data && data.length > 0) {
@@ -1545,7 +1566,6 @@ Updates the component state to reflect the new current page number Calls fetchFi
     return isOpenState;
   };
 
-
   useEffect(() => {
     setSelectedPageSize(10);
   }, []);
@@ -1606,7 +1626,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
           pattern,
           folderPattern,
           pageNumber,
-          10
+          10,
         );
         const { subfolders, files } = result;
 
@@ -1637,13 +1657,11 @@ Updates the component state to reflect the new current page number Calls fetchFi
     // renderFilesAndSubfolders(folderId);
   };
 
-  
-
   const fetchSubfoldersAndFiles = async (
     pattern,
     folderPattern,
     currentPage,
-    selectedPageSize
+    selectedPageSize,
   ) => {
     console.log("🔍 fetchSubfoldersAndFiles called with:", {
       pattern,
@@ -1652,7 +1670,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
       selectedPageSize,
       selectionType,
       selectionId,
-      selectedStorageAccount
+      selectedStorageAccount,
     });
 
     try {
@@ -1665,7 +1683,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
         selectionId,
         selectedStorageAccount,
         selectedSortCriteria,
-        selectedSortOrder
+        selectedSortOrder,
       );
 
       if (!response) {
@@ -1695,7 +1713,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
       setPreviousButtonDisabled(currentPage <= 1);
       // setNextButtonDisabled(currentPage >= calculatedTotalPages); // Compare with the updated total pages
       setNextButtonDisabled(
-        calculatedTotalPages <= 1 || currentPage >= calculatedTotalPages
+        calculatedTotalPages <= 1 || currentPage >= calculatedTotalPages,
       );
 
       if (viewType === "table") {
@@ -1717,21 +1735,17 @@ Updates the component state to reflect the new current page number Calls fetchFi
     }
   };
 
- 
-
   useEffect(() => {
     if (selectedFolderPath) {
       fetchSubfoldersAndFiles(
         pattern, // Replace with actual pattern if needed
         selectedFolderPath,
         currentPage,
-        selectedPageSize // Use selected page size from state
+        selectedPageSize, // Use selected page size from state
       );
     }
-     // eslint-disable-next-line
+    // eslint-disable-next-line
   }, ["", selectedFolderPath, currentPage, selectedPageSize]);
-
-  
 
   const handlePopupOkClick = () => {
     setShowPopup(false); // Close the popup
@@ -1779,7 +1793,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
       .catch((error) => {
         console.error(
           "Error fetching subfolders and files on OK click:",
-          error
+          error,
         );
       });
   };
@@ -1798,17 +1812,14 @@ Updates the component state to reflect the new current page number Calls fetchFi
         selectedPageSize,
         selectionType,
         selectionId,
-        selectedStorageAccount
+        selectedStorageAccount,
       );
     } catch (error) {
       console.error("Error fetching Files:", error);
     }
   };
 
-  
-
   const renderFolders = () => {
-  
     if (noPattern) {
       return (
         <FolderNoDataPopup
@@ -1846,11 +1857,15 @@ Updates the component state to reflect the new current page number Calls fetchFi
 
     // Render the folders and files list
     return (
-      <div className={`w-full h-full flex flex-row items-center pl-4 pt-4 pb-4 `}
-      style={{userSelect: "none",
-        WebkitUserSelect: "none" /* Safari */,
-        MozUserSelect: "none" /* Firefox */,
-        msUserSelect: "none"}}>
+      <div
+        className={`w-full h-full flex flex-row items-center pl-4 pt-4 pb-4 `}
+        style={{
+          userSelect: "none",
+          WebkitUserSelect: "none" /* Safari */,
+          MozUserSelect: "none" /* Firefox */,
+          msUserSelect: "none",
+        }}
+      >
         <div
           className="w-full h-full items-baseline grid gap-0 "
           style={{
@@ -2018,7 +2033,6 @@ Updates the component state to reflect the new current page number Calls fetchFi
   };
 
   const renderTableFolders = () => {
-    
     if (noPattern) {
       return (
         <FolderNoDataPopup
@@ -2069,16 +2083,16 @@ Updates the component state to reflect the new current page number Calls fetchFi
           height: `${(folderSunContainerHeight * 0.95).toFixed(2)}px`,
           scrollbarWidth: "thin",
           userSelect: "none",
-        WebkitUserSelect: "none" /* Safari */,
-        MozUserSelect: "none" /* Firefox */,
-        msUserSelect: "none",
+          WebkitUserSelect: "none" /* Safari */,
+          MozUserSelect: "none" /* Firefox */,
+          msUserSelect: "none",
         }}
       >
         <div
           className="rounded-b-lg  shadow-md shadow-slate-500\/30 mt-1"
           style={{
             width: `${(folderContainerWidth * 0.98 * 0.98).toFixed(2)}px`,
-            height: `${((folderSunContainerHeight * 0.95 )* 0.93).toFixed(2)}px`,
+            height: `${(folderSunContainerHeight * 0.95 * 0.93).toFixed(2)}px`,
           }}
         >
           <table className="table-design w-[100%] table-fixed ">
@@ -2093,7 +2107,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
             <thead className="bg-purpleshade1 sticky top-0 z-10 rounded-tr-lg rounded-tl-lg text-white">
               <tr>
                 <th className="py-2 sticky top-0 rounded-tl-lg font-normal text-xs"></th>
-              
+
                 <th className="py-2 sticky top-0 font-normal text-xs">
                   Name
                   <span
@@ -2164,12 +2178,9 @@ Updates the component state to reflect the new current page number Calls fetchFi
             className="overflow-auto  mt-0.5"
             style={{
               width: `${(folderContainerWidth * 0.98 * 0.98).toFixed(2)}px`,
-              height: `${((
-                folderSunContainerHeight *
-                0.95 *
-                0.93 )*
-                0.8
-              ).toFixed(2)}px`,
+              height: `${(folderSunContainerHeight * 0.95 * 0.93 * 0.8).toFixed(
+                2,
+              )}px`,
               scrollbarWidth: "thin",
             }}
           >
@@ -2212,7 +2223,6 @@ Updates the component state to reflect the new current page number Calls fetchFi
                         : ""
                     }`}
                     onClick={() => handleFileRowClick(file)}
-
                   >
                     <td className="w-[3%]"></td>
                     <td
@@ -2252,7 +2262,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
                       {file.modified_time}
                     </td>
                     {/* <td className="w-[15%] bg-green-500 text-[11px] flex item-center font-light overflow-ellipsis whitespace-nowrap overflow-hidden"> */}
-                     <td className="w-[15%] text-[11px] font-light text-black px-3 overflow-ellipsis whitespace-nowrap overflow-hidden">
+                    <td className="w-[15%] text-[11px] font-light text-black px-3 overflow-ellipsis whitespace-nowrap overflow-hidden">
                       {file.file_path}
                     </td>
                   </tr>
@@ -2343,11 +2353,9 @@ Updates the component state to reflect the new current page number Calls fetchFi
     setShowPopup(false);
   };
 
-  
-
   useEffect(() => {
     renderFilesAndSubfolders(folderId);
-     // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [searchResults]);
 
   const renderFilesAndSubfolders = (folderId) => {
@@ -2383,11 +2391,15 @@ Updates the component state to reflect the new current page number Calls fetchFi
 
     // Render files and subfolders
     return (
-      <div className={`w-full h-full flex flex-row items-center pt-4 pl-4 pb-4 relative`}
-      style={{userSelect: "none",
-        WebkitUserSelect: "none" /* Safari */,
-        MozUserSelect: "none" /* Firefox */,
-        msUserSelect: "none"}}>
+      <div
+        className={`w-full h-full flex flex-row items-center pt-4 pl-4 pb-4 relative`}
+        style={{
+          userSelect: "none",
+          WebkitUserSelect: "none" /* Safari */,
+          MozUserSelect: "none" /* Firefox */,
+          msUserSelect: "none",
+        }}
+      >
         <div
           className="w-full h-full items-baseline grid gap-0"
           style={{
@@ -2536,7 +2548,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
     subfolders,
     files,
     selectedSortCriteria,
-    selectedSortOrder
+    selectedSortOrder,
   ) => {
     const combinedItems = [
       ...subfolders.map((subfolder) => ({
@@ -2592,7 +2604,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
           pattern,
           selectedFolder,
           1,
-          selectedPageSize
+          selectedPageSize,
         );
         const { subfolders, files } = result;
 
@@ -2656,7 +2668,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
           pattern,
           selectedFolder,
           1,
-          selectedPageSize
+          selectedPageSize,
         );
         const { subfolders, files } = result;
 
@@ -2707,7 +2719,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
 
   useEffect(() => {
     handleFolderSortDescending();
-     // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [selectedFolder]);
 
   useEffect(() => {
@@ -2716,18 +2728,18 @@ Updates the component state to reflect the new current page number Calls fetchFi
         pattern,
         selectedFolder,
         currentPage,
-        selectedPageSize
+        selectedPageSize,
       );
     }
-     // eslint-disable-next-line
-  }, [pattern,selectedFolder, currentPage, selectedPageSize]);
+    // eslint-disable-next-line
+  }, [pattern, selectedFolder, currentPage, selectedPageSize]);
 
   useEffect(() => {
     const sortedItems = combineAndSortItems(
       subfolders,
       files,
       selectedSortCriteria,
-      selectedSortOrder
+      selectedSortOrder,
     );
     setSortedItems(sortedItems);
   }, [selectedSortCriteria, selectedSortOrder, subfolders, files]);
@@ -2752,7 +2764,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
           pattern,
           selectedFolder,
           1,
-          selectedPageSize
+          selectedPageSize,
         );
         const { subfolders, files } = result;
 
@@ -2780,7 +2792,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
       subfolders,
       files,
       sortKey,
-      sortOrder
+      sortOrder,
     );
 
     // Separate sorted items back into folders and files
@@ -2824,7 +2836,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
       subfolders,
       files,
       selectedSortCriteria,
-      selectedSortOrder
+      selectedSortOrder,
     );
 
     const handleFileRowClick = (file) => {
@@ -2877,16 +2889,16 @@ Updates the component state to reflect the new current page number Calls fetchFi
           height: `${(folderSunContainerHeight * 0.95).toFixed(2)}px`,
           scrollbarWidth: "thin",
           userSelect: "none",
-        WebkitUserSelect: "none" /* Safari */,
-        MozUserSelect: "none" /* Firefox */,
-        msUserSelect: "none",
+          WebkitUserSelect: "none" /* Safari */,
+          MozUserSelect: "none" /* Firefox */,
+          msUserSelect: "none",
         }}
       >
         <div
           className="rounded-b-lg shadow-md shadow-slate-500\/30 mt-2"
           style={{
             width: `${(folderContainerWidth * 0.98 * 0.98).toFixed(2)}px`,
-            height: `${((folderSunContainerHeight * 0.95 )* 0.92).toFixed(2)}px`,
+            height: `${(folderSunContainerHeight * 0.95 * 0.92).toFixed(2)}px`,
           }}
         >
           <table className="table-design table-fixed w-full">
@@ -2971,15 +2983,16 @@ Updates the component state to reflect the new current page number Calls fetchFi
           <div
             className="overflow-auto mt-0.5 "
             style={{
-              width: `${((folderContainerWidth * 0.98 )* 0.98).toFixed(2)}px`,
-              height: `${((
+              width: `${(folderContainerWidth * 0.98 * 0.98).toFixed(2)}px`,
+              height: `${(
                 folderSunContainerHeight *
                 0.95 *
-                0.93) *
+                0.93 *
                 0.78
               ).toFixed(2)}px`,
               scrollbarWidth: "thin",
-            }} >
+            }}
+          >
             <table className="table-design table-fixed w-full">
               <tbody>
                 {subfolders.map((folder) => (
@@ -3117,13 +3130,20 @@ Updates the component state to reflect the new current page number Calls fetchFi
   const handleToggleSwitch = (value, fieldId) => {
     setColumnData((prev) =>
       prev.map((column) =>
-        column.field_id === fieldId ? { ...column, is_masked: value } : column
-      )
+        column.field_id === fieldId ? { ...column, is_masked: value } : column,
+      ),
     );
     const column = columnData.find((col) => col.field_id === fieldId);
     if (!column) return;
     const blob_name = selectedFiles[0];
-    debouncedSaveMasking.current(fieldId, value, column, blob_name, containerData, fileShareId);
+    debouncedSaveMasking.current(
+      fieldId,
+      value,
+      column,
+      blob_name,
+      containerData,
+      fileShareId,
+    );
   };
 
   const handleNewSwitchChange = (value) => {
@@ -3181,8 +3201,8 @@ Updates the component state to reflect the new current page number Calls fetchFi
         prevColumnData.filter(
           (column) =>
             column.field_id !== fieldId ||
-            (column.field_id === "" && column.field_name !== fieldName)
-        )
+            (column.field_id === "" && column.field_name !== fieldName),
+        ),
       );
     };
     return (
@@ -3332,7 +3352,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
                             onClick={() =>
                               handleDeleteField(
                                 column.field_id,
-                                column.field_name
+                                column.field_name,
                               )
                             }
                           >
@@ -3525,7 +3545,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
           Authorization: `Bearer ${token}`,
           "X-CSRFToken": csrfToken,
         },
-        credentials: 'include',
+        credentials: "include",
         body: JSON.stringify(requestData),
       })
         .then((response) => {
@@ -3542,7 +3562,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
           // You can handle success, e.g., show a success message or update state
           handleFileDefinition(
             containerData || fileShareId,
-            containerData ? "container" : "fileShare"
+            containerData ? "container" : "fileShare",
           ).then((response) => {
             // Handle response data
             if (containerData) {
@@ -3638,7 +3658,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
     // Construct a regular expression to match the search input text
     const escapedSearchText = searchInputText.replace(
       /[.*+?^${}()|[\]\\]/g,
-      "\\$&"
+      "\\$&",
     );
     const regex = new RegExp(`(${escapedSearchText})`, "gi");
 
@@ -3674,7 +3694,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
             }}
           >
             {part}
-          </span>
+          </span>,
         );
       } else {
         // If it's not a match, simply push the part as-is
@@ -3721,7 +3741,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
     // Scroll to the matched text
     if (containerRef.current) {
       const matchedElement = containerRef.current.querySelector(
-        `[data-index="${currentMatchIndex}"]`
+        `[data-index="${currentMatchIndex}"]`,
       );
       if (matchedElement) {
         // Calculate the position of the matched element relative to the container
@@ -3831,7 +3851,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
       // Scroll to the matched text
       if (containerRef.current) {
         const matchedElement = containerRef.current.querySelector(
-          `[data-index="${currentMatchIndex}"]`
+          `[data-index="${currentMatchIndex}"]`,
         );
         if (matchedElement) {
           // Calculate the position of the matched element relative to the container
@@ -3985,7 +4005,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
         selectionType,
         selectedStorageAccount,
         selectedFormat,
-        maskedData
+        maskedData,
       )
         .then((response) => {
           setApiLoading(false);
@@ -4043,6 +4063,53 @@ Updates the component state to reflect the new current page number Calls fetchFi
     setIsOpenRows(false); // Close the dropdown after selecting an option
   };
 
+  const handleCheckboxChange = async () => {
+    const updatedValue = !isDownloadStorageState;
+
+    // Optimistically update UI
+    setIsDownloadStorageState(updatedValue);
+
+    try {
+      // 1. Find current storage account object to preserve existing account_key
+
+      const payload = {
+        storage_account: [
+          {
+            id: selectedStorageAccountId,
+            account_name: selectedStorageAccount,
+            // 👈 Pass existing key if present; do NOT hardcode ""
+            account_key: selectedAccountKey || undefined,
+            is_download_storage: updatedValue,
+          },
+        ],
+      };
+
+      const response = await apiRequest(
+        `${API_URL}/api/admin/update-storage-accounts/`,
+        "POST",
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+            "X-CSRFToken": csrfToken,
+          },
+          credentials: "include",
+        },
+      );
+
+      if (response && response.data && response.data.length > 0) {
+        setIsDownloadStorageState(
+          Boolean(response.data[0].is_download_storage),
+        );
+      }
+    } catch (error) {
+      console.error("Failed to update download storage state:", error);
+      setIsDownloadStorageState(!updatedValue); // Revert on failure
+      alert("Failed to update storage settings. Please try again.");
+    }
+  };
+
   const toggleRowsDropdown = () => setIsOpenRows(!isOpenRows);
   const renderPreviewData = (apiData) => {
     // if (apiLoading) {
@@ -4097,11 +4164,14 @@ Updates the component state to reflect the new current page number Calls fetchFi
     return (
       <div
         className="  flex flex-col px-6"
-        style={{ width: `${perviewWidth}px`, height: `${previewHeight}px` ,
-        userSelect: "none",
-        WebkitUserSelect: "none" /* Safari */,
-        MozUserSelect: "none" /* Firefox */,
-        msUserSelect: "none",}}
+        style={{
+          width: `${perviewWidth}px`,
+          height: `${previewHeight}px`,
+          userSelect: "none",
+          WebkitUserSelect: "none" /* Safari */,
+          MozUserSelect: "none" /* Firefox */,
+          msUserSelect: "none",
+        }}
       >
         {selectedFormat === "tabular" ? (
           <pre>
@@ -4219,14 +4289,34 @@ Updates the component state to reflect the new current page number Calls fetchFi
               {/* Blue div content here */}
             </div>
             <div
-              className="flex flex-row  px-5  text-black text-xs font-medium"
+              className="flex flex-row px-5 justify-between items-center  text-black text-xs font-medium"
               style={{
                 width: `${plainContainerWidth}px`,
-                height: `${(plainContainerHeight * 0.05).toFixed(2)}px`,
+                height: `${(plainContainerHeight * 0.07).toFixed(2)}px`,
               }}
             >
+              <div className="w-1/2 flex  ">
+                {selectedFiles[0] && selectedFiles[0].split(/[\\/]/).pop()}
+              </div>
+              {canSeeRealData && (
+                <div className="w-1/2 h-10  flex space-x-1 items-center justify-end">
+                  <div className="flex items-center">
+                    <input
+                      type="checkbox"
+                      onChange={handleCheckboxChange}
+                      checked={isDownloadStorageState}
+                      className="ml-2 cursor-pointer"
+                    />
+                  </div>
+
+                  <div className="">
+                    {selectedStorageAccount || "Loading..."}
+                  </div>
+                </div>
+              )}
+
               {/* {selectedFiles[0]} */}
-              {selectedFiles[0] && selectedFiles[0].split(/[\\/]/).pop()}
+              {/* {selectedFiles[0] && selectedFiles[0].split(/[\\/]/).pop()} */}
             </div>
             <div
               className="bg-white flex justify-center border border-lightgray-300 rounded-md shadow-md shadow-slate-500\/30"
@@ -4275,32 +4365,32 @@ Updates the component state to reflect the new current page number Calls fetchFi
                                       rowData,
                                       subIndex,
                                       currentMatchIndex,
-                                      matchedIndexes
+                                      matchedIndexes,
                                     )}
                               </div>
                             ))
                           : typeof item === "string"
-                          ? highlightText(
-                              item,
-                              index,
-                              currentMatchIndex,
-                              matchedIndexes
-                            )
-                          : Object.values(item).map((value, subIndex) => (
-                              <div
-                                key={`value-${subIndex}`}
-                                className="border-b border-primary"
-                              >
-                                {typeof value === "object"
-                                  ? JSON.stringify(value)
-                                  : highlightText(
-                                      value,
-                                      subIndex,
-                                      currentMatchIndex,
-                                      matchedIndexes
-                                    )}
-                              </div>
-                            ))}
+                            ? highlightText(
+                                item,
+                                index,
+                                currentMatchIndex,
+                                matchedIndexes,
+                              )
+                            : Object.values(item).map((value, subIndex) => (
+                                <div
+                                  key={`value-${subIndex}`}
+                                  className="border-b border-primary"
+                                >
+                                  {typeof value === "object"
+                                    ? JSON.stringify(value)
+                                    : highlightText(
+                                        value,
+                                        subIndex,
+                                        currentMatchIndex,
+                                        matchedIndexes,
+                                      )}
+                                </div>
+                              ))}
                       </div>
                     ))
                   ) : (
@@ -4311,7 +4401,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
                             apiData,
                             0,
                             currentMatchIndex,
-                            matchedIndexes
+                            matchedIndexes,
                           )}
                     </div>
                   )}
@@ -4404,7 +4494,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
                     title={property}
                     style={{
                       width: `${(metadatamodalWidth * 0.95 * 0.4).toFixed(
-                        2
+                        2,
                       )}px`,
                     }}
                   />
@@ -4419,7 +4509,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
                     title={JSON.stringify(value)}
                     style={{
                       width: `${(metadatamodalWidth * 0.95 * 0.4).toFixed(
-                        2
+                        2,
                       )}px`,
                     }}
                   />
@@ -4445,7 +4535,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
         selectionId,
         selectionType,
         selectedStorageAccount,
-        selectedFiles[0]
+        selectedFiles[0],
       );
 
       if (FixedData !== null) {
@@ -4494,7 +4584,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
             "Content-Type": "application/json",
             "X-CSRFToken": csrfToken,
           },
-          credentials: 'include',
+          credentials: "include",
           body: JSON.stringify({
             email: userEmail,
             timezone: selectedTimeZone.value,
@@ -4563,7 +4653,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
             searchPattern,
             selectedFolder,
             1,
-            value
+            value,
           );
         } else {
           // Fetch files with the search pattern and other parameters
@@ -4576,7 +4666,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
             selectionId,
             selectedStorageAccount,
             selectedSortCriteria,
-            selectedSortOrder
+            selectedSortOrder,
           );
         }
       } else {
@@ -4586,7 +4676,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
             "",
             selectedFolder,
             1,
-            value
+            value,
           ); // Use empty string for pattern
         } else {
           response = await fetchFilesFromApi(
@@ -4598,7 +4688,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
             selectionId,
             selectedStorageAccount,
             selectedSortCriteria,
-            selectedSortOrder
+            selectedSortOrder,
           ); // Use empty string for pattern
         }
       }
@@ -4834,7 +4924,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
         selectionId,
         selectedStorageAccount,
         selectedSortCriteria,
-        selectedSortOrder
+        selectedSortOrder,
       );
       // Clear search input and results if navigating to root or top-level folder
       setInputValue("");
@@ -4849,7 +4939,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
         pattern,
         folderPath, // Update to use the current folder path
         currentPage,
-        newPageSize // Pass the new page size to fetchSubfoldersAndFiles
+        newPageSize, // Pass the new page size to fetchSubfoldersAndFiles
       );
     }
     // Clear input value when navigating back to a parent folder or when folderPath is empty
@@ -4898,7 +4988,7 @@ Updates the component state to reflect the new current page number Calls fetchFi
         selectionId,
         selectedStorageAccount,
         selectedSortCriteria,
-        selectedSortOrder
+        selectedSortOrder,
       );
     } catch (error) {
       console.error("Error fetching Files:", error);
@@ -4986,10 +5076,10 @@ Updates the component state to reflect the new current page number Calls fetchFi
   const folderContainerWidth = `${(subContainerWidth * 0.98).toFixed(2)}`;
   const folderContainerHeight = `${(subContainerHeight * 0.8).toFixed(2)}`;
   const folderSunContainerHeight = `${(folderContainerHeight * 0.92).toFixed(
-    2
+    2,
   )}`;
   const subDataContainerHeight = `${(listItemsContainerHeight * 0.98).toFixed(
-    2
+    2,
   )}`;
   const tableContainerWidth = `${(subDataContainerWidth * 0.98).toFixed(2)}`;
   const tableContainerHight = `${(subContainerHeight * 0.84).toFixed(2)}`;
@@ -5051,7 +5141,6 @@ Updates the component state to reflect the new current page number Calls fetchFi
               <Sidebar isSidebarOpen={isSidebarOpen} />
             </div>
 
-           
             <div
               className=" bg-white flex flex-col  rounded-lg items-center  shadow-md shadow-slate-500\/30 "
               style={{

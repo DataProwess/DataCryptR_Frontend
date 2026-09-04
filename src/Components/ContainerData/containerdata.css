@@ -6,19 +6,24 @@
         --container-padding:0.75rem;
         --layout-gap:0.5rem;
         --back-dashboard-width: 100%;
-    --back-dashboard-height: 2rem;
-    --container-padding-x:2rem;
+    --back-dashboard-height: 3rem;
+    --container-padding-x:1.5rem;
     --container-padding-y:0.5rem;
+         --options-wrapper-padding-x:1rem;
+    --options-wrapper-padding-y:1.25rem;
     --sub-container-gap:0.5;
-    --tab-container-width:40rem;
+    /* --tab-container-width:40rem; */
+    --tab-container-width:65%;
     --tab-container-height:3rem;
     --tab-padding:0.5rem;
     --containers-width:100%;
     --containers-height:20rem;
-    --container-accounts-width:25%;
-    --container-accounts-height:28rem;
+    --container-accounts-width:20%;
+    /* --container-accounts-height:28rem; */
+    --container-accounts-height:88%;
     --container-data-width:80%;
-    --container-data-height:28rem;
+    /* --container-data-height:28rem; */
+    --container-data-height:88%;
 
     }
 /* } */
@@ -40,6 +45,9 @@
   transition: height 0.15s ease-out;
 }
 
+.container-data .options-wrapper-padding{
+    padding: var( --options-wrapper-padding-y) var(--options-wrapper-padding-x) !important;
+}
 .container-data .container-wrapper {
   display: flex !important;
   flex-direction: row !important;
