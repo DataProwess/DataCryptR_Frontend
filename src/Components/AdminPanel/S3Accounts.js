@@ -457,9 +457,10 @@ import { Link } from "react-router-dom";
 import authService from "../auth";
 import { API_URL } from "../ApiConfig";
 import DeletionConfirmationPopup from "./DeletionConfirmationPopup";
+import UserDeleteConfirmationPopup from "./UserDeleteConfirmationPopup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash, faSync } from "@fortawesome/free-solid-svg-icons";
-import NewFieldPopup from "../NewField";
+import NewFieldPopup from "./NewField";
 import { useAuth } from "../AuthContext";
 import { secureApiCall } from "../csrfUtils";
 import { useUI } from "../Context/UIContext";
@@ -476,6 +477,9 @@ const S3Accounts = ({ selectedOption }) => {
   const [s3AccountsData, setS3AccountsData] = useState([]);
   const [selectedS3Account, setSelectedS3Account] = useState(null);
   const [syncingAccountIds, setSyncingAccountIds] = useState(new Set());
+  // Add these state declarations alongside your existing states
+const [newS3AccountSecret, setNewS3AccountSecret] = useState("");
+const [newS3Region, setNewS3Region] = useState("us-east-1");
 
   // Helper to extract CSRF token accurately
   const getCsrfToken = useCallback(() => {
@@ -735,7 +739,55 @@ const S3Accounts = ({ selectedOption }) => {
   };
 
   const handleCancelDelete = () => setSelectedS3RowForDeletion(null);
-  const handleS3AccountSave = () => {};
+ const handleS3AccountSave = async () => {
+  try {
+    setLoadingS3Accounts?.(true);
+    const activeCsrfToken = getCsrfToken();
+
+    const payload = {
+      s3_accounts: [
+        {
+          id: null,
+          name: newS3FieldName,
+          aws_access_key_id: newS3AccountKey,
+          aws_secret_access_key: "dummy_secret_or_same_key", // Fallback string expected by backend
+          region_name: "us-east-1",                          // Default AWS region
+          is_download_storage: false,
+        },
+      ],
+    };
+
+    const res = await secureApiCall(
+      `${API_URL}/api/s3/accounts/create/`,
+      "POST",
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "X-CSRFToken": activeCsrfToken,
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    );
+
+    if (res?.data) {
+      setNewS3FieldName("");
+      setNewS3AccountKey("");
+      setIsS3NewFieldVisible(false);
+
+      if (typeof fetchS3AccountData === "function") {
+        await fetchS3AccountData();
+      }
+    }
+  } catch (error) {
+    console.error("Error creating S3 account:", error.message);
+  } finally {
+    setLoadingS3Accounts?.(false);
+  }
+};
+
+
 
   const handleS3AccountChange = (index, field, value) => {
     setS3AccountsData((prevData) => {
@@ -798,7 +850,7 @@ const S3Accounts = ({ selectedOption }) => {
         );
       default:
         return (
-          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-gray-100 text-gray-500">
+          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-red-400 text-gray-500">
             Not Synced
           </span>
         );
@@ -1035,11 +1087,18 @@ const S3Accounts = ({ selectedOption }) => {
 
         {selectedS3RowForDeletion && (
           <div className="absolute inset-0 flex justify-center z-20 items-center">
-            <DeletionConfirmationPopup
+            {/* <DeletionConfirmationPopup
               context={selectedS3RowForDeletion}
               onCancel={handleCancelDelete}
               onConfirm={handleS3AccountDelete}
-            />
+            /> */}
+             <UserDeleteConfirmationPopup
+                                      context={selectedS3RowForDeletion}
+                                      onCancel={handleCancelDelete}
+                                      onConfirm={() =>
+                                        handleS3AccountDelete(selectedS3RowForDeletion.id)
+                                      }
+                                    />
           </div>
         )}
       </div>

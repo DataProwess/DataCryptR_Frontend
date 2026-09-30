@@ -5,14 +5,11 @@ import { useAuth } from "../AuthContext";
 import { apiRequest } from "../csrfUtils";
 import { API_URL } from "../ApiConfig";
 import { useUI } from "../Context/UIContext";
-// import Navbar from "../Navbar";
 import Navbar from "../Navbar/Navbar";
-// import Sidebar from "../Sidebar";
+
 import Sidebar from "../Sidebar/Sidebar";
 import ErrorPopup from "../ErrorPopup";
 import Chatbot from "../Chatbot";
-import FilesPlainView from "./FilesPlainView";
-import FolderTabularView from "./FolderTabularView";
 import S3FileBrowserPage from "./S3FileBrowserPage";
 import S3PreviewDataModel from "./S3PreviewDataModel";
 import ColumnDefinition from "./ColumnDefinition";
@@ -1063,7 +1060,6 @@ const S3BucketExplore = () => {
                           selectedFiles={selectedFiles}
                           s3AccountId={s3AccountId}
                           bucketId={bucketId}
-                          isModalOpen={isModalOpen}
                           isMetaDataModalOpen={isMetaDataModalOpen}
                           isColumnDataModalOpen={isColumnDataModalOpen}
                           selectedS3AccountName={selectedS3AccountName}
@@ -1276,7 +1272,7 @@ const S3BucketExplore = () => {
       
 
       <div
-        className={`chatbot-margin  ${isDisabled || isBlurred || isInteractionDisabled ? "pointer-events-none" : ""} `}
+        className={`chatbot-margin  ${isDisabled || isBlurred || isModalOpen || isMetaDataModalOpen || isColumnDataModalOpen ? "pointer-events-none" : ""} `}
         // style={{
         //   right: "20px",
         //   bottom: "80px",

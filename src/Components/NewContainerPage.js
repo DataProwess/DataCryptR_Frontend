@@ -5,7 +5,7 @@ import authService from "./auth";
 import "react-toastify/dist/ReactToastify.css";
 import "./toaststyles.css";
 import { useNavigate, Link, useLocation } from "react-router-dom";
-import Sidebar from "./Sidebar";
+import Sidebar from "./V1_Sidebar";
 import Mnavbar from "./Navbar";
 import ContainerOptionsModal from "./ContainerData/ContainerOptionsModal";
 import { API_URL } from "./ApiConfig";

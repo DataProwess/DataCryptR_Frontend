@@ -10,7 +10,7 @@ import Jsontimezones from "./TimeZones";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import TimezoneModal from "./TimeZoneModal";
 import FullScreenPreview from "./FullScreenPreview";
-import Sidebar from "./Sidebar";
+import Sidebar from "./V1_Sidebar";
 import Navbar from "./Navbar";
 // eslint-disable-next-line
 import FixedWidthModal from "./FixedWidthModal";

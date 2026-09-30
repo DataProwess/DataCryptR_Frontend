@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Resizable } from "react-resizable";
 
 const FullScreenPreview = ({
+  safeApiData,
   apiData,
   data,
   localColumnWidths,
@@ -63,7 +64,7 @@ const FullScreenPreview = ({
     return [];
   };
 
-  const safeApiData = processApiData(apiData);
+  // const safeApiData = processApiData(apiData);
   console.log("Original apiData:", apiData);
   console.log("Processed safeApiData:", safeApiData);
   console.log("safeApiData[0]", safeApiData[0]);

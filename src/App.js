@@ -111,8 +111,8 @@ function App() {
             />
             <Route path="/files/:containerId" element={
               <ProtectedRoute>
-              <Explore />
-              {/* <FileExplore/> */}
+              {/* <Explore /> */}
+              <FileExplore/>
               </ProtectedRoute>} />
 
                <Route path="/s3-files/:bucketId" element={

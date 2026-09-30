@@ -176,7 +176,7 @@ const NewGlobalField = ({
   };
 
   return (
-    <div className="fixed inset-0 flex justify-center items-center z-50">
+    <div className="fixed flex justify-center items-center z-50">
       <div className="bg-white p-6 rounded-lg shadow-top z-50 w-[400px] h-[200px] flex flex-col space-y-4">
         <div className="flex flex-col space-y-5 w-full h-full mt-4  items-center">
           <input

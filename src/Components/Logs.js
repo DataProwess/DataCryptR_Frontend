@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import { css } from "@emotion/react";
 import authService from "./auth";
-import Sidebar from "./Sidebar";
+import Sidebar from "./V1_Sidebar";
 import { API_URL } from "./ApiConfig";
 import Chatbot from "./Chatbot";
 import ProfileModal from "./ProfileModal";

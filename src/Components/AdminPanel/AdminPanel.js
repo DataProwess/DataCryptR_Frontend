@@ -1,37 +1,15 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef} from "react";
 import { Link } from "react-router-dom";
-import authService from "../auth";
-import NewFieldPopup from "../NewField";
-import AlertNewFieldPopup from "../AlertNewFieldPopup";
-// import "./scroll.css";
-import Jsontimezones from "../TimeZones";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import "react-toastify/dist/ReactToastify.css";
-import { faCircleRight, faCircleLeft } from "@fortawesome/free-solid-svg-icons";
-// import Navbar from "./Navbar";
 import Navbar from "../Navbar/Navbar";
 import Sidebar from "../Sidebar/Sidebar";
-// import Sidebar from "./Sidebar";
 import { API_URL } from "../ApiConfig";
-import EditUserModal from "../EditUserModal";
-import AddUserGroupModal from "../AddUserGroupModal";
-import NewFileShareModal from "../NewFileShareModal";
-import TimezoneModal from "../TimeZoneModal";
-import NewGlobalField from "../NewGlobalField";
 import { toast } from "react-toastify";
 import Chatbot from "../Chatbot";
-import ProfileModal from "../ProfileModal";
-import ErrorPopup from "../ErrorPopup";
-import debounce from "lodash/debounce";
-// import "./admin.css";
-import AddMaskingConfig from "../AddMaskingConfig";
+
 import {
   secureApiCall,
-  apiRequest,
-  getCSRFToken,
-  getAuthToken,
-  fetchAndStoreCSRFToken,
+ 
 } from "../csrfUtils";
 import { useUI } from "../Context/UIContext";
 import { useAuth } from "../AuthContext";
@@ -50,26 +28,26 @@ import AddUserGroup from "./AddUserGroup";
 import EditUserGroup from "./EditUserGroup";
 
 const AdminPanel = () => {
-  const { token, permissions, csrfToken, userEmail, authLoading } = useAuth();
+  const { token,  csrfToken } = useAuth();
   const [loading, setLoading] = useState(true);
   const [userGroupsData, setUserGroupsData] = useState([]);
   const [isEditUserModalOpen, setIsEditUserModalOpen] = useState(false);
   const [selectedUserGroupDeletion, setSelectionUserGroupDeletion] =
     useState(null);
+  const [isAlertNewFieldVisible, setIsAlertNewFieldVisible] = useState(false);
   const [editedUserGroup, setEditedUserGroup] = useState({
     name: "",
     description: "",
     dcgroups_id: [],
     roles: [],
   });
-  const [isModalVisible, setModalVisible] = useState(false);
+  const [, setModalVisible] = useState(false);
   const [showPreview, setShowPreview] = useState(true);
-  const [dataType, setDataType] = useState(null);
+  const [d, setDataType] = useState(null);
   const [filteredItems, setFilteredItems] = useState([]);
 
   const {
-    isTimezoneModalOpen,
-    showProfileModal,
+   
     setIsTimezoneModalOpen,
     setShowProfileModal,
     showChatbot,
@@ -83,24 +61,28 @@ const AdminPanel = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [availableItems, setAvailableItems] = useState([]);
   const [dcGroups, setDcGroups] = useState([]);
-  const [responseMessage, setResponseMessage] = useState("");
+  const [, setResponseMessage] = useState("");
   const [inputValue1, setInputValue1] = useState("");
   const [inputValue2, setInputValue2] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [tooltipMessage, setTooltipMessage] = useState("");
-  const [input1Error, setInput1Error] = useState("");
+  const [, setInput1Error] = useState("");
   const [dcgroupsState, setDcgroupsState] = useState([]);
   const [editUserInput, setEditUserInput] = useState(
     editedUserGroup.name || "",
   );
   const [isSaveDisabled, setIsSaveDisabled] = useState(true);
-  const [dynamicGroupValues, setDynamicGroupValues] = useState([]);
+  const [, setDynamicGroupValues] = useState([]);
   const [isAddUserGroup, setIsAddUserGroup] = useState(false);
   const [chosenItems, setChosenItems] = useState([]);
   const [hasNameChanged, setHasNameChanged] = useState(false);
   const [selectedFileShareForDeletion, setSelectedFileShareForDeletion] =
     useState(null);
-  const [texinputValue, setTextInputValue] = useState("");
+  const [showMaskingUploadPopup, setShowMaskingUploadPopup] = useState(false);
+  const [isNewFieldVisible, setisNewFieldVisible] = useState(false);
+  const [showUploadPopup, setShowUploadPopup] = useState(false);
+  const [showDownloadPopup, setShowDownloadPopup] = useState(false);
+  const [isGcpNewFieldVisible, setIsGcpNewFieldVisible] = useState(false);
 
   const closePreviewModal = () => {
     document.body.style.overflow = "visible";
@@ -207,98 +189,7 @@ const AdminPanel = () => {
     // setIsPopupOpen(false);
   };
 
-  //   const isInteractionDisabled = showChatbot;
-  // const handleModalInputChange1 = (e) => {
-  //     setInputValue1(e.target.value);
-  //   };
-
-  // const handleModalInputChange2 = (e) => {
-  //   setInputValue2(e.target.value);
-  // };
-
-  // const handleChooseAll = () => {
-  //   setChosenItems((prevChosen) => [...prevChosen, ...availableItems]);
-  //   setAvailableItems([]);
-  //   setSelectedItems([]);
-  // };
-
-  // const handleRemoveAll = () => {
-  //   setAvailableItems((prevAvailable) => [...prevAvailable, ...chosenItems]);
-  //   setChosenItems([]);
-  //   setSelectedItems([]);
-  // };
-
-  // const handleAddMoveToLeft = () => {
-  //   setAvailableItems((prevAvailable) => [...prevAvailable, ...selectedItems]);
-  //   setChosenItems((prevChosen) =>
-  //     prevChosen.filter((item) => !selectedItems.includes(item))
-  //   );
-  //   setSelectedItems([]);
-  // };
-
-  // const handleMoveToRight = () => {
-  //   if (selectedItems.length > 0) {
-  //     setChosenItems((prevChosen) => {
-  //       const updatedChosenItems = [...prevChosen, ...selectedItems];
-  //       return Array.from(new Set(updatedChosenItems));
-  //     });
-
-  //     setAvailableItems((prevAvailable) =>
-  //       prevAvailable.filter((item) => !selectedItems.includes(item))
-  //     );
-
-  //     setSelectedItems([]);
-  //   }
-  // };
-
-  // Called when "Add New Field" is clicked
-  // const handleListUsergroups = () => {
-  //   setIsModalOpen(true);
-  //   setIsEditing(false);
-  //   setShowPreview(true);
-
-  //   fetch(`${API_URL}/api/core/blob-groups/`, {
-  //     method: "GET",
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //       "Content-Type": "application/json",
-  //       "X-CSRFToken": csrfToken,
-  //     },
-  //     credentials: "include",
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       if (data) {
-  //         setAvailableItems(Array.isArray(data) ? data : []);
-  //         setModalVisible(true);
-  //         document.body.style.overflow = "hidden";
-  //         setDataType("AddUser");
-  //       } else {
-  //         console.error("No data received from API for Preview.");
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching API data:", error);
-  //     });
-  // };
-
-  // const handleItemClick = (item, event) => {
-  //   const isCtrlPressed = event.ctrlKey || event.metaKey;
-
-  //   setSelectedItems((prevSelectedItems) => {
-  //     if (isCtrlPressed) {
-  //       if (prevSelectedItems.includes(item)) {
-  //         return prevSelectedItems.filter(
-  //           (selectedItem) => selectedItem !== item
-  //         );
-  //       } else {
-  //         return [...prevSelectedItems, item];
-  //       }
-  //     } else {
-  //       return [item];
-  //     }
-  //   });
-  // };
+  
 
   useEffect(() => {
     const chosenItemsArray = Array.from(chosenItems);
@@ -325,155 +216,7 @@ const AdminPanel = () => {
     }
   }, [editedUserGroup.dcgroups_id]);
 
-  // const validateForm = () => {
-  //   const isValidInputValue1 =
-  //     typeof inputValue1 === "string" && inputValue1.trim() !== "";
-  //   const isValidEditUserInput =
-  //     typeof editUserInput === "string" && editUserInput.trim() !== "";
-
-  //   const inputValue1Lower =
-  //     typeof inputValue1 === "string" ? inputValue1.toLowerCase() : "";
-  //   const isNameUnique = Array.isArray(userGroupName)
-  //     ? !userGroupName.includes(inputValue1Lower)
-  //     : true;
-
-  //   const editUserInputLower =
-  //     typeof editUserInput === "string" ? editUserInput.toLowerCase() : "";
-  //   const isEditUserInputNameUnique = Array.isArray(userGroupName)
-  //     ? !userGroupName.includes(editUserInputLower)
-  //     : true;
-
-  //   let tooltip = "";
-
-  //   if (isEditing) {
-  //     if (!hasNameChanged) {
-  //       tooltip = "";
-  //     } else if (!isValidEditUserInput) {
-  //       tooltip = "Edit user input required";
-  //     } else if (!isEditUserInputNameUnique) {
-  //       tooltip = "Edit user name already exists";
-  //     }
-  //   } else {
-  //     if (!isValidInputValue1) {
-  //       tooltip = "Name required";
-  //     } else if (!isNameUnique) {
-  //       tooltip = "Name already exists";
-  //     }
-  //   }
-
-  //   setTooltipMessage(tooltip);
-
-  //   setIsSaveDisabled(
-  //     (isEditing &&
-  //       hasNameChanged &&
-  //       (!isValidEditUserInput || !isEditUserInputNameUnique)) ||
-  //       (!isEditing && (!isValidInputValue1 || !isNameUnique))
-  //   );
-  // };
-
-  // useEffect(() => {
-  //   validateForm();
-  // }, [inputValue1, editUserInput, userGroupName]);
-
-  // const handleUserGroupSave = async () => {
-  //   if (isSaveDisabled) return;
-
-  //   try {
-  //     const url =
-  //       editedUserGroup && editedUserGroup?.id
-  //         ? `${API_URL}/api/core/blob-groups/${editedUserGroup.id}/`
-  //         : `${API_URL}/api/core/blob-groups/create/`;
-
-  //     const method = editedUserGroup && editedUserGroup?.id ? "PUT" : "POST";
-
-  //     let dcgroupsValue =
-  //       method === "POST" ? inputValue2 : dcgroupsState || [];
-  //     if (!Array.isArray(dcgroupsValue)) {
-  //       dcgroupsValue = [dcgroupsValue];
-  //     }
-
-  //     const selectedItemsArray = Array.isArray(selectedItems)
-  //       ? selectedItems
-  //       : [];
-  //     const chosenItemsArray = Array.isArray(chosenItems)
-  //       ? chosenItems
-  //       : Array.from(chosenItems || []);
-
-  //     const uniqueSelectedItems = Array.from(
-  //       new Set([...chosenItemsArray, ...selectedItemsArray])
-  //     );
-
-  //     const data = await secureApiCall(url, method, {
-  //       roles: uniqueSelectedItems,
-  //       name: method === "POST" ? inputValue1 : editUserInput,
-  //       description: "admin",
-  //       dcgroups: dcgroupsValue.join(","),
-  //     });
-
-  //     localStorage.setItem("chosenItems", JSON.stringify(uniqueSelectedItems));
-
-  //     setResponseMessage(data.message);
-  //     fetchData();
-
-  //     setUserGroupsData((prevState) => {
-  //       const prevData = Array.isArray(prevState) ? prevState : [];
-  //       if (data.data && Array.isArray(data.data)) {
-  //         const editedIndex = prevData.findIndex(
-  //           (group) => group.id === editedUserGroup?.id
-  //         );
-
-  //         if (editedIndex !== -1) {
-  //           const updatedData = [...prevData];
-  //           updatedData[editedIndex] = data.data[0];
-  //           return updatedData;
-  //         } else {
-  //           return [...prevData, data.data[data.data.length - 1]];
-  //         }
-  //       } else {
-  //         return prevData;
-  //       }
-  //     });
-
-  //     setInputValue1("");
-  //     setInputValue2("");
-  //     setSelectedItems([]);
-  //     setIsModalOpen(false);
-  //     setChosenItems([]);
-  //     setDcGroups([]);
-  //     closePreviewModal();
-  //     setIsEditUserModalOpen(false);
-  //     setIsAddUserGroup(false);
-  //   } catch (error) {
-  //     console.error("Error occurred during save:", error);
-  //     setResponseMessage("Error: Something went wrong.");
-  //   }
-  // };
-
-  // const handleOptionClick = (option) => {
-  //   setSelectedOption(option);
-  // };
-
-  // const fetchData = async () => {
-  //   try {
-  //     setLoading(true);
-  //     const userGroups = await secureApiCall(
-  //       `${API_URL}/api/core/blob-groups/`,
-  //       "GET"
-  //     );
-
-  //     const existingUserGroupNames = Array.isArray(userGroups)
-  //       ? userGroups.map((group) => group.name.toLowerCase())
-  //       : [];
-
-  //     setUserGroupsData(Array.isArray(userGroups) ? userGroups : []);
-  //     setUserGroupName(existingUserGroupNames);
-  //   } catch (error) {
-  //     console.error("Fetch data error:", error);
-  //     toast.error("Failed to fetch data");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  
 
   useEffect(() => {
     if (selectedOption === "User Group") {
@@ -560,9 +303,7 @@ const AdminPanel = () => {
 
   const isInteractionDisabled = showChatbot;
 
-  const handleAzureInputChange = (e) => {
-    setTextInputValue(e.target.value);
-  };
+ 
 
   const handleEditModalInputChange = (e) => {
     setEditUserInput(e.target.value);
@@ -851,105 +592,7 @@ const AdminPanel = () => {
     // eslint-disable-next-line
   }, [chosenItems]);
 
-  // const handleEditUserPermissions = (groupId) => {
-  //   const promises = [
-  //     fetch(`${API_URL}/api/core/blob-groups/${groupId}/`, {
-  //       method: "GET",
-  //       // headers: {
-  //       //   Authorization: `Bearer ${token}`,
-  //       //   "Content-Type": "application/json",
-  //       //   // "X-CSRFToken": csrfToken,
-  //       // },
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //         "X-CSRFToken": csrfToken,
-  //         "Content-Type": "application/json",
-  //       },
-  //       credentials: "include",
-  //     }).then((response) => response.json()),
-  //     // Add more fetch requests if needed
-  //   ];
-
-  //   Promise.all(promises)
-  //     .then((data) => {
-  //       if (data.length > 0) {
-  //         setEditedUserGroup(data[0]);
-  //         // setSelectedData(data[0]);
-  //         setModalVisible(true);
-  //         document.body.style.overflow = "hidden";
-  //         setShowPreview(true);
-  //         setDataType("EditUser");
-  //         setIsEditing(true);
-  //         setLoading(false);
-  //       } else {
-  //         console.error("No data received from API for Preview.");
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching API data:", error);
-  //     });
-  // };
-
-  //   const handleEditUserPermissions = (groupId) => {
-  //   setLoading(true);
-
-  //   fetch(`${API_URL}/api/core/blob-groups/${groupId}/`, {
-  //     method: "GET",
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //       "X-CSRFToken": csrfToken,
-  //       "Content-Type": "application/json",
-  //     },
-  //     credentials: "include",
-  //   })
-  //     .then((response) => response.json())
-  //     .then((groupData) => {
-  //       if (groupData) {
-  //         setEditedUserGroup(groupData);
-  //         setEditUserInput(groupData.name || "");
-
-  //         // --- ENHANCED SAML FIX START ---
-  //         // Check all common field representations (array of strings, array of objects, or delimited string)
-  //         const rawSaml =
-  //           groupData.dcgroups ||
-  //           groupData.dc_groups ||
-  //           groupData.saml_groups ||
-  //           groupData.azure_groups ||
-  //           [];
-
-  //         let parsedGroups = [];
-
-  //         if (Array.isArray(rawSaml)) {
-  //           parsedGroups = rawSaml
-  //             .map((g) => (typeof g === "object" && g !== null ? g.name || g.group_id || g.id : g))
-  //             .filter((g) => g && String(g).trim() !== "");
-  //         } else if (typeof rawSaml === "string" && rawSaml.trim() !== "") {
-  //           parsedGroups = rawSaml
-  //             .split(",")
-  //             .map((g) => g.trim())
-  //             .filter(Boolean);
-  //         }
-
-  //         // If parsedGroups has values, use them; otherwise, default to standard single empty input
-  //         setDcgroupsState(parsedGroups.length > 0 ? parsedGroups : [""]);
-  //         // --- ENHANCED SAML FIX END ---
-
-  //         setModalVisible(true);
-  //         document.body.style.overflow = "hidden";
-  //         setShowPreview(true);
-  //         setDataType("EditUser");
-  //         setIsEditing(true);
-  //       } else {
-  //         console.error("No data received from API for Preview.");
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching API data:", error);
-  //     })
-  //     .finally(() => {
-  //       setLoading(false);
-  //     });
-  // };
+ 
 
   const handleEditUserPermissions = (groupId) => {
     setLoading(true);
@@ -1419,12 +1062,11 @@ const AdminPanel = () => {
 
   return (
     <>
-    
       <div className="admin-data">
         <div className={`admin-container-data bg-primary`}>
           <div className="w-full h-full flex flex-col items-center container-padding vertical-gap ">
             <div
-              className={`admin-navbar-wrapper  flex ${isDisabled || isBlurred || isInteractionDisabled ? "  pointer-events-none" : ""}`}
+              className={`admin-navbar-wrapper  flex ${isDisabled || isBlurred || isInteractionDisabled || selectedUserGroupDeletion || isAlertNewFieldVisible ? "  pointer-events-none" : ""}`}
             >
               <Navbar />
             </div>
@@ -1471,7 +1113,11 @@ const AdminPanel = () => {
                       <div
                         className={`options-data-container container-gap flex flex-col items-center 
                         ${
-                          isInteractionDisabled || isDisabled || isBlurred
+                          isInteractionDisabled ||
+                          isDisabled ||
+                          isBlurred ||
+                          isModalOpen ||
+                          isEditUserModalOpen
                             ? " blur-effect pointer-events-none"
                             : ""
                         }`}
@@ -1518,7 +1164,8 @@ const AdminPanel = () => {
                             </table>
                           </div> */}
                           <div
-                            className={`usergroup-data-header rounded-t-xl overflow-hidden`}>
+                            className={`usergroup-data-header rounded-t-xl overflow-hidden`}
+                          >
                             <table className="table-design table-fixed w-full border-collapse ">
                               <colgroup>
                                 <col className="column1" />
@@ -1577,8 +1224,10 @@ const AdminPanel = () => {
                                   ) : (
                                     userGroupsData.map((group, index) => (
                                       <tr key={group.id} className="mt-2">
-                                        <td className="column1 font-light text-xs header-padding overflow-ellipsis whitespace-nowrap overflow-hidden"
-                                        title={group.name}>
+                                        <td
+                                          className="column1 font-light text-xs header-padding overflow-ellipsis whitespace-nowrap overflow-hidden"
+                                          title={group.name}
+                                        >
                                           {group.name}
                                         </td>
                                         <td className="column2 font-light text-xs header-padding overflow-ellipsis whitespace-nowrap overflow-hidden">
@@ -1680,7 +1329,6 @@ const AdminPanel = () => {
                           editUserInput={editUserInput}
                           // isEditUserModalOpen={isEditUserModalOpen}
                           editedUserGroup={editedUserGroup}
-                          chosenItems={chosenItems}
                           showPreview={showPreview}
                           dcGroups={dcGroups}
                           setDcGroups={setDcGroups}
@@ -1706,7 +1354,10 @@ const AdminPanel = () => {
                     )}
                     {selectedOption === "File Share" && (
                       // <div className={`w-full h-full  `}>
-                      <FileShareData selectedOption={selectedOption} />
+                      <FileShareData 
+                      selectedFileShareForDeletion={selectedFileShareForDeletion}
+                      setSelectedFileShareForDeletion={setSelectedFileShareForDeletion}
+                      selectedOption={selectedOption} />
                       // </div>
                     )}
                     {selectedOption === "S3 Storage" && (
@@ -1716,17 +1367,32 @@ const AdminPanel = () => {
                     )}
                     {selectedOption === "GCP" && (
                       // <div className={`w-full h-full  `}>
-                      <GCPAccounts selectedOption={selectedOption} />
+                      <GCPAccounts 
+                      isGcpNewFieldVisible = {isGcpNewFieldVisible} 
+                      setIsGcpNewFieldVisible = {setIsGcpNewFieldVisible}
+                      selectedOption={selectedOption} />
                       // </div>
                     )}
                     {selectedOption === "Global Column Config" && (
                       // <div className={`w-full h-full  `}>
-                      <GlobalColumnConfig selectedOption={selectedOption} />
+                      <GlobalColumnConfig
+                        selectedOption={selectedOption}
+                        showUploadPopup={showUploadPopup}
+                        setShowUploadPopup={setShowUploadPopup}
+                        showDownloadPopup={showDownloadPopup}
+                        setShowDownloadPopup={setShowDownloadPopup}
+                        isNewFieldVisible={isNewFieldVisible}
+                        setisNewFieldVisible={setisNewFieldVisible}
+                      />
                       // </div>
                     )}
                     {selectedOption === "Permanent Masking" && (
                       // <div className={`w-full h-full  `}>
-                      <PermanenetMasking selectedOption={selectedOption} />
+                      <PermanenetMasking
+                        showMaskingUploadPopup={showMaskingUploadPopup}
+                        setShowMaskingUploadPopup={setShowMaskingUploadPopup}
+                        selectedOption={selectedOption}
+                      />
                       // </div>
                     )}
                     {selectedOption === "Miscellaneous" && (
@@ -1736,7 +1402,11 @@ const AdminPanel = () => {
                     )}
                     {selectedOption === "Alert" && (
                       // <div className={`w-full h-full  `}>
-                      <Alert selectedOption={selectedOption} />
+                      <Alert
+                        isAlertNewFieldVisible={isAlertNewFieldVisible}
+                        setIsAlertNewFieldVisible={setIsAlertNewFieldVisible}
+                        selectedOption={selectedOption}
+                      />
                       // </div>
                     )}
                   </div>
@@ -1746,7 +1416,7 @@ const AdminPanel = () => {
           </div>
         </div>
         <div
-          className={`chatbot-margin  ${isDisabled || isBlurred || isInteractionDisabled ? "pointer-events-none" : ""} `}
+          className={`chatbot-margin  ${isDisabled || isBlurred || isInteractionDisabled || selectedUserGroupDeletion || isAlertNewFieldVisible || showMaskingUploadPopup || isNewFieldVisible || showUploadPopup || showDownloadPopup || isGcpNewFieldVisible ? "pointer-events-none" : ""} `}
           // style={{
           //   right: "20px",
           //   bottom: "80px",

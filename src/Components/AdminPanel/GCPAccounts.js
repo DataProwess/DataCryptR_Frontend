@@ -474,18 +474,19 @@ import { Link } from "react-router-dom";
 import authService from "../auth";
 import { API_URL } from "../ApiConfig";
 import DeletionConfirmationPopup from "./DeletionConfirmationPopup";
+import UserDeleteConfirmationPopup from "./UserDeleteConfirmationPopup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash, faSync } from "@fortawesome/free-solid-svg-icons";
-import NewFieldPopup from "../NewField";
+import NewFieldPopup from "./NewField";
 import { useAuth } from "../AuthContext";
 import { secureApiCall } from "../csrfUtils";
 import { useUI } from "../Context/UIContext";
 
-const GCPAccounts = ({ selectedOption }) => {
+const GCPAccounts = ({ selectedOption, isGcpNewFieldVisible, setIsGcpNewFieldVisible }) => {
   const { setShowPreview, showChatbot, isDisabled, isBlurred } = useUI();
   const { token, csrfToken, permissions } = useAuth();
 
-  const [isGcpNewFieldVisible, setIsGcpNewFieldVisible] = useState(false);
+ 
   const [selectedGcpRowForDeletion, setSelectedGcpRowForDeletion] = useState(null);
   const [loadingGcpAccounts, setLoadingGcpAccounts] = useState(false);
   const [newGcpAccountKey, setNewGcpAccountKey] = useState("");
@@ -747,8 +748,63 @@ const GCPAccounts = ({ selectedOption }) => {
   };
 
   const handleCancelDelete = () => setSelectedGcpRowForDeletion(null);
-  const handleGcpAccountSave = () => {};
+  // const handleGcpAccountSave = () => {};
 
+ const handleGcpAccountSave = async () => {
+  try {
+    setLoadingGcpAccounts(true);
+    const activeCsrfToken = getCsrfToken();
+
+    // Parse if user pasted JSON string, or create a valid JSON string structure
+    let formattedCredentials = newGcpAccountKey;
+    
+    try {
+      // Check if user pasted a JSON string; if so, parse/re-stringify to guarantee format
+      const parsed = JSON.parse(newGcpAccountKey);
+      formattedCredentials = JSON.stringify(parsed);
+    } catch {
+      // If user typed a plain string (like Project ID), construct a valid JSON object string
+      formattedCredentials = JSON.stringify({ project_id: newGcpAccountKey });
+    }
+
+    const payload = {
+      gcp_accounts: [
+        {
+          id: null,
+          name: newGcpFieldName,
+          credentials_json: formattedCredentials, // Valid JSON string required by serializer
+          project_id: newGcpAccountKey,
+          is_download_storage: false,
+        },
+      ],
+    };
+
+    const res = await secureApiCall(
+      `${API_URL}/api/gcp/accounts/create/`,
+      "POST",
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "X-CSRFToken": activeCsrfToken,
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    );
+
+    if (res?.data) {
+      setNewGcpFieldName("");
+      setNewGcpAccountKey("");
+      setIsGcpNewFieldVisible(false);
+      await fetchGcpAccountData();
+    }
+  } catch (error) {
+    console.error("Error creating GCP account:", error.message);
+  } finally {
+    setLoadingGcpAccounts(false);
+  }
+};
   const handleGcpAccountChange = (index, field, value) => {
     setGcpAccountsData((prevData) => {
       const newData = [...prevData];
@@ -788,6 +844,39 @@ const GCPAccounts = ({ selectedOption }) => {
     setGcpAccountsData(updatedaccountData);
   };
 
+  // const handleConfirmGcpDelete = async (gcpaccountId) => {
+  //     try {
+  //       if (!token) return;
+  
+  //       // const activeCsrfToken = getCsrfToken();
+  
+  //       const response = await secureApiCall(
+  //         `${API_URL}/api/admin/delete-storage-accounts/`,
+  //         "POST",
+  //         { storage_account_id: storageaccountId },
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //             "X-CSRFToken": csrfToken,
+  //             "Content-Type": "application/json",
+  //           },
+  //           credentials: "include",
+  //         }
+  //       );
+  
+  //       if (response) {
+  //         setGcpAccountsData((prevData) =>
+  //           prevData.filter((container) => container.id !== gcpaccountId)
+  //         );
+  //         setSelectedGcpRowForDeletion(null);
+  //         toast.success("Storage account deleted successfully.");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error during delete:", error);
+  //       toast.error("Failed to delete storage account.");
+  //     }
+  //   };
+
   const renderStatusBadge = (status) => {
     switch (status) {
       case "IN_PROGRESS":
@@ -810,16 +899,17 @@ const GCPAccounts = ({ selectedOption }) => {
         );
       default:
         return (
-          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-gray-100 text-gray-500">
+          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-red-400 text-gray-500">
             Not Synced
           </span>
         );
     }
   };
 
+
  return (
     <div className="options-data-container layout-gap flex flex-col items-center">
-      <div className="button-container flex flex-row px-2 items-center justify-between bg-newgray rounded-lg shadow-xl shadow-slate-500/30">
+      <div className={`button-container flex flex-row px-2 items-center justify-between bg-newgray rounded-lg shadow-xl shadow-slate-500/30 ${isGcpNewFieldVisible ? "blur-effect" : ""}`}>
         <button
           className="add-new-button flex flex-row justify-center text-xs rounded-md cursor-pointer items-center font-medium text-white bg-purpleshade1"
           onClick={() => setIsGcpNewFieldVisible(true)}
@@ -835,7 +925,7 @@ const GCPAccounts = ({ selectedOption }) => {
       </div>
 
       <div className="usergroup-data-container flex flex-col items-center">
-        <div className="usergroup-data-header rounded-t-xl">
+        <div className={`usergroup-data-header rounded-t-xl ${isGcpNewFieldVisible ? "blur-effect" : ""}`}>
           <table className="table-design table-fixed w-full">
             <colgroup>
               <col className="w-[5%]" />
@@ -864,7 +954,7 @@ const GCPAccounts = ({ selectedOption }) => {
           </table>
         </div>
 
-        <div className="usergroup-tabular-data mt-2 flex flex-col rounded-b-xl shadow-md shadow-slate-500/30 bg-white">
+        <div className={`usergroup-tabular-data mt-2 flex flex-col rounded-b-xl shadow-md shadow-slate-500/30 bg-white ${isGcpNewFieldVisible ? "blur-effect" : ""}`}>
           <div
             className="usergroup-tabular-rows py-1 overflow-auto"
             style={{ scrollbarWidth: "thin" }}
@@ -1046,11 +1136,18 @@ const GCPAccounts = ({ selectedOption }) => {
 
         {selectedGcpRowForDeletion && (
           <div className="absolute inset-0 flex justify-center z-20 items-center">
-            <DeletionConfirmationPopup
+            {/* <DeletionConfirmationPopup
               context={selectedGcpRowForDeletion}
               onCancel={handleCancelDelete}
               onConfirm={handleGcpAccountDelete}
-            />
+            /> */}
+             <UserDeleteConfirmationPopup
+                          context={selectedGcpRowForDeletion}
+                          onCancel={handleCancelDelete}
+                          onConfirm={() =>
+                            handleGcpAccountDelete(selectedGcpRowForDeletion.id)
+                          }
+                        />
           </div>
         )}
       </div>

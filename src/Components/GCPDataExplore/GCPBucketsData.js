@@ -61,7 +61,7 @@ const GCPBucketsData = ({
           setGcpBuckets(fetchedBuckets);
         } catch (err) {
           console.error("Error fetching S3 buckets:", err);
-          setGcpError("Failed to load S3 buckets. Please try again.");
+          setGcpError("Failed to load GCP buckets. Please try again.");
           setIsPopupOpen(true);
         } finally {
           setLoadingGcpBuckets(false);
@@ -114,7 +114,7 @@ const handleGcpBucketClick = async(gcpbucket) => {
     
         // Check the actual length of the extracted arrays
         if (blobs.length === 0 && folders.length === 0) {
-          setError("No Folders and Files Found");
+          setGcpError("No Folders and Files Found");
           setIsPopupOpen(true);
         } else {
           console.log("🚀 Navigating with payload:", {
@@ -138,12 +138,12 @@ const handleGcpBucketClick = async(gcpbucket) => {
               isDownloadStorage: isDownloadStorage,
               initialFiles: blobs,
               initialFolders: folders,
-             gcpAccountId: selectedgcpId ||  1,
+             gcpAccountId: selectedgcpId,
             },
           });
         }
       } catch (error) {
-        console.error("API Fetch Exception routing S3 context:", error.message);
+        console.error("API Fetch Exception routing GCP context:", error.message);
         setError(
           error.message || "An authentication or CSRF validation error occurred.",
         );

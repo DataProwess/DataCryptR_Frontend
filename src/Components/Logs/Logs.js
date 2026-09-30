@@ -1,10 +1,6 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-// import Navbar from "./Navbar";
 import Navbar from "../Navbar/Navbar";
-import { css } from "@emotion/react";
-import authService from "../auth";
-// import Sidebar from "./Sidebar";
 import Sidebar from "../Sidebar/Sidebar";
 import { API_URL } from "../ApiConfig";
 import Chatbot from "../Chatbot";
@@ -13,7 +9,6 @@ import TimezoneModal from "../TimeZoneModal";
 import ErrorPopup from "../ErrorPopup";
 import { useUI } from "../Context/UIContext";
 import "./logs.css";
-// import "./logsstyle.css";
 import { useAuth } from "../AuthContext";
 import { apiRequest } from "../csrfUtils";
 

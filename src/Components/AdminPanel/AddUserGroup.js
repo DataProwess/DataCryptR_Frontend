@@ -41,7 +41,7 @@ const AddUserGroup = ({
       // onRequestClose={closeModal}
       contentLabel="User Group Modal"
       // Backdrop / Overlay Setup
-      overlayClassName="fixed inset-0 z-[9999] bg-black/40 flex justify-center items-center backdrop-blur-sm"
+      overlayClassName="fixed inset-0 z-[9999]  flex justify-center items-center "
       // Modal Box Setup (p-0 allows header color to fill corners correctly)
       className="bg-[#F0F4FB] rounded-xl shadow-2xl border border-gray-200 
                   overflow-y-auto outline-none flex 

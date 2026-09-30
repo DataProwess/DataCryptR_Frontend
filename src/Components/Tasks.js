@@ -7,7 +7,7 @@ import { faCheck, faTimes, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faHurricane } from "@fortawesome/free-solid-svg-icons";
 import { faAsterisk } from "@fortawesome/free-solid-svg-icons";
-import Sidebar from "./Sidebar";
+import Sidebar from "./V1_Sidebar";
 import { API_URL } from "./ApiConfig";
 import Chatbot from "./Chatbot";
 import ProfileModal from "./ProfileModal";

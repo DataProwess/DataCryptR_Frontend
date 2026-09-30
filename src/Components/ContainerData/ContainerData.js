@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useUI } from "../Context/UIContext";
 // import Navbar from "../Navbar";
 import Navbar from "../Navbar/Navbar";
-// import Sidebar from "../Sidebar";
 import Sidebar from "../Sidebar/Sidebar";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Chatbot from "../Chatbot";
@@ -419,24 +418,49 @@ const ContainerData = () => {
     }
   };
 
-  const renderFolderIcon = (accountId) => {
-    if (accountId === selectedStorageAccountId) {
-      return (
-        <img
-          src={process.env.PUBLIC_URL + "/purple-storage-icon.png"}
-          alt="Closed Folder"
-          className="w-4 h-4 mr-3"
-        />
-      );
-    } else {
-      return (
-        <img
-          src={process.env.PUBLIC_URL + "/graystorageaccount-icon.png"}
-          alt="icon"
-          className="w-4 h-4 mr-3"
-        />
-      );
+  // const renderFolderIcon = (accountId) => {
+  //   if (accountId === selectedStorageAccountId) {
+  //     return (
+  //       <img
+  //         src={process.env.PUBLIC_URL + "/purple-storage-icon.png"}
+  //         alt="Closed Folder"
+  //         className="w-4 h-4 mr-3"
+  //       />
+  //     );
+  //   } else {
+  //     return (
+  //       <img
+  //         src={process.env.PUBLIC_URL + "/graystorageaccount-icon.png"}
+  //         alt="icon"
+  //         className="w-4 h-4 mr-3"
+  //       />
+  //     );
+  //   }
+  // };
+
+  const renderFolderIcon = (accountId, accountType) => {
+    let isSelected = false;
+
+    if (accountType === "storage") {
+      isSelected = accountId === selectedStorageAccountId;
+    } else if (accountType === "s3") {
+      isSelected = accountId === selectedS3storageAccountId;
+    } else if (accountType === "gcp") {
+      isSelected = accountId === selectedgcpId;
     }
+
+    return (
+      <img
+        src={
+          process.env.PUBLIC_URL +
+          (isSelected
+            ? "/purple-storage-icon.png"
+            : "/graystorageaccount-icon.png")
+        }
+        alt="Storage"
+        className="w-4 h-4 mr-3"
+      />
+    );
   };
 
   //   const handleTabClick = (option) => {
@@ -639,8 +663,9 @@ const ContainerData = () => {
                       <span>&nbsp;&gt; {selectedGcpAccountName}</span>
                     )}
                 </div>
-                <div
-                  className={`tab-container flex bg-white shadow-md rounded-lg p-1 overflow-hidden tab-margin-bottom`}
+                {/* <div
+                  className={`tab-container flex bg-white shadow-md rounded-lg p-1 overflow-hidden tab-margin-bottom overflow-x-auto overflow-y-hidde`}
+                style={{ scrollbarWidth: "thin", }} 
                 >
                   {[
                     { label: "Storage Account", value: "storageAccount" },
@@ -650,9 +675,38 @@ const ContainerData = () => {
                   ].map((tab) => (
                     <div
                       key={tab.value}
-                      className={`flex-1 min-w-0 h-[40px] flex items-center justify-center cursor-pointer rounded-md 
+                      className={`flex-1 min-w-0 h-[40px] flex items-center justify-center cursor-pointer rounded-md whitespace-nowrap
                             text-[12px] sm:text-[14px] md:text-[15px] font-medium truncate select-none transition-colors
                             ${selectedOption === tab.value ? "bg-purpleshade1 text-white" : "bg-white text-black"}`}
+                      onClick={() => handleTabClick(tab.value)}
+                    >
+                      {tab.label}
+                    </div>
+                  ))}
+                </div> */}
+                <div
+                  className="tab-container flex bg-white shadow-md rounded-lg p-1 overflow-x-auto overflow-y-hidden tab-margin-bottom"
+                  style={{ scrollbarWidth: "thin" }}
+                >
+                  {[
+                    { label: "Storage Account", value: "storageAccount" },
+                    { label: "File Shares", value: "fileShares" },
+                    { label: "S3 Storage", value: "s3Storage" },
+                    { label: "GCP", value: "gcp" },
+                  ].map((tab) => (
+                    <div
+                      key={tab.value}
+                      className={`flex-1 min-w-[140px] h-[40px] flex items-center justify-center cursor-pointer rounded-md
+        whitespace-nowrap
+        text-[12px] sm:text-[14px] md:text-[15px]
+        font-medium
+        select-none
+        transition-colors
+        ${
+          selectedOption === tab.value
+            ? "bg-purpleshade1 text-white"
+            : "bg-white text-black"
+        }`}
                       onClick={() => handleTabClick(tab.value)}
                     >
                       {tab.label}
@@ -707,11 +761,15 @@ const ContainerData = () => {
                             >
                               {/* Folder Icon stays fixed shape */}
                               <div className="flex-shrink-0">
-                                {renderFolderIcon(account.id)}
+                                {/* {renderFolderIcon(account.id)} */}
+                                {renderFolderIcon(account.id, "storage")}
                               </div>
 
                               {/* Text container fills space and truncates safely with an ellipse (...) */}
-                              <div className="truncate min-w-0 flex-1 select-none text-left">
+                              <div
+                                className="min-w-0 flex-1 overflow-hidden whitespace-nowrap text-ellipsis select-none text-left"
+                                title={account.account_name}
+                              >
                                 {account.account_name}
                               </div>
                             </div>
@@ -752,7 +810,12 @@ const ContainerData = () => {
                                 alt="icon"
                                 className="w-4 h-4 mr-3"
                               />
-                              {fileShare.name}
+                              <div
+                                className="min-w-0 flex-1 overflow-hidden whitespace-nowrap text-ellipsis select-none"
+                                title={fileShare.name}
+                              >
+                                {fileShare.name}
+                              </div>
                             </div>
                           ))
                         ))
@@ -793,8 +856,12 @@ const ContainerData = () => {
                               }}
                               onClick={() => handleS3AccountClick(account)}
                             >
-                              {renderFolderIcon(account.id)}
-                              <div className="truncate min-w-0 flex-1 select-none text-left">
+                              {/* {renderFolderIcon(account.id)} */}
+                              {renderFolderIcon(account.id, "s3")}
+                              <div
+                                className="min-w-0 flex-1 overflow-hidden whitespace-nowrap text-ellipsis select-none text-left"
+                                title={account.name}
+                              >
                                 {account.name}
                               </div>
                             </div>
@@ -835,8 +902,12 @@ const ContainerData = () => {
                               }}
                               onClick={() => handlegcpDataClick(account)}
                             >
-                              {renderFolderIcon(account.id)}
-                              <div className="truncate min-w-0 flex-1 select-none text-left">
+                              {/* {renderFolderIcon(account.id)} */}
+                              {renderFolderIcon(account.id, "gcp")}
+                              <div
+                                className="min-w-0 flex-1 overflow-hidden whitespace-nowrap text-ellipsis select-none text-left"
+                                title={account.name}
+                              >
                                 {account.name}
                               </div>
                             </div>
@@ -901,331 +972,49 @@ const ContainerData = () => {
             </div>
           </div>
         </div>
-      </div>
-    </>
-  );
-
-  return (
-    <>
-      <div className="h-screen w-screen bg-primary overflow-hidden">
-        <div className="w-full h-full flex flex-col items-center px-3 py-3 gap-1">
-          {/* Navbar Configuration */}
-          <div
-            className={`flex items-center justify-center w-[98vw] h-[10vh]
-                     ${isDisabled || isBlurred ? "pointer-events-none" : ""}`}
-          >
-            <Navbar />
-          </div>
-          {/* SideBar + Main Content (GREEN CONTAINER) */}
-          <div className="flex-1 flex flex-row w-full h-[88vh] gap-2 overflow-hidden">
-            {/* SideBar Wrapper - Given specific width padding room to breathe */}
-            <div
-              className={`w-[6vw] min-w-[80px] max-w-[100px] h-full flex-shrink-0 py-1 ${isDisabled || isBlurred ? "pointer-events-none" : ""}`}
-            >
-              {/* Inner Sidebar Card - This handles the background color, rounding, and shadow */}
-              <div className="w-full h-full bg-white rounded-lg shadow-lg shadow-slate-400/50 flex items-center justify-center py-4">
-                <Sidebar />
+        {showNoContainersPopup && (
+          <div className="fixed inset-0 flex justify-center items-center z-50">
+            <div className="bg-white p-6 rounded-lg shadow-md shadow-slate-500/30 w-96 h-32 flex flex-col items-center justify-center space-y-4">
+              <p className="font-normal text-xs text-black break-words text-center">
+                No containers available in {selectedStorageAccountName}
+              </p>
+              <div className="flex justify-center">
+                <button
+                  className="w-20 h-7 text-white text-xs bg-purpleshade1 font-normal border border-none rounded-lg"
+                  onClick={() => setShowNoContainersPopup(false)}
+                >
+                  OK
+                </button>
               </div>
             </div>
-            {/* SCALE WRAPPER - Centered container that takes remaining width */}
-            <div
-              className={`flex-1 h-full flex items-center justify-center p-1.5 ${isDisabled || isBlurred ? "pointer-events-none" : ""}`}
-            >
-              {/* SCALE CONTAINER 
-                  Using inverse width/height properties ensures that the element scales 
-                  but doesn't leave trailing dead margins in your layout.
-              */}
-              <div
-                className="origin-center transition-transform relative"
-                style={{
-                  transform: `scale(${scale})`,
-                  width: `${100 / scale}%`,
-                  height: `${100 / scale}%`,
-                }}
-              >
-                {/* Main Content Card */}
-                <div className="w-full h-full flex flex-col rounded-lg gap-2 bg-newgray shadow-lg shadow-slate-500/50 py-3 px-5">
-                  <div className="w-full h-[98%] flex flex-col gap-2">
-                    {/* Breadcrumbs */}
-                    <div className="w-full h-[4vh] flex items-center text-sm font-medium text-purpleshade1">
-                      <div>
-                        <Link to="/home">Home</Link> &gt;&nbsp;
-                      </div>
-                      {/* {selectedOption === "storageAccount"
-                        ? "Storage Account"
-                        : "File Share Data"}
-                      {selectedOption === "storageAccount" &&
-                        selectedStorageAccountName && (
-                          <span>&gt; {selectedStorageAccountName}</span>
-                        )} */}
-
-                      <span>
-                        {(() => {
-                          switch (selectedOption) {
-                            case "storageAccount":
-                              return "Storage Account";
-                            case "fileShares":
-                              return "File Shares";
-                            case "s3Storage":
-                              return "S3 Storage";
-                            case "gcp":
-                              return "GCP";
-                            default:
-                              return "Storage Platform"; // Fallback text
-                          }
-                        })()}
-                      </span>
-
-                      {/* Contextual Sub-Item: Check that it is a valid string with text */}
-                      {selectedOption === "storageAccount" &&
-                        typeof selectedStorageAccountName === "string" &&
-                        selectedStorageAccountName.trim() && (
-                          <span>&nbsp;&gt; {selectedStorageAccountName}</span>
-                        )}
-
-                      {selectedOption === "fileShares" &&
-                        typeof selectedFileShareName === "string" &&
-                        selectedFileShareName.trim() && (
-                          <span>&nbsp;&gt; {selectedFileShareName}</span>
-                        )}
-
-                      {selectedOption === "s3Storage" &&
-                        typeof selectedS3AccountName === "string" &&
-                        selectedS3AccountName.trim() && (
-                          <span>&nbsp;&gt; {selectedS3AccountName}</span>
-                        )}
-
-                      {selectedOption === "gcp" &&
-                        typeof selectedGcpAccountName === "string" &&
-                        selectedGcpAccountName.trim() && (
-                          <span>&nbsp;&gt; {selectedGcpAccountName}</span>
-                        )}
-                    </div>
-
-                    {/* Tab Selection */}
-                    <div className="w-full max-w-full sm:max-w-[650px] flex bg-white shadow-md rounded-lg p-1 overflow-hidden">
-                      {[
-                        { label: "Storage Account", value: "storageAccount" },
-                        { label: "File Shares", value: "fileShares" },
-                        { label: "S3 Storage", value: "s3Storage" },
-                        { label: "GCP", value: "gcp" },
-                      ].map((tab) => (
-                        <div
-                          key={tab.value}
-                          className={`flex-1 min-w-0 h-[40px] flex items-center justify-center cursor-pointer rounded-md 
-                            text-[12px] sm:text-[14px] md:text-[15px] font-medium truncate select-none transition-colors
-                            ${selectedOption === tab.value ? "bg-purpleshade1 text-white" : "bg-white text-black"}`}
-                          onClick={() => handleTabClick(tab.value)}
-                        >
-                          {tab.label}
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Split View Content Area */}
-                    <div className="w-full flex-1 flex flex-row  overflow-hidden">
-                      {/* Left Sidebar Menu List */}
-                      <div className="w-[20vw] min-w-[160px] max-w-[280px] h-[93%] bg-newgray shadow-md shadow-slate-500/30 flex flex-col rounded-l-xl  items-center justify-center border-l-2 border-slate-200/100 z-10 p-2">
-                        <div
-                          className="w-full  h-full overflow-y-visible"
-                          style={{ scrollbarWidth: "thin" }}
-                        >
-                          {/* Storage Accounts Loading / Mapping */}
-                          {loadingStorageAccounts &&
-                          selectedOption === "storageAccount" ? (
-                            <div className="w-full h-[85%] flex flex-col justify-center items-center space-y-4 mt-2 ml-2">
-                              <img
-                                src={process.env.PUBLIC_URL + "/loadergif.gif"}
-                                alt="logo"
-                                className="animate-spin w-6 h-6"
-                              />
-                              <p className="text-logintext font-[350] text-[11px] animate-pulse">
-                                Just a moment...
-                              </p>
-                            </div>
-                          ) : (
-                            selectedOption === "storageAccount" &&
-                            storageAccountOptions.map((account) => (
-                              <div
-                                key={account.id}
-                                className="flex flex-row w-full h-9 items-center font-normal text-xs cursor-pointer px-3 rounded-md transition-all duration-150 ease-in-out"
-                                style={{
-                                  background:
-                                    account.id === selectedStorageAccountId
-                                      ? "white"
-                                      : "transparent",
-                                  boxShadow:
-                                    account.id === selectedStorageAccountId
-                                      ? "0px 4px 10px rgba(0, 0, 0, 0.15)"
-                                      : "none",
-                                }}
-                                onClick={() =>
-                                  handleStorageAccountClick(account.id)
-                                }
-                              >
-                                {/* Folder Icon stays fixed shape */}
-                                <div className="flex-shrink-0">
-                                  {renderFolderIcon(account.id)}
-                                </div>
-
-                                {/* Text container fills space and truncates safely with an ellipse (...) */}
-                                <div className="truncate min-w-0 flex-1 select-none text-left">
-                                  {account.account_name}
-                                </div>
-                              </div>
-                            ))
-                          )}
-
-                          {/* File Shares Loading / Mapping */}
-                          {loadingFileShares &&
-                          selectedOption === "fileShares" ? (
-                            <div className="w-full h-[85%] flex flex-col justify-center items-center space-y-6 mt-10">
-                              <img
-                                src={process.env.PUBLIC_URL + "/loadergif.gif"}
-                                alt="logo"
-                                className="animate-spin w-8 h-8"
-                              />
-                              <p className="text-logintext font-[350] text-[13px] animate-pulse">
-                                Loading File Shares...
-                              </p>
-                            </div>
-                          ) : (
-                            selectedOption === "fileShares" &&
-                            (fileShareData.length === 0 ? (
-                              <div className="w-full text-center py-4 text-xs font-normal text-slate-400 italic">
-                                No File Share data found.
-                              </div>
-                            ) : (
-                              fileShareData.map((fileShare) => (
-                                <div
-                                  key={fileShare.id}
-                                  className="flex flex-row w-[200px] h-6 items-center text-black font-normal text-xs cursor-pointer p-2 rounded-lg"
-                                  onClick={() =>
-                                    handleFileShareClick(fileShare)
-                                  }
-                                >
-                                  <img
-                                    src={
-                                      process.env.PUBLIC_URL +
-                                      "/graystorageaccount-icon.png"
-                                    }
-                                    alt="icon"
-                                    className="w-4 h-4 mr-3"
-                                  />
-                                  {fileShare.name}
-                                </div>
-                              ))
-                            ))
-                          )}
-
-                          {/* S3 Storage Loading / Mapping */}
-                          {loadingS3Accounts &&
-                          selectedOption === "s3Storage" ? (
-                            <div className="w-full h-[85%] flex flex-col justify-center items-center space-y-4 mt-2 ml-2">
-                              <img
-                                src={process.env.PUBLIC_URL + "/loadergif.gif"}
-                                alt="logo"
-                                className="animate-spin w-6 h-6"
-                              />
-                              <p className="text-logintext font-[350] text-[11px] animate-pulse">
-                                Just a moment...
-                              </p>
-                            </div>
-                          ) : (
-                            selectedOption === "s3Storage" &&
-                            s3AccountData.map((account) => (
-                              <div
-                                key={account.id}
-                                className="flex flex-row w-full h-9 items-center font-normal text-xs cursor-pointer px-3 rounded-md transition-all duration-150 ease-in-out"
-                                style={{
-                                  background:
-                                    account.id === selectedStorageAccountId
-                                      ? "white"
-                                      : "transparent",
-                                  boxShadow:
-                                    account.id === selectedStorageAccountId
-                                      ? "0px 4px 10px rgba(0, 0, 0, 0.3)"
-                                      : "none",
-                                }}
-                                onClick={() => handleS3AccountClick(account)}
-                              >
-                                {renderFolderIcon(account.id)}
-                                <div className="truncate min-w-0 flex-1 select-none text-left">
-                                  {account.name}
-                                </div>
-                              </div>
-                            ))
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Right Workspace Window */}
-                      <div className="flex-1 h-[93%] bg-white rounded-r-xl shadow-md shadow-slate-500/30 flex flex-col justify-center items-center ">
-                        {/* Dynamic content changes go here */}
-                        <div className="w-full h-full flex justify-center items-center">
-                          {/* <div className="w-full h-9 bg-white rounded-lg shadow-md border-t border-slate-200/70"> */}
-                          {selectedOption === "storageAccount" && (
-                            <ContainerOptionsModal
-                              className={`${
-                                showChatbot ? "admin-blur-effect" : ""
-                              }`}
-                              containerOptions={containerOptions}
-                              //  selectedStorageAccount={storageAccountOptions.account_name}
-                              selectedStorageAccount={
-                                selectedStorageAccountName
-                              }
-                              selectedOption={selectedOption}
-                              fileShareData={fileShareData}
-                            />
-                          )}
-                          {selectedOption === "s3Storage" && (
-                            <S3BucketsData
-                              selectedS3AccountId={selectedStorageAccountId}
-                              selectedS3AccountName={selectedS3AccountName}
-                              selectedOption={selectedOption}
-                            />
-                          )}
-                        </div>
-                        {/* </div> */}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>{" "}
-              {/* End of Scale Container */}
-            </div>{" "}
-            {/* End of Scale Wrapper */}
-          </div>{" "}
-          {/* End of Green Container */}
+          </div>
+        )}
+        <div
+          className={`chatbot-margin  ${isDisabled || isBlurred || isInteractionDisabled ? "pointer-events-none" : ""} `}
+          // style={{
+          //   right: "20px",
+          //   bottom: "80px",
+          // }}
+        >
+          <img
+            src={process.env.PUBLIC_URL + "/chat-icon.png"}
+            alt="Chat Icon"
+            className="w-12 h-12 cursor-pointer animate-floating"
+            onClick={handleChatbotIconClick}
+          />
         </div>
-      </div>
-
-      <div
-        className={`fixed z-[9999] ${isDisabled || isBlurred ? "pointer-events-none" : ""} `}
-        style={{
-          right: "20px",
-          bottom: "20px",
-        }}
-      >
-        <img
-          src={process.env.PUBLIC_URL + "/chat-icon.png"}
-          alt="Chat Icon"
-          className="w-12 h-12 cursor-pointer animate-floating"
-          onClick={handleChatbotIconClick}
+        {showChatbot && (
+          <Chatbot
+            isOpen={showChatbot}
+            onClose={handleCloseChatbot} // Pass handleCloseChatbot to Chatbot
+          />
+        )}
+        <ErrorPopup
+          isOpen={isPopupOpen}
+          message={error}
+          onClose={handleCloseChatbot}
         />
       </div>
-      {showChatbot && (
-        <Chatbot
-          isOpen={showChatbot}
-          onClose={handleCloseChatbot} // Pass handleCloseChatbot to Chatbot
-        />
-      )}
-
-      <ErrorPopup
-        isOpen={isPopupOpen}
-        message={error}
-        onClose={handleCloseChatbot}
-      />
     </>
   );
 };

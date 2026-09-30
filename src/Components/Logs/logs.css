@@ -1553,7 +1553,7 @@
 .log-container .log-sidebar {
   @apply flex-shrink-0 ;
   width: var(--sidebar-width);
-  height:98%;
+  height:99%;
   /* background-color: var(--bg-color) !important;  */
   /* transition: width 0.15s ease-out, background-color 0.15s ease-out; */
 }
@@ -1564,7 +1564,7 @@
   flex-direction: column !important;  
   flex: 1 !important;            
    width: 100% !important;               
-  height: 98% !important;             
+  height: 99% !important;             
   min-width: 0 !important;            
   padding: var(--padding-y) var(--padding-x) !important;       
   /* background-color: var(--bg-color) !important;  */

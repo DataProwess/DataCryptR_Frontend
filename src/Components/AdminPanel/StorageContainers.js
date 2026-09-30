@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import NewFieldPopup from "../NewField";
+import NewFieldPopup from "./NewField";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash, faSync } from "@fortawesome/free-solid-svg-icons";
 import "react-toastify/dist/ReactToastify.css";
@@ -324,6 +324,17 @@ const StorageContainers = ({ selectedOption }) => {
     setSelectedContainer(container);
   };
 
+  // const handleRowClick = (container) => {
+  //   setSelectedContainer(container);
+  //   // Trigger the checkbox click
+  //   const checkbox = document.getElementById(
+  //     `checkbox-${container.container_id}`
+  //   );
+  //   if (checkbox) {
+  //     checkbox.click();
+  //   }
+  // };
+
   const handleCheckboxChange = (selectedContainer) => {
     const updatedContainerData = containerData.map((container) => {
       if (container === selectedContainer) {
@@ -389,7 +400,7 @@ const StorageContainers = ({ selectedOption }) => {
         );
       default:
         return (
-          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-gray-100 text-gray-500">
+          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-red-400 text-gray-500">
             Not Synced
           </span>
         );

@@ -1,39 +1,24 @@
 import { useEffect, useState, useRef } from "react";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
-import Modal from "react-modal";
-import { useAuth } from "../AuthContext";
-import { apiRequest } from "../csrfUtils";
-import { API_URL } from "../ApiConfig";
+import { useNavigate, useLocation, useParams, Link } from "react-router-dom";
+import "./newexplore.css";
+import { toast } from "react-toastify";
+import Navbar from "../Navbar/Navbar";
+import Sidebar from "../Sidebar/Sidebar";
 import { useUI } from "../Context/UIContext";
-import Navbar from "../Navbar";
-import Sidebar from "../Sidebar";
-import ErrorPopup from "../ErrorPopup";
+import { useAuth } from "../AuthContext";
+import Modal from "react-modal";
+import { API_URL } from "../ApiConfig";
+import { secureApiCall } from "../csrfUtils";
+import FileBrowserPage from "./FileBrowserPage"; // Import the new FileBrowserPage component
+import SubFoldersPage from "./SubFoldersPage"; // Import the new SubFoldersPage component
+import FilePreviewDataModal from "./FilePreviewDataModal"; // Import the new FilePreviewDataModal component
+import FileMetaData from "./FileMetaData"; // Import the new MetadataModal component
+import FileColumnDefinition from "./FileColumnDefinition"; // Import the new FileColumnDefinition component
+import FolderNoDataPopup from "../FolderNoDataPopup";
 import Chatbot from "../Chatbot";
-import FilesPlainView from "../S3BucketExplore/FilesPlainView";
-import FolderTabularView from "../S3BucketExplore/FolderTabularView";
-import S3FileBrowserPage from "../S3BucketExplore/S3FileBrowserPage";
-import S3PreviewDataModel from "../S3BucketExplore/S3PreviewDataModel";
-import ColumnDefinition from "../S3BucketExplore/ColumnDefinition";
-import MetaData from "../S3BucketExplore/MetaData";
-import "./explore.css";
-// import "./width.css";
-import DataExplore from "./DataExplore";
-import useDisplayProfiler from "../hooks/useDisplayProfiler";
-import useInspectPanel from "../hooks/useInspectPanel";
-
-
+import ErrorPopup from "../ErrorPopup";
 
 const FileExplore = () => {
-  const {zoom,  isInspectMode ,pixels, zoomLevel, width, height} = useDisplayProfiler();
-  const { isOpen, layoutWidth, layoutHeight, panelzoomLevel } = useInspectPanel();
-  console.log("Zoom Level:", zoom,isInspectMode);
-  const [modalStyles, setModalStyles] = useState({
-    marginTop: "110px",
-    maxHeight: `calc(100% - 110px)`,
-  });
-  const { token, csrfToken, permissions } = useAuth();
-
-  const location = useLocation();
   const {
     isDisabled,
     isBlurred,
@@ -44,1637 +29,2187 @@ const FileExplore = () => {
     showChatbot,
     setShowChatbot,
   } = useUI();
-  const { id } = useParams();
-
   const navigate = useNavigate();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  // 2. Extract state metadata parameters passed via the navigation router transition hook
-
-  // Destructure with clean fallback safeties so the layout won't break on a hard page refresh
+  const location = useLocation();
   const {
-    bucketId,
-    bucketName,
+    containerData,
+    selectedStorageAccount,
+    selectedStorageAccountId,
+    containerName,
     selectedOption,
-    selectedS3AccountName,
-    initialFiles,
-    initialFolders,
-    s3AccountId,
+    isDownloadStorage,
+    selectedAccountKey,
+    fileShareId,
+    fileShareName,
   } = location.state || {};
-  // Verify your tracking parameters
-  console.log("🎯 S3 Context Loaded in Explorer:", {
-    s3AccountId,
-    bucketId,
-    bucketName,
-  });
 
-  console.log("📁 Payload Files/Folders:", { initialFiles, initialFolders });
-  const [currentPath, setCurrentPath] = useState([]);
-  const [loading, setLoading] = useState(true);
-  console.log(s3AccountId, bucketId);
-  const [selectedNavbarOption, setSelectedNavbarOption] = useState(null);
-  const [selectedS3BucketFolder, setSelectedS3BucketFolder] = useState("");
+  console.log("FileExplore Props:", {
+    containerData,
+    selectedStorageAccount,
+    selectedStorageAccountId,
+    containerName,
+    selectedOption,
+    isDownloadStorage,
+    selectedAccountKey,
+    fileShareId,
+    fileShareName,
+  });
+  const { token, csrfToken, permissions } = useAuth();
+  const newFieldRef = useRef(null);
+  const { id } = useParams();
+  const [selectedFolderPath, setSelectedFolderPath] = useState("");
   const [inputValue, setInputValue] = useState("");
-  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [searchResults, setSearchResults] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedPageSize, setSelectedPageSize] = useState(10);
+  const [selectionId, setSelectionId] = useState(
+    containerData ? containerData : fileShareId,
+  );
+  // eslint-disable-next-line
+  const [selectionType, setSelectionType] = useState(
+    containerData ? "container" : "fileShare",
+  );
+  const [selectedSortCriteria, setSelectedSortCriteria] =
+    useState("creation_time");
+  const [selectedSortOrder, setSelectedSortOrder] = useState("des");
+  const [plainData, setPlainData] = useState({ subfolders: [], files: [] });
+  const [selectedFolder, setSelectedFolder] = useState("");
+  const [pattern, setPattern] = useState("");
+  const folderId = "";
+  const [subFolderTotalPages, setSubFolderTotalPages] = useState(0);
+  const [nextButtonDisabled, setNextButtonDisabled] = useState(false);
+  const [previousButtonDisabled, setPreviousButtonDisabled] = useState(true);
+  const [viewType, setViewType] = useState("table");
+  const [tableData, setTableData] = useState({ subfolders: [], files: [] });
+  const [subFoldersAndFiles, setSubFoldersAndFiles] = useState({});
+  const [searchInput, setSearchInput] = useState("");
+  const [customerFiles, setCustomerFiles] = useState([]);
+  const [filteredFilesFolders, setFilteredFilesFolders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [noFolderDataMessage, setNoFolderDataMessage] = useState(false);
+  const [isFolderPopup, setIsFolderPopup] = useState(false);
+  const [noPattern, setNoPattern] = useState("");
+  const [isNoDataPopupOpen, setIsNoDataPopupOpen] = useState(false);
+  const [noFolderData, setNoFolderData] = useState(false);
+  const [totalPages, setTotalPages] = useState(0);
+  const [filteredFolders, setFilteredFolders] = useState([]);
   const [isMetaDataModalOpen, setMetaDataModalOpen] = useState(false);
   const [isColumnDataModalOpen, setIsColumnDataModalOpen] = useState(false);
+  const [apiLoading, setApiLoading] = useState(true);
+  const [selectedFiles, setSelectedFiles] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState("");
-  const [fileError, setFileError] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isTableView, setIsTableView] = useState(true);
-  // const [totalPages, setTotalPages] = useState(0);
-  const [selectedFolder, setSelectedFolder] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [selectedPageSize, setSelectedPageSize] = useState(100);
-  const [loadingS3BucketFiles, setS3BucketFiles] = useState(false);
-  const [sharedFolders, setSharedFolders] = useState([]);
-  const [sharedFiles, setSharedFiles] = useState([]);
-  //  const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(100); // Set default matching your backend (100)
-  const [serverTotalItems, setServerTotalItems] = useState(0);
+  const [isContainerClick, setIsContainerClick] = useState(false);
   const [isdropdownOpen, setIsDropdownOpen] = useState(false);
-  const [searchPattern, setSearchPattern] = useState("");
-  const [previewData, setPreviewData] = useState([]);
-  const [columnData, setColumnData] = useState([]);
-  const [showPreview, setShowPreview] = useState(false);
-  const [isFullScreenPreview, setIsFullScreenPreview] = useState(false);
+  const [popupFolderName, setPopupFolderName] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(20); // Default rows per page
   const [dataType, setDataType] = useState(null);
-  const [isNewFieldVisible, setisNewFieldVisible] = useState(false);
-  const [saveButtonClicked, setSaveButtonClicked] = useState(false);
-  const newFieldRef = useRef(null);
-  const [isColumnDataFetched, setIsColumnDataFetched] = useState(false);
-  console.log("1", sharedFiles, sharedFolders);
+  const [showPreview, setShowPreview] = useState(false);
+  const [apiData, setApiData] = useState([]);
+  const [selectedFormat, setSelectedFormat] = useState("plain_text");
+  const [modalStyles, setModalStyles] = useState({
+    marginTop: "110px",
+    maxHeight: `calc(100% - 110px)`,
+  });
+  const [maskedData, setMaskedData] = useState(true);
+  const [metadata, setMetadata] = useState(null);
+  const [filePath, setFilePath] = useState("");
+  const [filePrefixId, setFilePrefixId] = useState(null);
   const [fileSeparator, setFileSeparator] = useState("");
   const [isHeaderAvailable, setIsHeaderAvailable] = useState(false);
   const [prefixText, setPrefixText] = useState("");
   const [rowDataStartNumber, setRowDataStartNumber] = useState(null);
-  const totalItemsCount = serverTotalItems; // e.g., 181
-  const totalPages = Math.ceil(totalItemsCount / rowsPerPage) || 1; // e.g., Math.ceil(181 / 100) = 2
+  const [selectedData, setSelectedData] = useState([]);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [isFullScreenPreview, setIsFullScreenPreview] = useState(false);
+  const [columnData, setColumnData] = useState([]);
   const [newFieldName, setNewFieldName] = useState("");
   const [newFieldIsMasked, setNewFieldIsMasked] = useState(false);
-  const startIndex = (currentPage - 1) * rowsPerPage;
-  const [selectedFormat, setSelectedFormat] = useState("plain_text");
-  const [metaData, setMetaData] = useState(null);
-  const [isMetaDataLoading, setIsMetaDataLoading] = useState(false);
-  const [metaDataError, setMetaDataError] = useState("");
-  const [filePath, setFilePath] = useState("");
-  const [filePrefixId, setFilePrefixId] = useState(null);
-  const [, setFileKey] = useState(null);
-  const [, setBucketName] = useState("");
-  const [, setLastModified] = useState("");
-  const [, setContentType] = useState("");
-  const [, setEtag] = useState("");
-  const [, setStorageClass] = useState("");
-  const [, setFileMetadata] = useState({});
-  const [, setFileSize] = useState(null);
+  const [isNewFieldVisible, setisNewFieldVisible] = useState(false);
+  const [saveButtonClicked, setSaveButtonClicked] = useState(false);
+  const [selectedContainer, setSelectedContainer] = useState(containerData);
+  const [selectedFileShare, setSelectedFileShare] = useState(fileShareId);
 
-  console.log(selectedFiles[0]);
-// const isZoomed = zoom > 110; // Threshold for "zoomed in"
-// if inspect mode is active, it will always evaluate to false, routing to width.css
-const isZoomed = !isInspectMode && zoom > 100; 
+  const sortData = (data, sortCriteria, sortOrder) => {
+    if (!Array.isArray(data)) return data;
 
-useEffect(() => {
-  const existingWidth = document.getElementById("width-css");
-  const existingExplore = document.getElementById("explore-css");
-  
-  if (existingWidth) existingWidth.remove();
-  if (existingExplore) existingExplore.remove();
+    return data.sort((a, b) => {
+      const aValue = a[sortCriteria];
+      const bValue = b[sortCriteria];
 
-  const link = document.createElement("link");
-  link.rel = "stylesheet";
-
-  if (isZoomed) {
-    link.id = "explore-css";
-    link.href = "/explore.css"; 
-  } else {
-    link.id = "width-css";
-    link.href = "/width.css"; 
-  }
-
-  document.head.appendChild(link);
-
-  return () => {
-    const activeLink = document.getElementById(link.id);
-    if (activeLink) activeLink.remove();
-  };
-}, [isZoomed]);
-
-  const isInteractionDisabled =
-    isPopupOpen || isModalOpen || isColumnDataModalOpen || isMetaDataModalOpen;
-
-  let targetFile = selectedFiles[0];
-  // 2. Build the full path and file name safely
-  let fullS3Key = "";
-
-  if (typeof targetFile === "string") {
-    fullS3Key = targetFile;
-  } else {
-    // 🛠️ Guarding against empty values with fallbacks
-    const path = targetFile?.file_path || "";
-    const name = targetFile?.file_name || "";
-
-    console.log(path);
-
-    if (path && !path.endsWith("/")) {
-      fullS3Key = `${path}/${name}`;
-    } else {
-      fullS3Key = `${path}${name}`;
-    }
-  }
-
-  console.log(fullS3Key);
-
-  const handleDynamicPreview = async () => {
-    console.log("clicked", isMenuOpen);
-
-    // 1. Guard check: Make sure a file is selected
-    if (!selectedFiles || selectedFiles.length === 0 || !selectedFiles[0]) {
-      throw new Error("No file selected for preview.");
-    }
-
-    const targetFile = selectedFiles[0];
-
-    try {
-      setError("");
-      setS3BucketFiles(true);
-
-      // const payload = {
-      //   s3_bucket_id: bucketId,
-      //   bucket_name: bucketName,
-      //   file_key: targetFile,
-
-      // };
-      const payload = {
-        s3_account_id: s3AccountId, // Required (int)
-        s3_bucket_id: bucketId, // Optional (int) — for masking column lookup
-        bucket_name: bucketName, // Required (str)
-        file_key: targetFile, // Required (str)
-        // max_bytes: 2100000,                                              // Optional (int) — matching backend default
-        // is_masked: typeof newFieldIsMasked !== "undefined" ? !!newFieldIsMasked : false, // Optional (bool) — defaults to False
-        // format: targetFileKey.endsWith(".csv") ? "plain_text" : "json"  // Optional (str) — infers format based on extension
-      };
-
-      console.log("🚀 Dispatched Payload to Backend View:", payload);
-
-      // 2. Trigger the api request
-      // (apiRequest already returns the JSON object or throws an error)
-      const response = await apiRequest(
-        `${API_URL}/api/s3/files/content/`,
-        "POST",
-        payload,
-      );
-
-      // 3. If apiRequest returned null (handled inside your utility e.g. 404, 401 redirection)
-      if (!response) {
-        throw new Error("No data returned from preview pipeline.");
-      }
-
-      if (response.error) {
-        throw new Error(response.error);
-      }
-
-      console.log("✅ Data successfully loaded from S3:", response);
-
-      // setPreviewData(response);
-      if (response.error) throw new Error(response.error);
-
-      const cleanPreviewData = response.data || response;
-
-      // 2. 🛠️ Save properties & lock screen background context *before* launching layout components
-      setPreviewData(cleanPreviewData);
-      setDataType("PreviewData");
-      document.body.style.overflow = "hidden"; // Locks parent scrolling immediately
-
-      // 3. 🛠️ Mount modal views concurrently now that cache constraints are satisfied
-      setIsModalOpen(true);
-      setShowPreview(true);
-      setIsFullScreenPreview(true);
-      setIsMenuOpen(true);
-
-      return cleanPreviewData;
-    } catch (err) {
-      console.error(err);
-      setError(err?.message);
-      throw err; // 🎯 CRITICAL: Must throw so the onClick catch block knows it failed!
-    } finally {
-      setS3BucketFiles(false);
-    }
-    //   return response;
-
-    // } catch (err) {
-    //   console.error("❌ Catch Block Triggered Inside handleDynamicPreview:");
-    //   console.dir(err); // This prints the raw error structure to your developer tools console
-
-    //   // 🎯 REVEAL THE ACTUAL BACKEND ERROR:
-    //   // If your apiRequest helper threw a detailed Error object, use its description
-    //   const errorMessage = err?.message || (typeof err === 'string' ? err : "Preview service temporarily unavailable.");
-
-    //   // Update your component state to show the real error on screen
-    //   setError(errorMessage);
-
-    //   throw new Error(errorMessage);
-    // } finally {
-    //   setS3BucketFiles(false);
-    // }
+      if (aValue < bValue) return sortOrder === "asc" ? -1 : 1;
+      if (aValue > bValue) return sortOrder === "asc" ? 1 : -1;
+      return 0;
+    });
   };
 
-  // const handleDynamicMetadata = () => {};
-
-  const handleDynamicMetadata = async () => {
-    const targetFile = selectedFiles[0];
-    if (!targetFile) return;
-
-    // Safely extract the file path string if targetFile is an object
-    const targetFileKey =
-      typeof targetFile === "object" ? targetFile.file_key : targetFile;
-
-    try {
-      // 🛠️ Mount the modal frame overlay container instantly to run our inner loading spinner state
-      setMetaDataModalOpen(true);
-      setIsMetaDataLoading(true);
-      setMetaDataError("");
-      setMetaData(null); // Purge historical execution remnants cleanly
-
-      const payload = {
-        s3_account_id: s3AccountId,
-        bucket_name: bucketName,
-        file_key: targetFileKey,
-      };
-
-      console.log("📨 Fetching Metadata with payload:", payload);
-
-      const response = await apiRequest(
-        `${API_URL}/api/s3/files/details/`,
-        "POST",
-        payload,
-      );
-
-      if (response && !response.error) {
-        // 🛠️ Extract from response.data to match your exact backend payload shape
-        const dataPayload = response.data || response;
-
-        if (!dataPayload || Object.keys(dataPayload).length === 0) {
-          throw new Error("Metadata response structure resolved empty.");
-        }
-
-        // Save the complete object cache
-        setMetaData(dataPayload);
-        document.body.style.overflow = "hidden";
-
-        if (typeof setDataType === "function") setDataType("Metadata");
-
-        // 🎯 Route the specific response keys to your state variables exactly
-        if (typeof setFileKey === "function") setFileKey(dataPayload.file_key);
-        if (typeof setBucketName === "function")
-          setBucketName(dataPayload.bucket);
-        if (typeof setFileSize === "function") setFileSize(dataPayload.size);
-        if (typeof setLastModified === "function")
-          setLastModified(dataPayload.last_modified);
-        if (typeof setContentType === "function")
-          setContentType(dataPayload.content_type);
-        if (typeof setEtag === "function") setEtag(dataPayload.etag);
-        if (typeof setStorageClass === "function")
-          setStorageClass(dataPayload.storage_class);
-        if (typeof setFileMetadata === "function")
-          setFileMetadata(dataPayload.metadata || {});
-
-        // Fallback handlers if your layout still expects old mock state parameters
-        if (typeof setFilePath === "function")
-          setFilePath(dataPayload.file_key);
-        if (typeof setFilePrefixId === "function")
-          setFilePrefixId(dataPayload.bucket);
-      } else {
-        throw new Error(
-          response?.error || "Failed to retrieve metadata details.",
-        );
-      }
-    } catch (error) {
-      console.error("Exception caught while fetching Metadata:", error);
-      if (typeof setMetaDataError === "function")
-        setMetaDataError(error?.message || "Service unavailable.");
-    } finally {
-      setIsMetaDataLoading(false);
-    }
-  };
-
-  const handleFileDefinition = async () => {
-    console.log("clicked");
-    if (!selectedFiles || selectedFiles.length === 0 || !selectedFiles[0]) {
-      throw new Error("No file selected for preview.");
-    }
-
-    const targetFile = selectedFiles[0];
-
-    try {
-      setFileError("");
-      setIsColumnDataFetched(false);
-      setS3BucketFiles(true); // Turn loader ON
-
-      const payload = {
-        s3_bucket_id: bucketId,
-        file_key: targetFile,
-      };
-
-      console.log("🚀 Dispatched Payload to Backend View:", payload);
-
-      const response = await apiRequest(
-        `${API_URL}/api/s3/column_definition/`,
-        "POST",
-        payload,
-      );
-
-      if (!response) {
-        throw new Error("No data returned from preview pipeline.");
-      }
-
-      if (response.error) {
-        throw new Error(response.error);
-      }
-
-      console.log("✅ Data successfully loaded from S3:", response);
-
-      const finalDataArray = Array.isArray(response)
-        ? response
-        : response.data || response.columns || [];
-
-      setColumnData(finalDataArray);
-
-      document.body.style.overflow = "hidden";
-
-      // 🛠️ THE CRITICAL FIX: Turn loading OFF right here *before* showing the modal!
-      setS3BucketFiles(false);
-
-      // Now trigger the display states safely
-      setIsColumnDataFetched(true);
-      setShowPreview(true);
-      setIsColumnDataModalOpen(true);
-
-      return response;
-    } catch (err) {
-      console.error("Column Data Exception caught in Component View:", err);
-      setFileError(
-        err?.message || "Column Definition service temporarily unavailable.",
-      );
-      setIsPopupOpen(true);
-      setIsColumnDataFetched(false);
-      setS3BucketFiles(false); // Turn loader OFF on error
-      throw err;
-    }
-    // ⚠️ Removed the 'finally' block so it doesn't execute out of order during state batching
-  };
-  console.log(columnData);
-
-  // Add a tracker to handle the empty validation state trigger
-
-  //   const handleSave = async () => {
-  //   // 1. Validate the local input field text if a new row is active
-  //   if (isNewFieldVisible && !newFieldName.trim()) {
-  //     setSaveButtonClicked(true);
-  //     const inputElement = document.getElementById("newFieldNameInput");
-  //     inputElement?.focus();
-  //     return; // Stop execution if the field is empty
-  //   }
-
-  //   try {
-  //     setS3BucketFiles(true);
-  //     setSaveButtonClicked(false);
-
-  //     // 2. Build the field list payload array dynamically
-  //     let updatedPayloadFields = columnData
-  //       .filter(col => col.field_name || col.field_id) // Exclude old, empty placeholder objects
-  //       .map((col) => ({
-  //         field_id: col.field_id || null,
-  //         field_name: col.field_name,
-  //         is_masked: col.is_masked,
-  //         blob_prefix: col.blob_prefix || ""
-  //       }));
-
-  //     // 3. Append your new custom entry directly to the payload if it exists
-  //     if (isNewFieldVisible && newFieldName.trim()) {
-  //       const existingBlobPrefix = columnData && columnData.length > 0 ? columnData[0].blob_prefix : "";
-  //       updatedPayloadFields.push({
-  //         field_id: null, // Indicates a new entry to the backend
-  //         field_name: newFieldName.trim(),
-  //         is_masked: newFieldIsMasked,
-  //         blob_prefix: existingBlobPrefix
-  //       });
-  //     }
-
-  //     const payload = {
-  //       s3_bucket_id: parseInt(bucketId, 10),
-  //       file_key: selectedFiles[0],
-  //       columns: updatedPayloadFields
-  //     };
-
-  //     console.log("📨 Dispatching Request Payload to S3:", payload);
-
-  //     const response = await apiRequest(
-  //       `${API_URL}/api/s3/update_file_column_definition/`,
-  //       "POST",
-  //       payload
-  //     );
-
-  //     if (response && !response.error) {
-  //       console.log("🎉 Layout definitions saved successfully!", response);
-
-  //       // 4. Update the state immediately on success
-  //       const freshDataArray = response.columns || response.data || updatedPayloadFields;
-  //       setColumnData(freshDataArray);
-
-  //       // Reset local and UI visibility states
-  //       setNewFieldName("");
-  //       setNewFieldIsMasked(false);
-  //       setisNewFieldVisible(false);
-  //       setIsColumnDataModalOpen(false);
-  //       document.body.style.overflow = "auto";
-  //     } else {
-  //       throw new Error(response?.error || "Failed to commit changes safely.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Exception caught inside Save Pipeline:", error);
-  //     setFileError(error?.message || "Service temporarily unavailable.");
-  //     setIsPopupOpen(true);
-  //   } finally {
-  //     setS3BucketFiles(false);
-  //   }
-  // };
-
-  const handleSave = async () => {
-    // Safe extraction variables with explicit fallbacks
-    const currentNewName = (newFieldName || "").trim();
-    const currentMaskState = !!newFieldIsMasked;
-
-    const targetFile = selectedFiles[0];
-
-    console.log("savenew", currentNewName, currentMaskState, isNewFieldVisible);
-
-    // 1. Validation: Ensure field isn't empty if a new row layout is active
-    if (isNewFieldVisible && !currentNewName) {
-      setSaveButtonClicked(true);
-      const inputElement = document.getElementById("newFieldNameInput");
-      inputElement?.focus();
+  const fetchFilesFromApi = async (
+    pattern = "",
+    folderPattern = "",
+    page = 1,
+    pageSize = selectedPageSize,
+    selectionType,
+    selectionId,
+    selectedStorageAccount,
+  ) => {
+    if (!token) {
+      console.error("Token is not available.");
       return;
     }
 
+    console.log("🌐 fetchFilesFromApi called with:", {
+      pattern,
+      folderPattern,
+      page,
+      pageSize,
+      selectionType,
+      selectionId,
+      selectedStorageAccount,
+    });
+
     try {
-      setS3BucketFiles(true);
-      setSaveButtonClicked(false);
-
-      // 2. Map existing valid records to match backend expectations exactly
-      let updatedPayloadFields = (Array.isArray(columnData) ? columnData : [])
-        .filter((col) => {
-          const hasValidId =
-            col.field_id !== null &&
-            col.field_id !== undefined &&
-            col.field_id !== "";
-          const hasValidName = col.field_name && col.field_name.trim() !== "";
-          return hasValidId || hasValidName;
-        })
-        .map((col) => ({
-          field_id: col.field_id,
-          // 🛠️ BACKEND COMPATIBILITY FIX:
-          // Your backend view loop expects exactly these properties.
-          field_data_type: col.field_data_type || "text",
-          is_masked:
-            typeof col.is_masked === "string"
-              ? JSON.parse(col.is_masked)
-              : !!col.is_masked,
-        }));
-
-      // 3. Append the structural new entry field if it's currently active
-      // 3. Structural mapping layer for new addition entries
-      if (isNewFieldVisible && currentNewName) {
-        // Find the highest numeric field_id currently in the table
-        const maxId = (Array.isArray(columnData) ? columnData : []).reduce(
-          (max, col) => {
-            const idNum = parseInt(col.field_id, 10);
-            return !isNaN(idNum) && idNum > max ? idNum : max;
-          },
-          0,
-        );
-
-        updatedPayloadFields.push({
-          field_id: maxId + 1, // 👉 Dynamically assigns the next numeric position (e.g., 3)
-          field_name: currentNewName,
-          is_masked: currentMaskState,
-          field_data_type: "text",
-        });
-      }
-
-      // 4. Build payload including both Prefix parameters and columns array
-      const payload = {
-        s3_bucket_id: bucketId,
-        file_key: targetFile,
-
-        // 🛠️ NEW PREFIX INTEGRATION: Bind state values from your parent components
-        file_separator:
-          selectedFormat === "csv"
-            ? ","
-            : selectedFormat === "tsv"
-              ? "\t"
-              : ",", // fallback example
-        is_header_available: true, // Bind directly to your structural React state variable here
-        row_data_start_number: 2, // Bind directly to your structural React state variable here
-
-        columns: updatedPayloadFields,
+      let requestBody = {
+        storage_account: selectedStorageAccount,
+        pattern: pattern,
+        folder_pattern: folderPattern,
+        page_number: page,
+        page_size: pageSize,
+        sort_by: {
+          sort_string: selectedSortCriteria,
+          order_by: selectedSortOrder,
+        },
       };
 
-      console.log("📨 Dispatching FULL Payload to S3 Backend:", payload);
+      if (selectionType === "container") {
+        requestBody.container_id = selectionId;
+      } else if (selectionType === "fileShare") {
+        requestBody.file_share_id = selectionId;
+      }
 
-      const response = await apiRequest(
-        `${API_URL}/api/s3/update_file_column_definition/`,
+      console.log("📤 API request body:", requestBody);
+
+      const data = await secureApiCall(
+        `${API_URL}/api/blob/list_blobs/`,
         "POST",
-        payload,
+        requestBody,
       );
 
-      if (response && !response.error) {
-        console.log("🎉 Layout definitions updated successfully!", response);
+      console.log("📥 API response data:", data);
+      console.log("📁 Folders found:", data.folder_list);
+      console.log("📄 Files found:", data.blob_list);
 
-        // Target your backend's "data" response key array directly
-        let freshDataArray = response.data || response.columns || [];
+      const isEmpty = !data.blob_list.length && !data.folder_list.length;
 
-        // 5. LOCAL WORKAROUND INJECTION:
-        // Since backend lacks database creation tools, we force re-add 'abc' locally
-        const checkNewSaved = freshDataArray.some(
-          (col) => col.field_name === currentNewName,
-        );
-        if (isNewFieldVisible && currentNewName && !checkNewSaved) {
-          const existingBlobPrefix =
-            columnData && columnData.length > 0
-              ? columnData[0].blob_prefix || 249
-              : 249;
-
-          freshDataArray = [
-            ...freshDataArray,
-            {
-              field_id: `temp_${Date.now()}`,
-              field_name: currentNewName,
-              is_masked: currentMaskState,
-              field_data_type: "text",
-              blob_prefix: existingBlobPrefix,
-            },
-          ];
-        }
-
-        // Update local storage state variable to update UI instantly
-        setColumnData(freshDataArray);
-
-        // Reset temporary working states safely
-        setNewFieldName("");
-        setNewFieldIsMasked(false);
-        setisNewFieldVisible(false);
-        setIsColumnDataModalOpen(false);
-        setSelectedFiles([]);
-        document.body.style.overflow = "auto";
-      } else {
-        throw new Error(response?.error || "Failed to commit changes safely.");
+      // Condition 1: If both folderPattern and pattern are empty and no data, show ErrorPopup
+      if (!folderPattern && !pattern && isEmpty) {
+        setNoFolderDataMessage("No folders or files found.");
+        setIsFolderPopup(true); // Open the error popup
+        setLoading(false);
+        return null;
       }
+
+      // Condition 2: If folderPattern is provided but no data, fetch the parent folder
+      if (!folderPattern && pattern && isEmpty) {
+        const parentFolderPattern = folderPattern.substring(
+          0,
+          folderPattern.lastIndexOf("/"),
+        );
+        setNoPattern("No matching folders or files found.");
+        setIsNoDataPopupOpen(true); // Open the folder no data popup
+        return null;
+      }
+
+      if (folderPattern && pattern && isEmpty) {
+        const parentFolderPattern = folderPattern.substring(
+          0,
+          folderPattern.lastIndexOf("/"),
+        );
+        setNoFolderDataMessage("No subfolders or files found.");
+        setNoFolderData(true); // Open the subfolder error popup
+        return null;
+      }
+
+      const calculatedTotalPages = Math.ceil(parseInt(data.total) / pageSize);
+
+      if (calculatedTotalPages === 1) {
+        setNextButtonDisabled(true);
+        setPreviousButtonDisabled(true);
+      }
+
+      setPreviousButtonDisabled(page <= 1);
+      setNextButtonDisabled(page >= calculatedTotalPages);
+      setTotalPages(calculatedTotalPages);
+      setCustomerFiles(data);
+      setFilteredFilesFolders(data.blob_list);
+
+      const sortedFiles = sortData(
+        data.blob_list,
+        selectedSortCriteria,
+        selectedSortOrder,
+      );
+      const sortedFolders = sortData(
+        data.folder_list.map((folder, index) => ({
+          id: index,
+          name: folder,
+        })),
+        selectedSortCriteria,
+        selectedSortOrder,
+      );
+
+      setFilteredFilesFolders(sortedFiles);
+      setFilteredFolders(sortedFolders);
+
+      setLoading(false);
+      return data;
     } catch (error) {
-      console.error("Exception caught inside Save Pipeline:", error);
-      setFileError(error?.message || "Service temporarily unavailable.");
-      setIsPopupOpen(true);
-    } finally {
-      setS3BucketFiles(false);
+      console.error("Error fetching data:", error);
+      setLoading(false);
+      throw error;
     }
   };
 
-  const renderBreadcrumbs = () => {};
+  useEffect(() => {
+    if (containerData) {
+      fetchFilesFromApi(
+        pattern,
+        selectedFolderPath,
+        1, // Assuming initial page number is 1
+        selectedPageSize,
+        "container",
+        containerData,
+        selectedStorageAccount,
+        selectedSortCriteria,
+        selectedSortOrder,
+      );
+    } else if (fileShareId) {
+      fetchFilesFromApi(
+        pattern,
+        selectedFolderPath,
+        1, // Assuming initial page number is 1
+        selectedPageSize,
+        "fileShare",
+        fileShareId,
+        selectedStorageAccount,
+        selectedSortCriteria,
+        selectedSortOrder,
+      );
+    } else {
+      console.error("No containerData or fileShareId available");
+    }
+    // eslint-disable-next-line
+  }, [
+    token,
+    csrfToken,
+    pattern,
+    containerData,
+    fileShareId,
+    selectedPageSize,
+    selectedFolderPath,
+    selectedStorageAccount,
+    selectedSortCriteria,
+    selectedSortOrder,
+  ]);
 
-  const renderTableFilesAndSubfolders = () => {};
-
-  const handleDownload = () => {};
-  const PageClick = () => {};
-
-  const renderFolders = () => {
-    console.log(initialFiles, initialFolders);
-  };
-
-  const renderTableFolders = () => {};
-
-  const renderFilesAndSubfolders = () => {};
-
-  const handleTableView = () => {
-    setIsTableView(true);
+  const handleSearchOkClick = async () => {
+    setInputValue(""); // Clear the input field
+    setNoPattern(""); // Reset the noPattern state
+    setIsNoDataPopupOpen(false); // Close the popup
     setCurrentPage(1);
-    setRowsPerPage(100);
-    setSearchPattern("");
-    setIsDropdownOpen(false);
-    // setTotalPages(totalPages);
-    // setIsRenderTableView(true);
+    try {
+      // Re-fetch all folders and files without the pattern
+      fetchFilesFromApi(
+        "",
+        "",
+        1,
+        selectedPageSize,
+        selectionType,
+        selectionId,
+        selectedStorageAccount,
+      );
+    } catch (error) {
+      console.error("Error fetching Files:", error);
+    }
   };
 
-  const handlePlainView = () => {
-    setIsTableView(false);
-    setRowsPerPage(100);
-    setSearchPattern("");
-    setIsDropdownOpen(false);
-    // setIsRenderTableView(false);
-    setCurrentPage(1);
-    // setTotalPages(totalPages);
+  const fetchSubfoldersAndFiles = async (
+    pattern,
+    folderPattern,
+    currentPage,
+    selectedPageSize,
+  ) => {
+    console.log("🔍 fetchSubfoldersAndFiles called with:", {
+      pattern,
+      folderPattern,
+      currentPage,
+      selectedPageSize,
+      selectionType,
+      selectionId,
+      selectedStorageAccount,
+    });
+
+    try {
+      const response = await fetchFilesFromApi(
+        pattern,
+        folderPattern,
+        currentPage,
+        selectedPageSize, // Pass the pageSize parameter
+        selectionType,
+        selectionId,
+        selectedStorageAccount,
+        selectedSortCriteria,
+        selectedSortOrder,
+      );
+
+      if (!response) {
+        throw new Error("Invalid API response");
+      }
+
+      console.log("📥 fetchSubfoldersAndFiles response:", response);
+      console.log("📁 Subfolder data:", response.folder_list);
+      console.log("📄 Files data:", response.blob_list);
+      console.log("📊 Total count:", response.total);
+
+      const subfolderData = response.folder_list || [];
+      const filesData = response.blob_list || [];
+      const totalCount = parseInt(response.total, 10);
+
+      if (isNaN(totalCount) || totalCount < 0) {
+        throw new Error("Invalid total count in API response");
+      }
+
+      // Calculate total pages based on totalCount and pageSize
+      const calculatedTotalPages = Math.ceil(totalCount / selectedPageSize);
+
+      // Update state
+      setSubFolderTotalPages(calculatedTotalPages); // Update total pages before setting the button state
+
+      // Now that totalPages is updated, set button disabled states based on the updated values
+      setPreviousButtonDisabled(currentPage <= 1);
+      // setNextButtonDisabled(currentPage >= calculatedTotalPages); // Compare with the updated total pages
+      setNextButtonDisabled(
+        calculatedTotalPages <= 1 || currentPage >= calculatedTotalPages,
+      );
+
+      if (viewType === "table") {
+        setTableData({ subfolders: subfolderData, files: filesData });
+      } else {
+        setPlainData({ subfolders: subfolderData, files: filesData });
+      }
+
+      // Set subfolder and file data
+      setSubFoldersAndFiles((prevState) => ({
+        ...prevState,
+        [folderPattern]: { subfolders: subfolderData, files: filesData },
+      }));
+
+      return { subfolders: subfolderData, files: filesData };
+    } catch (error) {
+      console.error("Error fetching subfolders and files:", error);
+      return { subfolders: [], files: [] };
+    }
   };
+
+  useEffect(() => {
+    if (selectedFolderPath) {
+      fetchSubfoldersAndFiles(
+        pattern, // Replace with actual pattern if needed
+        selectedFolderPath,
+        currentPage,
+        selectedPageSize, // Use selected page size from state
+      );
+    }
+    // eslint-disable-next-line
+  }, ["", selectedFolderPath, currentPage, selectedPageSize]);
 
   const handleBackToDashboard = () => {
-    // Navigate back to the home/container page
-    // and explicitly pass the target active tab name in the state
-    navigate("/container-data", {
+    const params = new URLSearchParams();
+
+    if (selectedOption === "fileShares") {
+      params.set("selectedOption", "fileShares");
+      params.set("fileShareName", fileShareName);
+    } else {
+      params.set("selectedOption", "storageAccount");
+      params.set("selectedStorageAccount", selectedStorageAccount);
+    }
+
+    navigate(`/container-data?${params.toString()}`, {
       state: {
-        activeTabFallback: "s3Storage",
+        activeTabFallback:
+          selectedOption === "fileShares" ? "fileShares" : "storageAccount",
       },
     });
   };
 
-  const getZoomScale = () => {
-    const width = window.innerWidth;
+  const handleInputChange = async (e) => {
+    setSearchResults(null);
+    const folderPattern = folderId;
 
-    if (width >= 1600) return 1;
-    if (width >= 1400) return 1;
-    if (width >= 1200) return 1;
-    if (width >= 1000) return 1;
-    if (width >= 800) return 1;
-    // if (width >= 700) return 1;
-    // if (width >= 600) return 1;
-    return 1;
+    // Clear previous search results
+    setCurrentPage(1);
+    const inputText = e.target.value.toLowerCase();
+    setSearchInput(inputText);
+    setInputValue(inputText); // Set search input value
+
+    // const pageSize = inputText === '' ? 1 : currentPage;
+    const pageNumber = 1;
+    const pageSize = selectedPageSize;
+
+    // setInputValue(inputText);
+    // console.log("i want the search text in folders",inputText)
+
+    try {
+      await fetchFilesFromApi(
+        inputText,
+        folderPattern,
+        pageNumber,
+        pageSize,
+        // selectedPageSize,
+        selectionType,
+        selectionId,
+        selectedStorageAccount,
+        selectedSortCriteria,
+        selectedSortOrder,
+      );
+    } catch (error) {
+      console.error("Error fetching Files:", error);
+    }
+  };
+  const handleFolderInputChange = async (e, folderId) => {
+    const inputText = e.target.value.toLowerCase();
+    setSearchInput(inputText);
+    setInputValue(inputText); // Set search input value
+
+    setSearchResults(null); // Clear previous search results
+    setCurrentPage(1);
+
+    // const pageSize = inputText === '' ? 1 : currentPage;
+    const pageNumber = 1;
+    const pageSize = selectedPageSize;
+
+    try {
+      // Fetch subfolders and files based on the input pattern and folder ID
+      // let response = await fetchSubfoldersAndFiles(inputText, folderId, pageSize, selectedPageSize);
+      let response = await fetchSubfoldersAndFiles(
+        inputText,
+        folderId,
+        pageNumber,
+        pageSize,
+      );
+
+      if (!response) {
+        setSearchResults(null); // Reset search results if no response
+        return;
+      }
+
+      // Update the search results with subfolders and files
+      setSearchResults({
+        subfolders: response.subfolders || [],
+        files: response.files || [],
+      });
+
+      // Handle empty results (if no subfolders or files match the search)
+      // if (response.subfolders.length === 0 && response.files.length === 0) {
+      //   setNoPattern("No matching folders or files found."); // Set message for no matches
+      //   setFolderNoMatchingData(true); // Trigger popup for no matching data
+      // }
+    } catch (error) {
+      console.error("Error fetching Files:", error);
+    }
+  };
+  const handleFileDefinition = (selectionId, selectionType) => {
+    return new Promise(async (resolve, reject) => {
+      if (selectedFiles.length === 0) {
+        console.error(new Error("No files selected."));
+        return;
+      }
+
+      const fullPath = selectedFiles[0];
+
+    // Get only the file name from the complete path
+    const filename = fullPath.split(/[\\/]/).pop();
+
+    // Truncate only the name shown in the popup
+    const displayFilename =
+      filename.length > 30
+        ? `${filename.substring(0, 27)}...`
+        : filename;
+
+      try {
+        // Map selectedFiles to promises for API calls
+        const promises = selectedFiles.map(async (selectedFile) => {
+          const blobName = selectedFile;
+          const requestBody = {
+            blob_name: blobName,
+          };
+
+          // Set the appropriate id in the request body based on selectionType
+          if (selectionType === "container") {
+            requestBody.container_id = selectionId;
+          } else if (selectionType === "fileShare") {
+            requestBody.file_share_id = selectionId;
+          }
+
+          return await secureApiCall(
+            `${API_URL}/api/blob/column_defination/`,
+            "POST",
+            requestBody,
+          );
+        });
+
+        const data = await Promise.all(promises);
+
+        // Check if data is not empty
+        if (data.length > 0) {
+          setColumnData(data[0]);
+          setSelectedData(data[0]);
+          setModalVisible(true);
+          document.body.style.overflow = "hidden";
+          setShowPreview(true);
+          setDataType("ColumnData");
+          resolve(data[0]); // Resolve with the first data element
+        } else {
+          console.error("No data received from API for Preview.");
+          reject(new Error("No data received from API for Preview."));
+        }
+      } catch (error) {
+        setError(`No Data Exist in the '${displayFilename}'`);
+        setIsPopupOpen(true);
+        console.error("Error fetching API data:", error);
+        reject(error);
+      }
+    });
   };
 
-  // State to track scale dynamically on resize
-  const [scale, setScale] = useState(getZoomScale());
+ 
+
+  const handleDynamicMetadata = async (selectionId, selectionType) => {
+    if (selectedFiles.length === 0) {
+      return; // Exit the function if no files are selected
+    }
+
+    const blobName = selectedFiles[0];
+
+    try {
+      if (!token) {
+        console.error("Token is not available.");
+        return;
+      }
+
+      let requestBody = {
+        blob_name: blobName,
+      };
+
+      if (selectionType === "container") {
+        requestBody.container_id = selectionId;
+      } else if (selectionType === "fileShare") {
+        requestBody.file_share_id = selectionId;
+      }
+
+      const data = await secureApiCall(
+        `${API_URL}/api/blob/get_blob_prefix/`,
+        "POST",
+        requestBody,
+      );
+
+      if (data && data.length > 0) {
+        setMetadata(data[0]);
+        setModalVisible(true);
+        document.body.style.overflow = "hidden";
+        setDataType("Metadata");
+        setFilePath(data[0].file_path);
+        setFilePrefixId(data[0].file_prefix_id);
+        setFileSeparator(data[0].file_separator);
+        setIsHeaderAvailable(data[0].is_header_available);
+        setPrefixText(data[0].prefix_text);
+        setRowDataStartNumber(data[0].row_data_start_number);
+      } else {
+        console.error("No metadata received from API.");
+      }
+    } catch (error) {
+      setError(`No MetaData Exist in the '${selectedFiles[0]}'`);
+      setIsPopupOpen(true);
+      console.error("Error fetching metadata:", error);
+    }
+  };
 
   useEffect(() => {
-    const handleResize = () => setScale(getZoomScale());
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  window.addEventListener("resize", () => {
-    // Calculate approximate zoom level
-    const zoomLevel = Math.round((window.outerWidth / window.innerWidth) * 100);
-
-    if (zoomLevel > 125 || zoomLevel < 75) {
-      console.warn(`Optimized for 75%-125% zoom. Current zoom: ${zoomLevel}%`);
-      // You can trigger a UI banner or modal here
+    if (containerData) {
+      handleDynamicMetadata(containerData, "container")
+        .then((response) => {
+          // Handle response data
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    } else if (fileShareId) {
+      handleDynamicMetadata(fileShareId, "fileShare")
+        .then((response) => {
+          // Handle response data
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
     }
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [containerData, fileShareId, token, selectedFiles]);
 
-  const handleChatbotIconClick = () => {
-    setShowChatbot(!showChatbot); // Toggle the showChatbot state
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  const handleSave = async () => {
+    if (selectedFiles.length > 0) {
+      const selectedFile = selectedFiles[0];
+      const blobName = selectedFile;
+
+      const blobPrefix = selectedFile.prefix || ""; // Use an empty string as a fallback
+
+      // Prepare the data to be sent in the request
+      const requestData = {
+        blob_name: blobName,
+        columns: [
+          ...columnData.map((column) => ({
+            field_id: column.field_id,
+            field_name: column.field_name,
+            is_masked: JSON.parse(column.is_masked), // Convert to boolean
+            blob_prefix: column.blob_prefix,
+          })),
+          // Add the new field to the requestData only if it has non-empty values
+          ...(newFieldName.trim() !== ""
+            ? [
+                {
+                  field_id: "", // Set field_id to an empty string for the new field
+                  field_name: newFieldName,
+                  is_masked: newFieldIsMasked,
+                  blob_prefix: blobPrefix, // Example, adjust as needed
+                },
+              ]
+            : []),
+        ],
+      };
+
+      // Determine the container ID based on the presence of containerData or fileShareId
+      if (containerData) {
+        requestData.container_id = containerData;
+      } else if (fileShareId) {
+        requestData.file_share_id = fileShareId;
+      } else {
+        // console.error("Neither containerData nor fileShareId is available.");
+        return; // Abort the function if neither containerData nor fileShareId is available
+      }
+      // Make the API request to save changes using fetch
+      fetch(`${API_URL}/api/blob/update_prefix_column_defination/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+          "X-CSRFToken": csrfToken,
+        },
+        credentials: "include",
+        body: JSON.stringify(requestData),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setError("Save successful");
+          setIsPopupOpen(true); // Open the popup
+          // alert(`Save successful`);
+          // toast.success("Save successful");
+          // You can handle success, e.g., show a success message or update state
+          handleFileDefinition(
+            containerData || fileShareId,
+            containerData ? "container" : "fileShare",
+          ).then((response) => {
+            // Handle response data
+            if (containerData) {
+              setSelectedContainer(containerData);
+              setSelectedFileShare(null);
+            } else if (fileShareId) {
+              setSelectedContainer(null);
+              setSelectedFileShare(fileShareId);
+            }
+          });
+        })
+        .catch((error) => {
+          toast.error("Save unsuccessful");
+          // You can handle errors, e.g., show an error message
+        });
+    } else {
+      // console.log("No selected files");
+    }
+
+    setNewFieldName("");
+    setNewFieldIsMasked(false);
+    setisNewFieldVisible(false);
+    await delay(1000);
+    setIsModalOpen(false);
   };
 
-  const handleCloseChatbot = () => {
-    setShowChatbot(false); // Set showChatbot to false to hide the chatbot
-    setIsTimezoneModalOpen(false);
-    setShowProfileModal(false);
-    setSelectedNavbarOption(null);
-    setIsPopupOpen(false);
+  const renderBreadcrumbs = () => {
+    if (!selectedFolder) return null;
+
+    const folderPaths = selectedFolder.split("/");
+
+    const breadcrumbs = folderPaths.map((path, index) => {
+      const fullPath = folderPaths.slice(0, index + 1).join("/");
+
+      // setInputValue("");
+      return (
+        <span
+          key={fullPath}
+          onClick={() => {
+            handleBreadcrumbClick(fullPath);
+            // setInputValue("")
+          }}
+          style={{ cursor: "pointer" }}
+        >
+          {path}
+          {index < folderPaths.length - 1 && " > "}
+        </span>
+      );
+    });
+
+    return <div className="folder-navigation">{breadcrumbs}</div>;
+  };
+  const handlePlainView = () => {
+    setIsTableView(false);
+    // setIsRenderTableView(false);
+    // setCurrentPage(1);
+    setTotalPages(totalPages);
   };
 
-  const handleDropdownChange = async (e) => {
-    const selectedPage = parseInt(e.target.value, 10);
-    // setSelectedPageSize(selectedPage);
-    setRowsPerPage(selectedPage);
+  const handleTableView = () => {
+    setIsTableView(true);
+    // setCurrentPage(1);
+    setTotalPages(totalPages);
+    // setIsRenderTableView(true);
+  };
+
+  const handleBreadcrumbClick = (folderPath) => {
+    handleFolderClick(folderPath);
+    // setSelectedPageSize(10);
+    if (!folderPath || folderPath === "/") {
+      // Reset the page size to 10
+      const newPageSize = 10;
+      setSelectedPageSize(newPageSize); // Reset page size
+
+      // Fetch root folders and files with the updated page size
+      fetchFilesFromApi(
+        pattern,
+        selectedFolderPath,
+        1, // Reset to the first page
+        newPageSize,
+        selectionType,
+        selectionId,
+        selectedStorageAccount,
+        selectedSortCriteria,
+        selectedSortOrder,
+      );
+      // Clear search input and results if navigating to root or top-level folder
+      setInputValue("");
+      setSearchResults(null);
+      setSearchInput("");
+      // selectedPageSize(10);
+    } else {
+      const newPageSize = 10;
+      setSelectedPageSize(newPageSize);
+      // Fetch subfolders and files
+      fetchSubfoldersAndFiles(
+        pattern,
+        folderPath, // Update to use the current folder path
+        currentPage,
+        newPageSize, // Pass the new page size to fetchSubfoldersAndFiles
+      );
+    }
+    // Clear input value when navigating back to a parent folder or when folderPath is empty
+    if (folderPath !== selectedFolder || !selectedFolder) {
+      setInputValue("");
+      setSearchResults(null); // Clear search results
+      setSearchInput("");
+    }
+  };
+
+  const handleContainerClick = async (containerData) => {
+    try {
+      await fetchFilesFromApi(
+        pattern,
+        selectedFolderPath,
+        currentPage,
+        selectedPageSize,
+        selectionType,
+        selectionId,
+        selectedStorageAccount,
+        selectedSortCriteria,
+        selectedSortOrder,
+      );
+    } catch (error) {
+      console.error("Error fetching Files:", error);
+    }
+    setIsContainerClick(true);
+    setSelectedFolder(null);
+    setSelectedFiles([]);
+    setInputValue("");
+    setSelectedPageSize(10);
     setCurrentPage(1);
   };
 
-  const handleOptionClick = (value) => {
-    const syntheticEvent = { target: { value } };
-    handleDropdownChange(syntheticEvent);
+  useEffect(() => {}, [isContainerClick]);
+  const handleFolderClick = async (folderId, inputValue = "") => {
+    console.log("📂 Folder clicked:", folderId);
+    console.log("🔍 Current selected folder path:", selectedFolderPath);
+
+    setSearchResults(null); // Clear the search results when navigating folders
+    setInputValue("");
+    setSearchInput("");
     setIsDropdownOpen(false);
+    // const newPageSize = 10;
+    // setSelectedPageSize(newPageSize);
+
+    // Reset `currentPage` to 1
+    setCurrentPage(1);
+
+    // if (selectedPageSize !== 10) {
+    //   setSelectedPageSize(10); // Reset page size to default (0)
+    // }
+
+    const newPageSize = 10;
+    setSelectedPageSize(newPageSize);
+
+    const pattern = inputValue ? inputValue.toLowerCase() : ""; // Use inputValue as search pattern
+    const folderPattern = folderId;
+
+    // Manage subfolder and file state
+    setSubFoldersAndFiles((prevState) => {
+      const newPageSize = 10;
+      setSelectedPageSize(newPageSize);
+      const folderKeys = Object.keys(prevState);
+
+      // Find the index of the folder pattern in the existing folder structure
+      const index = folderKeys.indexOf(folderPattern);
+
+      // If folderPattern exists, remove all subsequent folder paths
+      if (index !== -1) {
+        const filteredEntries = folderKeys.slice(0, index + 1); // Keep only up to the selected folder
+        const newState = filteredEntries.reduce((acc, key) => {
+          acc[key] = prevState[key];
+          return acc;
+        }, {});
+
+        return newState;
+      }
+
+      return prevState;
+    });
+
+    if (!subFoldersAndFiles[folderPattern]) {
+      // Fetch the subfolders and files for the current folder
+      try {
+        const newPageSize = 10;
+        setSelectedPageSize(newPageSize);
+        const result = await fetchSubfoldersAndFiles(
+          pattern,
+          folderPattern,
+          pageNumber,
+          10,
+        );
+        const { subfolders, files } = result;
+
+        setSubFoldersAndFiles((prevState) => ({
+          ...prevState,
+          [folderPattern]: { subfolders, files },
+        }));
+
+        // Show popup if no subfolders or files are found
+        if (subfolders.length === 0 && files.length === 0) {
+          setPopupFolderName(folderId);
+          setShowPopup(true);
+          return; // Prevent navigation to the empty folder
+        } else {
+          setShowPopup(false);
+        }
+
+        setInputValue(""); // Reset input value after folder click
+      } catch (error) {
+        console.error("Error handling folder click:", error);
+        return; // Stop further execution in case of an error
+      }
+    }
+    // setSelectedPageSize(10);
+    // setCurrentPage(1)
+    setSelectedFolder(folderId); // Set the folder as selected
+    setSelectedFiles([]); // Clear selected files
+    // renderFilesAndSubfolders(folderId);
   };
 
+  const handleSortAscending = (sortKey) => {
+    // Helper function to handle sorting based on the type of the field
+    const sortFunction = (a, b) => {
+      const aVal = a[sortKey] || a.file_name || a.name;
+      const bVal = b[sortKey] || b.file_name || b.name;
+
+      if (typeof aVal === "string" && typeof bVal === "string") {
+        return aVal.localeCompare(bVal);
+      } else if (typeof aVal === "number" && typeof bVal === "number") {
+        return aVal - bVal; // Numeric comparison for size
+      } else if (
+        new Date(aVal) instanceof Date &&
+        !isNaN(new Date(aVal)) &&
+        new Date(bVal) instanceof Date &&
+        !isNaN(new Date(bVal))
+      ) {
+        return new Date(aVal) - new Date(bVal); // Date comparison for creation/modified date
+      }
+      return 0; // Default return for non-comparable values
+    };
+
+    // Sort folders
+    const sortedFolders = [...filteredFolders].sort(sortFunction);
+
+    // Sort files
+    const sortedFiles = [...filteredFilesFolders].sort(sortFunction);
+
+    setFilteredFolders(sortedFolders);
+    setFilteredFilesFolders(sortedFiles);
+  };
+
+  console.log("filteredFolders", filteredFolders);
+  console.log("filteredFilesFolders", filteredFilesFolders);
+  const handleSortDescending = (sortKey) => {
+    // Helper function to handle sorting based on the type of the field
+    const sortFunction = (a, b) => {
+      const aVal = a[sortKey] || a.file_name || a.name;
+      const bVal = b[sortKey] || b.file_name || b.name;
+
+      if (typeof aVal === "string" && typeof bVal === "string") {
+        return bVal.localeCompare(aVal); // Reverse alphabetical order
+      } else if (typeof aVal === "number" && typeof bVal === "number") {
+        return bVal - aVal; // Reverse numeric comparison
+      } else if (
+        new Date(aVal) instanceof Date &&
+        !isNaN(new Date(aVal)) &&
+        new Date(bVal) instanceof Date &&
+        !isNaN(new Date(bVal))
+      ) {
+        return new Date(bVal) - new Date(aVal); // Reverse date comparison
+      }
+      return 0; // Default return for non-comparable values
+    };
+
+    // Sort folders
+    const sortedFolders = [...filteredFolders].sort(sortFunction);
+
+    // Sort files
+    const sortedFiles = [...filteredFilesFolders].sort(sortFunction);
+
+    setFilteredFolders(sortedFolders);
+    setFilteredFilesFolders(sortedFiles);
+  };
+
+  const handleFileRowClick = (file) => {
+    if (file.file_id) {
+      handleFileClick(file.file_name);
+    } else {
+      handleFolderClick(file);
+    }
+  };
+  const handleFileClick = (file) => {
+    setSelectedFiles([file]); // Ensure it sets an array with the selected file
+  };
+
+
+
+  const currentFolderData = searchResults ||
+    subFoldersAndFiles[selectedFolder] || {
+      subfolders: [],
+      files: [],
+    };
+
+  const combineAndSortItems = (
+    subfolders,
+    files,
+    selectedSortCriteria,
+    selectedSortOrder,
+  ) => {
+    const combinedItems = [
+      ...subfolders.map((subfolder) => ({
+        name: subfolder,
+        type: "subfolder",
+      })),
+      ...files.map((file) => ({
+        ...file,
+        name: file.file_name ? file.file_name.split("/").pop() : "",
+        type: "file",
+      })),
+    ];
+
+    combinedItems.sort((a, b) => {
+      const getValue = (item, criteria) => {
+        switch (criteria) {
+          case "name":
+            return item.name || "";
+          case "size":
+            return item.size || 0;
+          case "creation_time":
+            return item.creation_time;
+          case "modified_time":
+            return item.modified_time;
+          default:
+            return "";
+        }
+      };
+
+      const valueA = getValue(a, selectedSortCriteria);
+      const valueB = getValue(b, selectedSortCriteria);
+
+      if (valueA < valueB) return selectedSortOrder === "asc" ? -1 : 1;
+      if (valueA > valueB) return selectedSortOrder === "asc" ? 1 : -1;
+      return 0;
+    });
+
+    return combinedItems;
+  };
+
+  const handleFolderSort = async (sortKey, sortOrder) => {
+    if (!["asc", "desc"].includes(sortOrder)) {
+      console.error("Invalid sort order:", sortOrder);
+      return;
+    }
+
+    const pattern = inputValue ? inputValue.toLowerCase() : "";
+
+    if (!selectedFolder) {
+      console.error("Selected folder path is empty or not defined.");
+      return;
+    }
+
+    // Ensure folder data is fetched and available
+    if (!subFoldersAndFiles[selectedFolder]) {
+      try {
+        const result = await fetchSubfoldersAndFiles(
+          pattern,
+          selectedFolder,
+          1,
+          selectedPageSize,
+        );
+        const { subfolders, files } = result;
+
+        setSubFoldersAndFiles((prevState) => ({
+          ...prevState,
+          [selectedFolder]: { subfolders, files },
+        }));
+      } catch (error) {
+        console.error("Error fetching subfolders and files:", error);
+        return;
+      }
+    }
+
+    // Get the folder data for the selected path
+    const { subfolders = [], files = [] } =
+      subFoldersAndFiles[selectedFolder] || {};
+
+    if (subfolders.length === 0 && files.length === 0) {
+      console.warn("No subfolders or files to sort.");
+      return;
+    }
+
+    // Combine and sort items
+    const sortedItems = combineAndSortItems(
+      subfolders,
+      files,
+      sortKey,
+      sortOrder,
+    );
+
+    // Separate sorted items back into folders and files
+    const sortedFolders = sortedItems
+      .filter((item) => item.type === "subfolder")
+      .map((item) => item.name);
+    const sortedFiles = sortedItems.filter((item) => item.type === "file");
+
+    // Update state with sorted data
+    setSubFoldersAndFiles((prevState) => ({
+      ...prevState,
+      [selectedFolder]: { subfolders: sortedFolders, files: sortedFiles },
+    }));
+  };
+
+  const handleDynamicPreview = (
+    selectionId,
+    selectionType,
+    selectedStorageAccount,
+  ) => {
+    setApiLoading(true);
+    return new Promise(async (resolve, reject) => {
+      if (selectedFiles.length === 0) {
+        setApiLoading(false);
+        return;
+      }
+
+      const fullPath = selectedFiles[0];
+      const filename = fullPath.split(/[\\/]/).pop();
+
+// Truncate only for displaying in the popup
+const displayFilename =
+  filename.length > 30
+    ? `${filename.substring(0, 27)}...`
+    : filename;
+
+      let dataFormat;
+      if (selectedFormat === "tabular") {
+        dataFormat = "table";
+      } else {
+        dataFormat = "plain_text";
+      }
+
+      const requestBody = {
+        storage_account: selectedStorageAccount,
+        blob_name: selectedFiles[0], // Assuming you're processing only the first selected file
+        is_masked: maskedData,
+        line: null,
+        format: dataFormat,
+      };
+
+      if (selectionType === "container") {
+        requestBody.container_id = selectionId;
+      } else if (selectionType === "fileShare") {
+        requestBody.file_share_id = selectionId;
+      }
+
+      try {
+        const data = await secureApiCall(
+          `${API_URL}/api/blob/blob_content/`,
+          "POST",
+          requestBody,
+        );
+
+        if (data) {
+          setApiData(data);
+          setSelectedData(data);
+          setModalVisible(true);
+          document.body.style.overflow = "hidden";
+          setIsFullScreenPreview(true);
+          setShowPreview(true);
+          setDataType("API");
+          resolve(data);
+          setApiLoading(false);
+        } else {
+          setError(`No Data Exist in the '${displayFilename}'`);
+          setIsPopupOpen(true);
+          setLoading(false);
+        }
+      } catch (error) {
+        setError(`No Data Exist in the '${displayFilename}'`);
+        setIsPopupOpen(true);
+        setLoading(false);
+        console.error("Error fetching API data:", error);
+        reject(error);
+      } finally {
+        setLoading(false); // Stop loading after fetch completes
+      }
+    });
+  };
+
+  useEffect(() => {
+    if (typeof apiData === "object" && apiData !== null) {
+      // If apiData is an object and not null
+      if (Array.isArray(apiData.rows)) {
+      } else {
+      }
+    } else if (typeof apiData === "string") {
+      // If apiData is a string
+      // console.log("apiData is a string. Length:", apiData.length);
+    } else {
+      // console.log("apiData is of an unexpected type:", typeof apiData);
+    }
+  }, [apiData]);
+
+  
+
+  const handleOptionClick = async (value) => {
+    const syntheticEvent = { target: { value } };
+    handleDropdownChange(syntheticEvent); // Update the page size state
+    setIsDropdownOpen(false); // Close the dropdown
+
+    setSearchResults(null);
+    setSearchInput("");
+
+    const searchPattern = searchInput || ""; // Use the searchInput state
+
+    try {
+      let response;
+      // Wait for the page size state to update before making fetch calls
+      await new Promise((resolve) => setTimeout(resolve, 1));
+
+      if (searchPattern !== "") {
+        if (selectedFolder) {
+          // Fetch subfolders and files with the search pattern
+          response = await fetchSubfoldersAndFiles(
+            searchPattern,
+            selectedFolder,
+            1,
+            value,
+          );
+        } else {
+          // Fetch files with the search pattern and other parameters
+          response = await fetchFilesFromApi(
+            searchPattern,
+            selectedFolderPath,
+            1,
+            value,
+            selectionType,
+            selectionId,
+            selectedStorageAccount,
+            selectedSortCriteria,
+            selectedSortOrder,
+          );
+        }
+      } else {
+        // Handle case when no pattern is provided
+        if (selectedFolder) {
+          response = await fetchSubfoldersAndFiles(
+            "",
+            selectedFolder,
+            1,
+            value,
+          ); // Use empty string for pattern
+        } else {
+          response = await fetchFilesFromApi(
+            "",
+            selectedFolderPath,
+            1,
+            value,
+            selectionType,
+            selectionId,
+            selectedStorageAccount,
+            selectedSortCriteria,
+            selectedSortOrder,
+          ); // Use empty string for pattern
+        }
+      }
+
+      setSearchResults({
+        subfolders: response.subfolders || [],
+        files: response.files || [],
+      });
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  // Close the dropdown when the component mounts
+  useEffect(() => {
+    setIsDropdownOpen(false);
+  }, []);
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
   };
 
-  const closePreviewModal = () => {
-    // Close the modal
-    // setMaskedData(true);
-    setSelectedFormat("plain_text");
-    // setIsOpen(false);
-    // setSearchInputText("");
-    // setIsFixedModalOpen(false);
-    // setisNewFieldVisible(false);
-    setIsModalOpen(false);
+  const handlePrevious = async () => {
+    if (currentPage > 1) {
+      const previousPage = currentPage - 1;
 
-    document.body.style.overflow = "visible";
-    setSelectedFiles([]);
+      try {
+        const searchPattern = searchInput || ""; // Use the searchInput state
+
+        let response;
+
+        // Fetch data based on whether a pattern is provided and folder selection
+        if (searchPattern !== "") {
+          if (selectedFolder) {
+            // Fetch subfolders and files with the search pattern
+            response = await fetchSubfoldersAndFiles(
+              searchPattern,
+              selectedFolder,
+              previousPage,
+              selectedPageSize,
+            );
+          } else {
+            // Fetch files with the search pattern and other parameters
+            response = await fetchFilesFromApi(
+              searchPattern,
+              selectedFolderPath,
+              previousPage,
+              selectedPageSize,
+              selectionType,
+              selectionId,
+              selectedStorageAccount,
+              selectedSortCriteria,
+              selectedSortOrder,
+            );
+          }
+        } else {
+          // Handle case when no pattern is provided
+          if (selectedFolder) {
+            response = await fetchSubfoldersAndFiles(
+              "",
+              selectedFolder,
+              previousPage,
+              selectedPageSize,
+            ); // Use empty string for pattern
+          } else {
+            response = await fetchFilesFromApi(
+              "",
+              selectedFolderPath,
+              previousPage,
+              selectedPageSize,
+              selectionType,
+              selectionId,
+              selectedStorageAccount,
+              selectedSortCriteria,
+              selectedSortOrder,
+            ); // Use empty string for pattern
+          }
+        }
+
+        setSearchResults({
+          subfolders: response.subfolders || [],
+          files: response.files || [],
+        });
+
+        // After data is fetched, update the page state
+        setCurrentPage(previousPage);
+
+        // Update button states based on new page values
+        setPreviousButtonDisabled(previousPage <= 1);
+        setNextButtonDisabled(previousPage >= totalPages);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
   };
-  return (
-    <>
-    <div className="fixed bottom-3 right-3 z-50 bg-slate-950/90 text-white font-mono text-[10px] px-3 py-2 rounded-md border border-slate-700/50 shadow-2xl flex flex-col gap-0.5 pointer-events-none">
-        <div>🔍 Zoom Level: <span className="text-emerald-400 font-bold">{zoom}%</span></div>
-        <div>🖥️ Inspect Panel: <span className={`font-bold ${isInspectMode ? 'text-amber-400' : 'text-slate-400'}`}>{isInspectMode ? "OPENED / RESIZED" : "CLOSED / BASE"}</span></div>
-        <p>🔍 Detected Zoom Engine: {zoom}%</p>
-        <p>🖥️ Available Layout Width: {pixels.width}px</p>
-        <p>📐 Available Layout Height: {pixels.height}px</p>
-        <p>💻 DevTools Open: {isInspectMode ? "YES" : "NO"}</p>
-      </div>
-      <div className="app-container bg-primary">
-        <div className="w-full h-full flex flex-col items-center container-padding layout-vertical-gap ">
-          <div className="s3-navbar-wrapper flex justify-center">
-            <Navbar />
-          </div>
-          <div className="s3-container layout-gap">
-            <div className="s3-sidebar rounded-lg shadow-xl shadow-slate-500/50 overflow-y-visible">
-              <Sidebar />
-            </div>
-            <div className="sub-container bg-white layout-padding  rounded-lg shadow-xl shadow-slate-400/50 overflow-hidden sub-container-gap">
-              <div
-                className="layout-backdashboard items-center px-2 flex gap-2 bucketname-text font-[400] text-purpleshade1 cursor-pointer"
-                onClick={handleBackToDashboard}
-              >
-                <img
-                  src={process.env.PUBLIC_URL + "/purple-storage-icon.png"}
-                  alt="red icon"
-                  className="w-4 h-4 "
-                />
-                {selectedS3AccountName || "Loading..."}
-              </div>
-              <div className="data-container items-center bg-primary rounded-lg shadow-md shadow-slate-500/50 sub-container-gap">
-                <div className="layout-button-container flex items-center justify-between sub-container-gap flex-shrink-0 ">
-                  <div className="layout-search-container flex items-center gap-2 rounded px-2 shadow-sm shadow-slate-500/50 bg-white flex-shrink-0">
-                    <input
-                      className="outline-none font-[350] button-text w-full bg-transparent"
-                      type="text"
-                      placeholder="Search for files....."
-                      // onChange={(e) => {
-                      //   if (selectedS3BucketFolder) {
-                      //     handleBucketFolderInputChange(
-                      //       e,
-                      //       selectedS3BucketFolder,
-                      //     );
-                      //   } else {
-                      //     handleBucketInputChange(e);
-                      //   }
-                      // }}
-                      onChange={(e) => setSearchPattern(e.target.value)}
-                      // value={inputValue}
-                      value={searchPattern}
-                      onFocus={() => {
-                        setRowsPerPage(100);
-                        setCurrentPage(1);
-                      }}
-                    />
-                    <img
-                      src={process.env.PUBLIC_URL + "/search_icon.png"}
-                      alt="search"
-                      className="w-4 h-4 ml-1 flex-shrink-0"
-                    />
-                  </div>
-                  <div className="layout-button-wrapper  flex gap-2 items-center justify-end  px-2 py-1 flex-shrink-0">
-                    <button
-                      className={`layout-button items-center justify-center px-4 font-medium button-text rounded-md transition-all 
-                                ${
-                                  !selectedFiles ||
-                                  selectedFiles.length === 0 ||
-                                  isModalOpen ||
-                                  isMetaDataModalOpen ||
-                                  isColumnDataModalOpen
-                                    ? "text-purpleshade1 flex items-center cursor-not-allowed rounded-md shadow-md shadow-slate-500/30 bg-white"
-                                    : "bg-purpleshade1 text-white hover:bg-opacity-90 cursor-pointer"
-                                }`}
-                      disabled={
-                        !selectedFiles ||
-                        selectedFiles.length === 0 ||
-                        isModalOpen ||
-                        isMetaDataModalOpen ||
-                        isColumnDataModalOpen
-                      }
-                      onClick={() => {
-                        handleDynamicPreview()
-                          .then((response) => {
-                            if (response) {
-                              setShowPreview(true);
-                              setIsModalOpen(true);
-                            }
-                          })
-                          .catch((error) => {
-                            console.error(
-                              "Preview Exception caught in Component View:",
-                              error,
-                            );
-                            setError(
-                              error?.message ||
-                                "Preview service temporarily unavailable.",
-                            );
-                            setIsPopupOpen(true);
-                          });
-                      }}
-                      style={{
-                        cursor:
-                          !selectedFiles ||
-                          selectedFiles.length === 0 ||
-                          isModalOpen ||
-                          isMetaDataModalOpen
-                            ? "not-allowed"
-                            : "pointer",
-                      }}
-                    >
-                      Preview
-                    </button>
 
-                    <button
-                      className={`layout-button px-4 items-center justify-center font-medium button-text rounded-md transition-all 
-                      ${
-                        selectedFiles.length === 0 ||
-                        isModalOpen ||
-                        isColumnDataModalOpen
-                          ? "text-purpleshade1 cursor-not-allowed rounded-md shadow-md shadow-slate-500/30 font-medium text-[13px] bg-white"
-                          : "bg-purpleshade1 text-white hover:bg-opacity-90 cursor-pointer"
-                      }`}
-                      disabled={
-                        selectedFiles.length === 0 ||
-                        isModalOpen ||
-                        isColumnDataModalOpen
-                      }
-                      onClick={handleDynamicMetadata} // 🛠️ FIX: Fire pipeline directly instead of just opening modal blindly
-                    >
-                      Metadata
-                    </button>
+  const handleNext = async () => {
+    if (currentPage < totalPages) {
+      const nextPage = currentPage + 1;
 
-                    <button
-                      className={`layout-button px-4 items-center justify-center font-medium button-text rounded-md transition-all ${
-                        selectedFiles.length === 0 ||
-                        isModalOpen ||
-                        isMetaDataModalOpen
-                          ? "text-purpleshade1 flex items-center cursor-not-allowed rounded-md shadow-md shadow-slate-500/30 font-medium text-[13px] bg-white"
-                          : "bg-purpleshade1 text-white hover:bg-opacity-90 cursor-pointer"
-                      }`}
-                      disabled={
-                        selectedFiles.length === 0 ||
-                        isModalOpen ||
-                        isMetaDataModalOpen
-                      }
-                      onClick={handleFileDefinition} // Handled entirely inside the async wrapper safely
-                      style={{
-                        cursor:
-                          selectedFiles.length === 0 ||
-                          isModalOpen ||
-                          isMetaDataModalOpen
-                            ? "not-allowed"
-                            : "pointer",
-                      }}
-                    >
-                      CDefinition
-                    </button>
-                  </div>
-                </div>
-                <div className="layout-table-structure rounded-lg shadow-md shadow-slate-500/50 overflow-hidden bg-white flex-1 flex flex-col ">
-                  <div className="layout-breadcrums-container bg-purpleshade1 flex items-center justify-between px-4 py-2 text-white text-[13px] font-medium">
-                    <div className=" flex items-center gap-2 text-xs text-white ">
-                      <button
-                        onClick={() => setCurrentPath([])}
-                        className="font-medium"
-                      >
-                        {bucketName || "Root"}
-                      </button>
-                      {currentPath.map((segment, idx) => (
-                        <span key={idx} className="flex items-center gap-2">
-                          <span> &gt;</span>
-                          <button
-                            onClick={() =>
-                              setCurrentPath(currentPath.slice(0, idx + 1))
-                            }
-                            className="hover:text-white font-medium"
-                          >
-                            {segment}
-                          </button>
-                        </span>
-                      ))}
-                    </div>
-                    <div className="flex flex-nowrap items-center gap-2 sm:gap-3 flex-shrink-0">
-                      <button type="button" onClick={handleTableView}>
-                        <img
-                          src={
-                            isTableView
-                              ? process.env.PUBLIC_URL + "/bg-tableformat.png"
-                              : process.env.PUBLIC_URL + "/tableformat.png"
-                          }
-                          alt="Table"
-                          className={
-                            isTableView
-                              ? "w-6 h-7 rounded-lg  py-1 "
-                              : "w-6 h-7 rounded-lg  py-1 "
-                          }
-                        />
-                      </button>
-                      <button type="button" onClick={handlePlainView}>
-                        <img
-                          src={
-                            !isTableView
-                              ? process.env.PUBLIC_URL +
-                                "/bg-plainformat-icon.png"
-                              : process.env.PUBLIC_URL + "/plainformat-icon.png"
-                          }
-                          alt="Plain"
-                          className={
-                            !isTableView
-                              ? "w-6 h-7  rounded-lg  py-1 "
-                              : "w-5 h-7  rounded-lg  py-1 "
-                          }
-                        />
-                      </button>
-                    </div>
-                  </div>
-                  <DataExplore
-                    handlePlainView={handlePlainView}
-                    handleTableView={handleTableView}
-                    isTableView={isTableView} // Let the child know which view layout state to render
-                    selectedFiles={selectedFiles}
-                    setSelectedFiles={setSelectedFiles}
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
-                    rowsPerPage={rowsPerPage}
-                    setRowsPerPage={setRowsPerPage}
-                    serverTotalItems={serverTotalItems}
-                    setServerTotalItems={setServerTotalItems}
-                    currentPath={currentPath}
-                    setCurrentPath={setCurrentPath}
-                    searchPattern={searchPattern}
-                    setSearchPattern={setSearchPattern}
-                  />
-                </div>
-              </div>
+      try {
+        // Ensure pattern is not null but an empty string if not set
+        const searchPattern = searchInput || ""; // Use the searchInput state
 
-              <div className="layout-button-container  flex items-center  justify-between px-7">
-                <div className="flex flex-row space-x-4 ">
-                            <div className="flex flex-row items-center space-x-4">
-                              <span className="h-4 text-[11px] font-normal text-black">
-                                {currentPage} of {totalPages}
-                              </span>
+        let response;
 
-                              <button
-                                className={`w-5 h-4 rounded-lg cursor-pointer font-bold text-sm mt-1 `}
-                                disabled={currentPage === 1}
-                                onClick={() =>
-                                  setCurrentPage((prev) =>
-                                    Math.max(prev - 1, 1),
-                                  )
-                                }
-                                style={{
-                                  cursor:
-                                    currentPage === 1
-                                      ? "not-allowed"
-                                      : "pointer",
-                                }}
-                              >
-                                <img
-                                  src={
-                                    process.env.PUBLIC_URL + "/less-than.png"
-                                  }
-                                  alt="Closed Folder"
-                                  className="w-3 h-3"
-                                />
-                              </button>
-                              <button
-                                className={`w-5 h-4 rounded-lg cursor-pointer font-bold mt-1 text-sm`}
-                                disabled={currentPage === totalPages}
-                                onClick={() =>
-                                  setCurrentPage((prev) =>
-                                    Math.min(prev + 1, totalPages),
-                                  )
-                                }
-                                style={{
-                                  cursor:
-                                    currentPage === totalPages
-                                      ? "not-allowed"
-                                      : "pointer",
-                                }}
-                              >
-                                <img
-                                  src={
-                                    process.env.PUBLIC_URL + "/more-than.png"
-                                  }
-                                  alt="Closed Folder"
-                                  className="w-3 h-3"
-                                />
-                              </button>
-                            </div>
-                            {/* ) : null} */}
-                          </div>
-                          <div
-                            className={`relative inline-block ${
-                              isModalOpen ? "pointer-events-none" : ""
-                            } ${showChatbot ? "pointer-events-none" : ""}}`}
-                          >
-                            <button
-                              id="pageSizeDropdownButton"
-                              onClick={toggleDropdown}
-                              className="  text-black  text-[11px] font-normal rounded-lg  px-3 py-1 bg-gray
-                   text-center inline-flex items-center "
-                              type="button"
-                            >
-                              Page Size: {rowsPerPage}
-                              <svg
-                                className={`w-2.5 h-2 ms-3 ${
-                                  isdropdownOpen ? "rotate-180" : ""
-                                }`}
-                                aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 10 6"
-                              >
-                                <path
-                                  stroke="currentColor"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth="2"
-                                  d="m1 1 4 4 4-4"
-                                />
-                              </svg>
-                              {/* )} */}
-                            </button>
+        // Fetch data based on whether a pattern is provided and folder selection
+        if (searchPattern !== "") {
+          if (selectedFolder) {
+            // Fetch subfolders and files with the search pattern
+            response = await fetchSubfoldersAndFiles(
+              searchPattern,
+              selectedFolder,
+              nextPage,
+              selectedPageSize,
+            );
+          } else {
+            // Fetch files with the search pattern and other parameters
+            response = await fetchFilesFromApi(
+              searchPattern,
+              selectedFolderPath,
+              nextPage,
+              selectedPageSize,
+              selectionType,
+              selectionId,
+              selectedStorageAccount,
+              selectedSortCriteria,
+              selectedSortOrder,
+            );
+          }
+        } else {
+          // Handle case when no pattern is provided
+          if (selectedFolder) {
+            response = await fetchSubfoldersAndFiles(
+              "",
+              selectedFolder,
+              nextPage,
+              selectedPageSize,
+            ); // Use empty string for pattern
+          } else {
+            response = await fetchFilesFromApi(
+              "",
+              selectedFolderPath,
+              nextPage,
+              selectedPageSize,
+              selectionType,
+              selectionId,
+              selectedStorageAccount,
+              selectedSortCriteria,
+              selectedSortOrder,
+            ); // Use empty string for pattern
+          }
+        }
 
-                            <div
-                              className={`z-50 ${isdropdownOpen ? "" : "hidden"} ${
-                                isModalOpen ? "pointer-events-none" : ""
-                              } bg-background-100 border border-primary divide-y divide-secondary rounded-lg shadow w-28
-                   dark:bg-primary absolute bottom-full mt-1`}
-                            >
-                              <ul
-                                className="py-1 text-[11px] font-normal text-black dark:text-gray-200"
-                                aria-labelledby="pageSizeDropdownButton"
-                              >
-                                <li>
-                                  <button
-                                    type="button"
-                                    onClick={() => handleOptionClick(100)}
-                                    // value={100}
-                                    // onChange={(e) => setRowsPerPage(Number(e.target.value))}
-                                    className="block px-3 py-0.5  text-start text-black w-full hover:bg-purpleshade1 dark:hover:bg-gray-600 dark:hover:text-white"
-                                  >
-                                    100
-                                  </button>
-                                </li>
-                                <li>
-                                  <button
-                                    type="button"
-                                    onClick={() => handleOptionClick(50)}
-                                    // value={50}
-                                    // onChange={(e) => setRowsPerPage(Number(e.target.value))}
-                                    className="block px-3 py-0.5  text-start text-black w-full hover:bg-purpleshade1 dark:hover:bg-gray-600 dark:hover:text-white"
-                                  >
-                                    50
-                                  </button>
-                                </li>
-                                <li>
-                                  <button
-                                    type="button"
-                                    // value={25}
-                                    // onChange={(e) => setRowsPerPage(Number(e.target.value))}
-                                    onClick={() => handleOptionClick(25)}
-                                    className="block px-3 py-0.5 text-start text-black w-full hover:bg-purpleshade1 dark:hover:bg-gray-600 dark:hover:text-white"
-                                  >
-                                    25
-                                  </button>
-                                </li>
-                                <li>
-                                  <button
-                                    type="button"
-                                    //             value={10}
-                                    // onChange={(e) => setRowsPerPage(Number(e.target.value))}
-                                    onClick={() => handleOptionClick(10)}
-                                    className="block px-3 py-0.5 text-start text-black w-full hover:bg-purpleshade1 dark:hover:bg-gray-600 dark:hover:text-white"
-                                  >
-                                    10
-                                  </button>
-                                </li>
-                              </ul>
-                            </div>
+        setSearchResults({
+          subfolders: response.subfolders || [],
+          files: response.files || [],
+        });
 
-                            {/* </div> */}
-                          </div>
-                
+        // After data is fetched, update the page state
+        setCurrentPage(nextPage);
 
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-  );
+        // Update button states based on new page values
+        setPreviousButtonDisabled(nextPage <= 1);
+        setNextButtonDisabled(nextPage >= totalPages);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+      // setCurrentPage(1);
+    }
+  };
+
+  useEffect(() => {
+    handleNext();
+    // eslint-disable-next-line
+  }, []);
+
+  const handleDropdownChange = async (e) => {
+    const selectedPage = parseInt(e.target.value, 10);
+    setSelectedPageSize(selectedPage);
+    setCurrentPage(1);
+  };
+
+   const handleChatbotIconClick = () => {
+    setShowChatbot(!showChatbot); // Toggle the showChatbot state
+  };
+
+  const isInteractionDisabled =
+    isPopupOpen || isModalOpen || isColumnDataModalOpen || isMetaDataModalOpen;
 
   return (
     <>
-      <div className="w-screen h-screen bg-primary">
-        <div className="w-full h-full flex flex-col items-center px-3 py-3 gap-1">
-          {/* Navbar Configuration */}
-          <div
-            className={`flex items-center justify-center w-[98vw] h-[10vh]
-                           ${isDisabled || isBlurred || isInteractionDisabled ? "pointer-events-none" : ""}`}
-          >
-            <Navbar />
-          </div>
-          <div className="flex-1 flex flex-row w-full h-[88vh] gap-2 overflow-hidden">
-            {/* SideBar Wrapper - Given specific width padding room to breathe */}
+      <div className="explore-container">
+        <div className="app-container bg-primary">
+          <div className="w-full h-full flex flex-col items-center container-padding layout-vertical-gap ">
             <div
-              className={`w-[6vw] min-w-[80px] max-w-[100px] h-full flex-shrink-0 py-1 
-                ${isDisabled || isBlurred || isInteractionDisabled ? "pointer-events-none" : ""}`}
+              className={` explore-navbar-wrapper  flex ${isDisabled || isBlurred || isModalOpen || isColumnDataModalOpen || isMetaDataModalOpen ? "  pointer-events-none" : ""}`}
             >
-              {/* Inner Sidebar Card - This handles the background color, rounding, and shadow */}
-              <div className="w-full h-full bg-white rounded-lg shadow-lg shadow-slate-400/50 flex items-center justify-center py-4">
+              <Navbar />
+            </div>
+            <div className="explore-container layout-gap ">
+              <div
+                className={`explore-sidebar
+                                ${isDisabled || isBlurred || isModalOpen || isColumnDataModalOpen || isMetaDataModalOpen ? "pointer-events-none" : ""}`}
+              >
                 <Sidebar />
               </div>
-            </div>
-            {/* SCALE WRAPPER - Centered container that takes remaining width */}
-            <div
-              className={`flex-1 h-full flex items-center justify-center p-1.5 ${isDisabled || isBlurred || isInteractionDisabled ? "pointer-events-none" : ""}`}
-            >
-              {/* SCALE CONTAINER 
-                  Using inverse width/height properties ensures that the element scales 
-                  but doesn't leave trailing dead margins in your layout.
-              */}
               <div
-                className={`origin-center transition-transform relative  ${isInteractionDisabled ? "blur-effect pointer-events-none" : ""}`}
-                style={{
-                  transform: `scale(${scale})`,
-                  width: `${100 / scale}%`,
-                  height: `${100 / scale}%`,
-                }}
+                className={`sub-container bg-white layout-padding  rounded-lg shadow-xl shadow-slate-400/50 overflow-hidden sub-container-gap
+                ${isDisabled || isBlurred ? "pointer-events-none" : ""}`}
               >
-                {/* Main Content Card */}
-                <div className="w-full h-full flex flex-col justify-center  items-center rounded-lg  bg-white shadow-lg shadow-slate-500/50 py-2 px-2">
-                  <div className="w-full h-[98%] flex flex-col  ">
-                    <div
-                      className="w-full h-[4vh]  px-5 flex items-center text-sm font-medium text-purpleshade1 cursor-pointer"
-                      onClick={handleBackToDashboard}
-                    >
-                      <img
-                        src={
-                          process.env.PUBLIC_URL + "/purple-storage-icon.png"
-                        }
-                        alt="red icon"
-                        className="w-4 h-4 mr-1 ml-2 mt-1"
-                      />
-                      {selectedS3AccountName || "Loading..."}
-                    </div>
-                    <div
-                      className={`flex-1 h-[95%]   rounded-lg flex flex-col gap-2 items-center p-4`}
-                    >
-                      <div className="w-full h-[95%] px-7 flex flex-col gap-2  pb-4  bg-newgray shadow-lg shadow-slate-500/50 rounded-lg">
-                        <div className="w-full flex flex-wrap gap-3 items-center justify-between flex-shrink-0  p-2 ">
-                          {/* Left Side: Input Search Field (Fluid scale widths) */}
-                          <div className="flex items-center justify-between w-full sm:w-64 md:w-72 h-9 rounded px-2 shadow-sm shadow-slate-500/50 bg-white flex-shrink-0">
-                            <input
-                              className="outline-none font-[350] text-[13px] w-full bg-transparent"
-                              type="text"
-                              placeholder="Search for files....."
-                              // onChange={(e) => {
-                              //   if (selectedS3BucketFolder) {
-                              //     handleBucketFolderInputChange(
-                              //       e,
-                              //       selectedS3BucketFolder,
-                              //     );
-                              //   } else {
-                              //     handleBucketInputChange(e);
-                              //   }
-                              // }}
-                              onChange={(e) => setSearchPattern(e.target.value)}
-                              // value={inputValue}
-                              value={searchPattern}
-                              onFocus={() => {
-                                setRowsPerPage(100);
-                                setCurrentPage(1);
-                              }}
-                            />
-                            <img
-                              src={process.env.PUBLIC_URL + "/search_icon.png"}
-                              alt="search"
-                              className="w-4 h-4 ml-1 flex-shrink-0"
-                            />
-                          </div>
+                <div
+                  className="layout-backdashboard py-1 items-center px-2 flex gap-2 bucketname-text font-[400] text-purpleshade1 cursor-pointer"
+                  onClick={handleBackToDashboard}
+                >
+                  <img
+                    src={process.env.PUBLIC_URL + "/purple-storage-icon.png"}
+                    alt="storage icon"
+                    className="w-4 h-4 mr-1 ml-2 mt-1"
+                  />
 
-                          {/* Right Side: Functional Control Button Deck (Self-adjusting gaps) */}
-                          <div className="flex flex-wrap items-center gap-2 sm:gap-3 ">
-                            {console.log("pa", selectedFiles)}
-                            <button
-                              className={`h-8 px-4 font-medium text-[12px] sm:text-[13px] rounded-md transition-all 
-                                ${
-                                  !selectedFiles ||
-                                  selectedFiles.length === 0 ||
-                                  isModalOpen ||
-                                  isMetaDataModalOpen ||
-                                  isColumnDataModalOpen
-                                    ? "text-purpleshade1 cursor-not-allowed rounded-md shadow-md shadow-slate-500/30 bg-white"
-                                    : "bg-purpleshade1 text-white hover:bg-opacity-90 cursor-pointer"
-                                }`}
-                              disabled={
-                                !selectedFiles ||
-                                selectedFiles.length === 0 ||
-                                isModalOpen ||
-                                isMetaDataModalOpen ||
-                                isColumnDataModalOpen
-                              }
-                              onClick={() => {
-                                handleDynamicPreview()
-                                  .then((response) => {
-                                    if (response) {
-                                      setShowPreview(true);
-                                      setIsModalOpen(true);
-                                    }
-                                  })
-                                  .catch((error) => {
-                                    console.error(
-                                      "Preview Exception caught in Component View:",
-                                      error,
-                                    );
-                                    setError(
-                                      error?.message ||
-                                        "Preview service temporarily unavailable.",
-                                    );
-                                    setIsPopupOpen(true);
-                                  });
-                              }}
-                              style={{
-                                cursor:
-                                  !selectedFiles ||
-                                  selectedFiles.length === 0 ||
-                                  isModalOpen ||
-                                  isMetaDataModalOpen
-                                    ? "not-allowed"
-                                    : "pointer",
-                              }}
-                            >
-                              Preview
-                            </button>
+                  <span className="text-purpleshade1">
+                    {selectedOption === "fileShares"
+                      ? fileShareName
+                      : selectedStorageAccount}
+                  </span>
+                </div>
 
-                            <button
-                              className={`h-8 px-4 font-medium text-[12px] sm:text-[13px] rounded-md transition-all 
-    ${
-      selectedFiles.length === 0 || isModalOpen || isColumnDataModalOpen
-        ? "text-purpleshade1 cursor-not-allowed rounded-md shadow-md shadow-slate-500/30 font-medium text-[13px] bg-white"
-        : "bg-purpleshade1 text-white hover:bg-opacity-90 cursor-pointer"
-    }`}
-                              disabled={
-                                selectedFiles.length === 0 ||
-                                isModalOpen ||
-                                isColumnDataModalOpen
-                              }
-                              onClick={handleDynamicMetadata} // 🛠️ FIX: Fire pipeline directly instead of just opening modal blindly
-                            >
-                              Metadata
-                            </button>
-
-                            <button
-                              className={`h-8 px-4 font-medium text-[12px] sm:text-[13px] rounded-md transition-all ${
-                                selectedFiles.length === 0 ||
-                                isModalOpen ||
-                                isMetaDataModalOpen
-                                  ? "text-purpleshade1 cursor-not-allowed rounded-md shadow-md shadow-slate-500/30 font-medium text-[13px] bg-white"
-                                  : "bg-purpleshade1 text-white hover:bg-opacity-90 cursor-pointer"
-                              }`}
-                              disabled={
-                                selectedFiles.length === 0 ||
-                                isModalOpen ||
-                                isMetaDataModalOpen
-                              }
-                              onClick={handleFileDefinition} // Handled entirely inside the async wrapper safely
-                              style={{
-                                cursor:
-                                  selectedFiles.length === 0 ||
-                                  isModalOpen ||
-                                  isMetaDataModalOpen
-                                    ? "not-allowed"
-                                    : "pointer",
-                              }}
-                            >
-                              CDefinition
-                            </button>
-                          </div>
-                        </div>
-
-                        <div className="w-full h-[80%] flex flex-col items-center shadow-lg rounded-b-lg shadow-slate-500/50 ">
-                          {/* <div className="w-full flex-1 min-w-0 flex flex-col"> */}
-                          {/* <div className="w-full flex-1 min-h-0 flex flex-col"> */}
-                          {loadingS3BucketFiles ? (
-                            /* 🛠️ FIXED: Removed rigid h-[85%] constraint so loader remains centered without leaking layout rows */
-                            <div className="w-full flex-1 flex flex-col justify-center items-center space-y-4">
-                              <img
-                                src={process.env.PUBLIC_URL + "/loadergif.gif"}
-                                alt="Loading..."
-                                className="animate-spin w-8 h-8"
-                              />
-                              <p className="text-logintext font-[350] text-[13px] animate-pulse">
-                                Just a moment...
-                              </p>
-                            </div>
-                          ) : (
-                            /* Responsive View Router Injector Slot */
-                            <div className="w-full h-full flex-1 min-w-0 ">
-                              <S3FileBrowserPage
-                                handlePlainView={handlePlainView}
-                                handleTableView={handleTableView}
-                                isTableView={isTableView} // Let the child know which view layout state to render
-                                selectedFiles={selectedFiles}
-                                setSelectedFiles={setSelectedFiles}
-                                currentPage={currentPage}
-                                setCurrentPage={setCurrentPage}
-                                rowsPerPage={rowsPerPage}
-                                setRowsPerPage={setRowsPerPage}
-                                serverTotalItems={serverTotalItems}
-                                setServerTotalItems={setServerTotalItems}
-                                currentPath={currentPath}
-                                setCurrentPath={setCurrentPath}
-                                searchPattern={searchPattern}
-                                setSearchPattern={setSearchPattern}
-                              />
-                            </div>
-                          )}
-                          {/* </div> */}
-                          {/* </div> */}
-                        </div>
-
-                        <Modal
-                          isOpen={isModalOpen} // Controls visibility of this wrapper container
-                          onRequestClose={closePreviewModal}
-                          contentLabel="Modal"
-                          overlayClassName="overlay-blur"
-                          className="fixed bg-white rounded-lg shadow shadow-slate-500/30 items-center 
-                          overflow-y-auto cursor-pointer border-solid border-ccc z-50 transition-right-0.3s ease-in-out modal-custom-dimensions scrollbar-thin"
-                          style={{ ...modalStyles }}
-                          onAfterOpen={() => {
-                            const tabularRadio =
-                              document.getElementById("tabular");
-                            if (tabularRadio) {
-                              tabularRadio.focus();
+                <div
+                  className={`flex-1 h-[95%]   rounded-lg flex flex-col gap-2 items-center px-4 py-2`}
+                >
+                  <div className="data-container items-center bg-primary rounded-lg shadow-md shadow-slate-500/50 sub-container-gap">
+                    <div className="layout-button-container   flex items-center justify-between sub-container-gap flex-shrink-0 ">
+                      <div className="layout-search-container flex items-center gap-2 rounded px-2 shadow-sm shadow-slate-500/50 bg-white flex-shrink-0">
+                        {/* <div className="flex flex-row justify-between items-center w-72 h-9 rounded  p-1 shadow-lg shadow-lightgray-100/30  bg-white"> */}
+                        <input
+                          className="outline-none ml-0 font-[350] text-[13px] search-bar   "
+                          type="text"
+                          placeholder="Search for files....."
+                          // onChange={(e) => handleInputChange(e, selectedFolder)}
+                          onChange={(e) => {
+                            if (selectedFolder) {
+                              handleFolderInputChange(e, selectedFolder);
+                            } else {
+                              handleInputChange(e);
                             }
                           }}
-                        >
-                          <div className="flex justify-end">
-                            <button
-                              className="bg-background-100 text-2xl font-semibold mr-4 mt-1 mb-1"
-                              onClick={() => {
-                                // 🎯 FIX 1: Explicitly force both state controls to false on click
-                                setIsModalOpen(false);
-                                setShowPreview(false);
-                                setSelectedFiles([]);
-                              }}
-                            >
-                              <img
-                                src={process.env.PUBLIC_URL + "/closefile.png"}
-                                alt="close"
-                                className="h-4 w-4 mt-2"
-                              />
-                            </button>
-                          </div>
-
-                          {showPreview &&
-                          dataType === "PreviewData" &&
-                          previewData ? (
-                            <S3PreviewDataModel
-                              // 🎯 FIX 2: Swapped 'isMenuOpen' to 'isModalOpen' to align state keys
-
-                              isModalOpen={isModalOpen}
-                              setIsModalOpen={setIsModalOpen}
-                              previewData={previewData}
-                              selectedFormat={selectedFormat}
-                              selectedFiles={selectedFiles}
-                              s3AccountId={s3AccountId}
-                              bucketId={bucketId}
-                              // 🎯 FIX 3: Consolidated the duplicate definition into a single, clean handler prop
-                              // closePreviewModal={() => {
-                              //   setIsModalOpen(false);
-                              //   setShowPreview(false);
-                              //   setSelectedFiles([])
-                              // }}
-                            />
-                          ) : (
-                            /* This loader handles the async delay smoothly while previewData mounts */
-                            <div className="w-full h-48 flex flex-col justify-center items-center text-black">
-                              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purpleshade1 mb-2"></div>
-                              <p className="text-sm italic text-gray-500">
-                                Parsing response cache data...
-                              </p>
-                            </div>
-                          )}
-                        </Modal>
-
-                        {isColumnDataModalOpen && (
-                          <ColumnDefinition
-                            isColumnDataModalOpen={isColumnDataModalOpen}
-                            setIsColumnDataModalOpen={setIsColumnDataModalOpen}
-                            columnData={columnData}
-                            showPreview={showPreview}
-                            selectedFiles={selectedFiles}
-                            setSelectedFiles={setSelectedFiles}
-                            permissions={permissions}
-                            loading={loading}
-                            isNewFieldVisible={isNewFieldVisible}
-                            setisNewFieldVisible={setisNewFieldVisible}
-                            setColumnData={setColumnData}
-                            // 🛠️ SYNCHRONIZED PARENT STATE BINDINGS:
-                            newFieldName={newFieldName}
-                            setNewFieldName={setNewFieldName}
-                            newFieldIsMasked={newFieldIsMasked} // 🛠️ FIX: Now correctly referencing the value variable, not the function setter!
-                            setNewFieldIsMasked={setNewFieldIsMasked}
-                            handleSave={handleSave}
-                            saveButtonClicked={saveButtonClicked}
-                            closePreviewModal={closePreviewModal}
-                            newFieldRef={newFieldRef}
-                            isColumnDataFetched={isColumnDataFetched}
-                          />
-                        )}
-
-                        {isMetaDataModalOpen && (
-                          <MetaData
-                            isOpen={isMetaDataModalOpen}
-                            closePreviewModal={closePreviewModal} // 🛠️ Simple callback to reset the boolean trigger state
-                            metaData={metaData}
-                            selectedFiles={selectedFiles}
-                            loading={isMetaDataLoading} // 🛠️ Pass parent loading state accurately down to target child
-                            setMetaDataModalOpen={setMetaDataModalOpen}
-                            setSelectedFiles={setSelectedFiles}
-                          />
-                        )}
+                          value={inputValue}
+                        />
+                        <img
+                          src={process.env.PUBLIC_URL + "/search_icon.png"}
+                          alt="search"
+                          className="w-4 h-4 "
+                        />
+                        {/* </div> */}
                       </div>
+                      <div className="flex-grow"></div>
+                      <div className="layout-button-wrapper space-x-1   flex gap-2 items-center justify-end  px-2 py-1 flex-shrink-0">
+                        <button
+                          className={`button-base ${
+                            selectedFiles.length === 0 ||
+                            isMetaDataModalOpen ||
+                            isColumnDataModalOpen
+                              ? "text-purpleshade1 cursor-not-allowed  rounded-md shadow-md shadow-slate-500/30  font-medium  text-[13px] bg-white"
+                              : "button-enabled"
+                          }`}
+                          // onClick={() => {
+                          //   handleDynamicPreview(
+                          //     selectionId,
+                          //     selectionType,
+                          //     selectedStorageAccount
+                          //   );
+                          //   setIsModalOpen(true);
+                          // }}
+                          onClick={() => {
+                            handleDynamicPreview(
+                              selectionId,
+                              selectionType,
+                              selectedStorageAccount,
+                            )
+                              .then(() => {
+                                setIsModalOpen(true); // Open modal only if data is valid
+                              })
+                              .catch((error) => {
+                                console.error("Preview Error:", error);
+                                console.error("🔍 API Error Details:", {
+                                  endpoint: "/api/blob/blob_content/",
+                                  status: "500 Internal Server Error",
+                                  message:
+                                    "Backend server error - check backend logs",
+                                });
 
-                      {/* pagination */}
-                      <div className="w-full h-10 mt-2">
-                        <div className="w-full h-11 px-4 flex items-center justify-between flex-shrink-0 text-xs text-slate-500">
-                          <div className="flex flex-row space-x-4 ">
-                            <div className="flex flex-row items-center space-x-4">
-                              <span className="h-4 text-[11px] font-normal text-black">
-                                {currentPage} of {totalPages}
-                              </span>
+                                // Show user-friendly error
+                                setError(
+                                  "Preview service temporarily unavailable. Please try again later.",
+                                );
+                                setIsPopupOpen(true);
+                                // Handle any other errors here
+                              });
+                          }}
+                          disabled={
+                            selectedFiles.length === 0 ||
+                            isMetaDataModalOpen ||
+                            isColumnDataModalOpen
+                          }
+                          style={{
+                            cursor:
+                              selectedFiles.length === 0 ||
+                              isModalOpen ||
+                              isMetaDataModalOpen
+                                ? "not-allowed"
+                                : "pointer",
+                          }}
+                        >
+                          Preview
+                        </button>
 
-                              <button
-                                className={`w-5 h-4 rounded-lg cursor-pointer font-bold text-sm mt-1 `}
-                                disabled={currentPage === 1}
-                                onClick={() =>
-                                  setCurrentPage((prev) =>
-                                    Math.max(prev - 1, 1),
-                                  )
-                                }
-                                style={{
-                                  cursor:
-                                    currentPage === 1
-                                      ? "not-allowed"
-                                      : "pointer",
-                                }}
-                              >
-                                <img
-                                  src={
-                                    process.env.PUBLIC_URL + "/less-than.png"
-                                  }
-                                  alt="Closed Folder"
-                                  className="w-3 h-3"
-                                />
-                              </button>
-                              <button
-                                className={`w-5 h-4 rounded-lg cursor-pointer font-bold mt-1 text-sm`}
-                                disabled={currentPage === totalPages}
-                                onClick={() =>
-                                  setCurrentPage((prev) =>
-                                    Math.min(prev + 1, totalPages),
-                                  )
-                                }
-                                style={{
-                                  cursor:
-                                    currentPage === totalPages
-                                      ? "not-allowed"
-                                      : "pointer",
-                                }}
-                              >
-                                <img
-                                  src={
-                                    process.env.PUBLIC_URL + "/more-than.png"
-                                  }
-                                  alt="Closed Folder"
-                                  className="w-3 h-3"
-                                />
-                              </button>
-                            </div>
-                            {/* ) : null} */}
-                          </div>
-                          <div
-                            className={`relative inline-block ${
-                              isModalOpen ? "pointer-events-none" : ""
-                            } ${showChatbot ? "pointer-events-none" : ""}}`}
-                          >
-                            <button
-                              id="pageSizeDropdownButton"
-                              onClick={toggleDropdown}
-                              className="  text-black  text-[11px] font-normal rounded-lg  px-3 py-1 bg-gray
-                   text-center inline-flex items-center "
-                              type="button"
-                            >
-                              Page Size: {rowsPerPage}
-                              <svg
-                                className={`w-2.5 h-2 ms-3 ${
-                                  isdropdownOpen ? "rotate-180" : ""
-                                }`}
-                                aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 10 6"
-                              >
-                                <path
-                                  stroke="currentColor"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth="2"
-                                  d="m1 1 4 4 4-4"
-                                />
-                              </svg>
-                              {/* )} */}
-                            </button>
+                        <button
+                          className={`button-base ${
+                            selectedFiles.length === 0 ||
+                            isModalOpen ||
+                            isColumnDataModalOpen
+                              ? "text-purpleshade1 cursor-not-allowed  rounded-md shadow-md shadow-slate-500/30 ml-8 h-8 w-24 font-medium  text-[13px] bg-white"
+                              : "button-enabled"
+                          }`}
+                          onClick={() => {
+                            handleDynamicMetadata(selectionId, selectionType);
+                            // setIsModalOpen(true);
+                            // openMetaDataModal();
+                            setMetaDataModalOpen(true);
+                          }}
+                          disabled={
+                            selectedFiles.length === 0 ||
+                            isModalOpen ||
+                            isColumnDataModalOpen
+                          }
+                          style={{
+                            cursor:
+                              selectedFiles.length === 0 ||
+                              isModalOpen ||
+                              isMetaDataModalOpen
+                                ? "not-allowed"
+                                : "pointer",
+                          }}
+                        >
+                          Metadata
+                        </button>
 
-                            <div
-                              className={`z-50 ${isdropdownOpen ? "" : "hidden"} ${
-                                isModalOpen ? "pointer-events-none" : ""
-                              } bg-background-100 border border-primary divide-y divide-secondary rounded-lg shadow w-28
-                   dark:bg-primary absolute bottom-full mt-1`}
-                            >
-                              <ul
-                                className="py-1 text-[11px] font-normal text-black dark:text-gray-200"
-                                aria-labelledby="pageSizeDropdownButton"
-                              >
-                                <li>
-                                  <button
-                                    type="button"
-                                    onClick={() => handleOptionClick(100)}
-                                    // value={100}
-                                    // onChange={(e) => setRowsPerPage(Number(e.target.value))}
-                                    className="block px-3 py-0.5  text-start text-black w-full hover:bg-purpleshade1 dark:hover:bg-gray-600 dark:hover:text-white"
-                                  >
-                                    100
-                                  </button>
-                                </li>
-                                <li>
-                                  <button
-                                    type="button"
-                                    onClick={() => handleOptionClick(50)}
-                                    // value={50}
-                                    // onChange={(e) => setRowsPerPage(Number(e.target.value))}
-                                    className="block px-3 py-0.5  text-start text-black w-full hover:bg-purpleshade1 dark:hover:bg-gray-600 dark:hover:text-white"
-                                  >
-                                    50
-                                  </button>
-                                </li>
-                                <li>
-                                  <button
-                                    type="button"
-                                    // value={25}
-                                    // onChange={(e) => setRowsPerPage(Number(e.target.value))}
-                                    onClick={() => handleOptionClick(25)}
-                                    className="block px-3 py-0.5 text-start text-black w-full hover:bg-purpleshade1 dark:hover:bg-gray-600 dark:hover:text-white"
-                                  >
-                                    25
-                                  </button>
-                                </li>
-                                <li>
-                                  <button
-                                    type="button"
-                                    //             value={10}
-                                    // onChange={(e) => setRowsPerPage(Number(e.target.value))}
-                                    onClick={() => handleOptionClick(10)}
-                                    className="block px-3 py-0.5 text-start text-black w-full hover:bg-purpleshade1 dark:hover:bg-gray-600 dark:hover:text-white"
-                                  >
-                                    10
-                                  </button>
-                                </li>
-                              </ul>
-                            </div>
-
-                            {/* </div> */}
-                          </div>
-                        </div>
+                        <button
+                          className={`button-base ${
+                            selectedFiles.length === 0 ||
+                            isModalOpen ||
+                            isMetaDataModalOpen
+                              ? "text-purpleshade1 cursor-not-allowed rounded-md shadow-md shadow-slate-500/30 ml-8 h-8 w-24 font-medium text-[13px] bg-white"
+                              : "button-enabled"
+                          }`}
+                          onClick={() => {
+                            handleFileDefinition(selectionId, selectionType);
+                            setIsColumnDataModalOpen(true);
+                          }}
+                          disabled={
+                            selectedFiles.length === 0 ||
+                            isModalOpen ||
+                            isMetaDataModalOpen
+                          }
+                          style={{
+                            cursor:
+                              selectedFiles.length === 0 ||
+                              isModalOpen ||
+                              isMetaDataModalOpen
+                                ? "not-allowed"
+                                : "pointer",
+                          }}
+                        >
+                          CDefinition
+                        </button>
                       </div>
                     </div>
+                    <div
+                      className={`layout-table-structure rounded-lg shadow-md shadow-slate-500/50 overflow-hidden bg-white flex-1 flex flex-col ${isInteractionDisabled ? "blur-effect pointer-events-none" : ""} `}
+                    >
+                      <div className={`layout-breadcrums-container bg-purpleshade1 flex items-center justify-between px-4 py-2 text-white text-[13px] font-medium`}>
+                        <div className={` flex items-center gap-2 text-xs text-white `}>
+                          <div
+                            className="cursor-pointer mr-1 text-white"
+                            onClick={() => handleContainerClick(containerData)}
+                          >
+                            {/* {containerName} Container */}
+                            {containerName
+                              ? `${containerName}`
+                              : `${fileShareName}`}
+                            {/* <Link to="/container-data"> {containerName ? `${containerName} Container` : `${fileShareName}`}</Link> */}
+                          </div>
+                          <span className={`mr-1 `}> &gt; </span>{" "}
+                          {renderBreadcrumbs()}
+                        </div>
+                        <div className={`flex flex-nowrap items-center gap-2 sm:gap-3 flex-shrink-0 ${isDisabled || isBlurred || isModalOpen || isColumnDataModalOpen || isMetaDataModalOpen ? "pointer-events-none" : ""}`}>
+                          <button type="button" onClick={handleTableView}>
+                            <img
+                              src={
+                                isTableView
+                                  ? process.env.PUBLIC_URL +
+                                    "/bg-tableformat.png"
+                                  : process.env.PUBLIC_URL + "/tableformat.png"
+                              }
+                              alt="Table"
+                              className={
+                                isTableView
+                                  ? "w-6 h-7 rounded-lg  py-1 "
+                                  : "w-6 h-7 rounded-lg  py-1 "
+                              }
+                            />
+                          </button>
+                          <button type="button" onClick={handlePlainView}>
+                            <img
+                              src={
+                                !isTableView
+                                  ? process.env.PUBLIC_URL +
+                                    "/bg-plainformat-icon.png"
+                                  : process.env.PUBLIC_URL +
+                                    "/plainformat-icon.png"
+                              }
+                              alt="Plain"
+                              className={
+                                !isTableView
+                                  ? "w-6 h-7  rounded-lg  py-1 "
+                                  : "w-5 h-7  rounded-lg  py-1 "
+                              }
+                            />
+                          </button>
+                        </div>
+                      </div>
+                      {/* {loading ? (
+                        <div className="w-full h-[85%] flex flex-col justify-center items-center space-y-6">
+                          <img
+                            src={process.env.PUBLIC_URL + "/loadergif.gif"}
+                            alt="Loading"
+                            className="animate-spin w-8 h-8"
+                          />
+
+                          <p className="text-logintext font-[350] text-[13px] animate-pulse">
+                            Just a moment...
+                          </p>
+                        </div> */}
+                      {selectedFolder ? (
+                        <SubFoldersPage
+                          selectedFolder={selectedFolder}
+                          subfolders={currentFolderData.subfolders}
+                          files={currentFolderData.files}
+                          selectedFiles={selectedFiles}
+                          setSelectedFiles={setSelectedFiles}
+                          currentPage={currentPage}
+                          setCurrentPage={setCurrentPage}
+                          rowsPerPage={rowsPerPage}
+                          setRowsPerPage={setRowsPerPage}
+                          isTableView={isTableView}
+                          handleTableView={handleTableView}
+                          handlePlainView={handlePlainView}
+                          handleFolderClick={handleFolderClick}
+                          handleFileClick={handleFileClick}
+                          handleFileRowClick={handleFileRowClick}
+                          handleSortAscending={handleSortAscending}
+                          handleSortDescending={handleSortDescending}
+                          totalPages={subFolderTotalPages}
+                          handleFolderSort={handleFolderSort}
+                          folderId={selectedFolder}
+                        />
+                      ) : (
+                        <FileBrowserPage
+                          filteredFilesFolders={filteredFilesFolders}
+                          filteredFolders={filteredFolders}
+                          handleFolderClick={handleFolderClick}
+                          handlePlainView={handlePlainView}
+                          handleTableView={handleTableView}
+                          isTableView={isTableView}
+                          selectedFiles={selectedFiles}
+                          setSelectedFiles={setSelectedFiles}
+                          currentPage={currentPage}
+                          setCurrentPage={setCurrentPage}
+                          rowsPerPage={rowsPerPage}
+                          setRowsPerPage={setRowsPerPage}
+                          handleSortAscending={handleSortAscending}
+                          handleSortDescending={handleSortDescending}
+                          totalPages={totalPages}
+                          handleFileRowClick={handleFileRowClick}
+                          handleFileClick={handleFileClick}
+                          handleSearchOkClick={handleSearchOkClick}
+                          isModalOpen={isModalOpen}
+                          isMetaDataModalOpen={isMetaDataModalOpen}
+                          isColumnDataModalOpen={isColumnDataModalOpen}
+                        />
+                      )}
+                    </div>
+
+                    <Modal
+                      isOpen={isModalOpen}
+                      onRequestClose={() => {
+                        setIsModalOpen(false);
+                        setShowPreview(false);
+                        setSelectedFiles([]);
+                      }}
+                      contentLabel="Modal"
+                      overlayClassName="overlay-blur"
+                      className="fixed bg-white rounded-lg shadow shadow-slate-500\/30 items-center 
+                                      overflow-y-auto cursor-pointer border-solid border-ccc z-50 transition-right-0.3s ease-in-out modal-custom-dimensions scrollbar-thin"
+                      style={{ ...modalStyles }}
+                      // style={{width:`${(width * 0.9).toFixed(2)}px`,height:`${(height * 0.65).toFixed(2)}px`,
+                      // marginLeft:`${(width * 0.06).toFixed(2)}px`, marginTop:`${(height * 0.2).toFixed(2)}px`}}
+                      onAfterOpen={() => {
+                        // Focus on the radio button when the modal opens
+                        const tabularRadio = document.getElementById("tabular");
+                        if (tabularRadio) {
+                          tabularRadio.focus();
+                        }
+                      }}
+                    >
+                      <div className="flex justify-end">
+                        <button
+                          className="bg-background-100 text-2xl font-semibold mr-4 mt-1 mb-1"
+                          onClick={() => {
+                            // 🎯 FIX 1: Explicitly force both state controls to false on click
+                            setIsModalOpen(false);
+                            setShowPreview(false);
+                            setSelectedFiles([]);
+                          }}
+                        >
+                          <img
+                            src={process.env.PUBLIC_URL + "/closefile.png"}
+                            alt="close"
+                            className="h-4 w-4 mt-2"
+                          />
+                        </button>
+                      </div>
+
+                      {showPreview && dataType === "API" && (
+                        <FilePreviewDataModal
+                          // 🎯 FIX 2: Swapped 'isMenuOpen' to 'isModalOpen' to align state keys
+
+                          isModalOpen={isModalOpen}
+                          setIsModalOpen={setIsModalOpen}
+                          apiData={apiData}
+                          selectedFormat={selectedFormat}
+                          setSelectedFormat={setSelectedFormat}
+                          selectedFiles={selectedFiles}
+                          selectedStorageAccountId={selectedStorageAccountId}
+                          containerName={containerName}
+                          containerData={containerData}
+                          isMetaDataModalOpen={isMetaDataModalOpen}
+                          isColumnDataModalOpen={isColumnDataModalOpen}
+                          selectedStorageAccount={selectedStorageAccount}
+                          isDownloadStorage={isDownloadStorage}
+                          fileShareId={fileShareId}
+                          fileShareName={fileShareName}
+                          selectedAccountKey={selectedAccountKey}
+                          selectionId={selectionId}
+                          selectionType={selectionType}
+                          handleDynamicPreview={handleDynamicPreview}
+                          apiLoading={apiLoading}
+                          setApiLoading={setApiLoading}
+                          isHeaderAvailable={isHeaderAvailable}
+                          setIsHeaderAvailable={setIsHeaderAvailable}
+                        />
+                      )}
+                    </Modal>
+                    <FileMetaData
+                      isOpen={isMetaDataModalOpen}
+                      closeModal={() => setMetaDataModalOpen(false)}
+                      metaData={metadata}
+                      selectedFiles={selectedFiles}
+                      setSelectedFiles={setSelectedFiles}
+                      loading={loading}
+                    />
+                    {/* <FileColumnDefinition
+                      isOpen={isColumnDataModalOpen}
+                      closeModal={() => setIsColumnDataModalOpen(false)}
+                      columnData={columnData}
+                      showPreview={showPreview}
+                    /> */}
+                    {isColumnDataModalOpen && (
+                      <FileColumnDefinition
+                        isColumnDataModalOpen={isColumnDataModalOpen}
+                        setIsColumnDataModalOpen={setIsColumnDataModalOpen}
+                        columnData={columnData}
+                        showPreview={showPreview}
+                        selectedFiles={selectedFiles}
+                        setSelectedFiles={setSelectedFiles}
+                        permissions={permissions}
+                        loading={loading}
+                        isNewFieldVisible={isNewFieldVisible}
+                        setisNewFieldVisible={setisNewFieldVisible}
+                        setColumnData={setColumnData}
+                        // 🛠️ SYNCHRONIZED PARENT STATE BINDINGS:
+                        newFieldName={newFieldName}
+                        setNewFieldName={setNewFieldName}
+                        newFieldIsMasked={newFieldIsMasked} // 🛠️ FIX: Now correctly referencing the value variable, not the function setter!
+                        setNewFieldIsMasked={setNewFieldIsMasked}
+                        handleSave={handleSave}
+                        saveButtonClicked={saveButtonClicked}
+                        // closePreviewModal={is}
+                        setError={setError}
+                        error={error}
+                        isPopupOpen={isPopupOpen}
+                        setIsPopupOpen={setIsPopupOpen}
+                        newFieldRef={newFieldRef}
+                        // isColumnDataFetched={isColumnDataFetched}
+                      />
+                    )}
+                  </div>
+
+                  <div
+                    className={`layout-page-container  mt-2 flex items-center  justify-between px-2 `}
+                  >
+                    <div className="flex flex-row space-x-4 ">
+                      {isTableView ? (
+                        <div className="flex flex-row items-center space-x-4">
+                          <span className="h-4 text-[11px] font-normal">
+                            {currentPage} of {totalPages}
+                          </span>
+
+                          <button
+                            className={`w-5 h-4 rounded-lg cursor-pointer font-bold text-sm mt-1`}
+                            onClick={handlePrevious}
+                            disabled={previousButtonDisabled}
+                            style={{
+                              cursor: previousButtonDisabled
+                                ? "not-allowed"
+                                : "pointer",
+                            }}
+                          >
+                            <img
+                              src={process.env.PUBLIC_URL + "/less-than.png"}
+                              alt="Closed Folder"
+                              className="w-3 h-3"
+                            />
+                          </button>
+                          <button
+                            className={`w-5 h-4 rounded-lg cursor-pointer font-bold mt-1 text-sm`}
+                            onClick={handleNext}
+                            disabled={nextButtonDisabled}
+                            style={{
+                              cursor: nextButtonDisabled
+                                ? "not-allowed"
+                                : "pointer",
+                            }}
+                          >
+                            <img
+                              src={process.env.PUBLIC_URL + "/more-than.png"}
+                              alt="Closed Folder"
+                              className="w-3 h-3"
+                            />
+                          </button>
+                        </div>
+                      ) : (
+                        <div
+                          className={`flex flex-row items-center space-x-4 ${
+                            isColumnDataModalOpen ? "pointer-events-none" : ""
+                          }
+                    ${isModalOpen ? " pointer-events-none" : ""} ${
+                      showChatbot ? "pointer-events-none" : ""
+                    }
+                  
+                    ${showProfileModal ? "pointer-events-none" : ""}${
+                      isMetaDataModalOpen ? "pointer-events-none" : ""
+                    }`}
+                        >
+                          <span className="h-4 text-[11px] font-normal">
+                            {/* {currentPage} of {totalPages} */}
+                            {selectedFolder
+                              ? ` ${currentPage} of ${subFolderTotalPages}`
+                              : ` ${currentPage} of ${totalPages}`}
+                          </span>
+
+                          <button
+                            className={`w-5 h-4 rounded-lg cursor-pointer font-bold text-sm mt-1  `}
+                            onClick={handlePrevious}
+                            disabled={previousButtonDisabled}
+                            style={{
+                              cursor: previousButtonDisabled
+                                ? "not-allowed"
+                                : "pointer",
+                            }}
+                          >
+                            <img
+                              src={process.env.PUBLIC_URL + "/less-than.png"}
+                              alt="Closed Folder"
+                              className="w-3 h-3"
+                            />
+                          </button>
+                          <button
+                            className={`w-5 h-4 rounded-lg cursor-pointer font-bold mt-1 text-sm `}
+                            onClick={handleNext}
+                            disabled={nextButtonDisabled}
+                            style={{
+                              cursor: nextButtonDisabled
+                                ? "not-allowed"
+                                : "pointer",
+                            }}
+                          >
+                            <img
+                              src={process.env.PUBLIC_URL + "/more-than.png"}
+                              alt="Closed Folder"
+                              className="w-3 h-3"
+                            />
+                          </button>
+                        </div>
+                      )}
+                    </div>
+
+                    {selectedFolder ? (
+                      <div
+                        className={`relative inline-block ${
+                          isModalOpen ? "pointer-events-none" : ""
+                        } ${showChatbot ? "pointer-events-none" : ""}}`}
+                      >
+                        <button
+                          id="pageSizeDropdownButton"
+                          onClick={toggleDropdown}
+                          className="  text-black  text-[11px] font-normal rounded-lg  px-3 py-1 bg-gray
+          text-center inline-flex items-center "
+                          type="button"
+                        >
+                          Page Size: {selectedPageSize}{" "}
+                          {/* {totalPages > 1 && ( */}
+                          <svg
+                            className={`w-2.5 h-2 ms-3 ${
+                              isdropdownOpen ? "rotate-180" : ""
+                            }`}
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 10 6"
+                          >
+                            <path
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="m1 1 4 4 4-4"
+                            />
+                          </svg>
+                          {/* )} */}
+                        </button>
+
+                        <div
+                          className={`z-50 ${isdropdownOpen ? "" : "hidden"} ${
+                            isModalOpen ? "pointer-events-none" : ""
+                          } bg-background-100 border border-primary divide-y divide-secondary rounded-lg shadow w-32
+          dark:bg-primary absolute bottom-full mt-1`}
+                        >
+                          <ul
+                            className="py-1 text-[11px] font-normal text-black dark:text-gray-200"
+                            aria-labelledby="pageSizeDropdownButton"
+                          >
+                            <li>
+                              <button
+                                type="button"
+                                onClick={() => handleOptionClick(5)}
+                                className="block px-2  text-start text-black w-full hover:bg-purpleshade1 
+                            dark:hover:bg-gray-600 dark:hover:text-white"
+                              >
+                                5
+                              </button>
+                            </li>
+                            <li>
+                              <button
+                                type="button"
+                                onClick={() => handleOptionClick(10)}
+                                className="block px-3 py-0.5 text-start text-black w-full hover:bg-purpleshade1 dark:hover:bg-gray-600 dark:hover:text-white"
+                              >
+                                10
+                              </button>
+                            </li>
+                            <li>
+                              <button
+                                type="button"
+                                onClick={() => handleOptionClick(15)}
+                                className="block px-3 py-0.5 text-start w-full text-black hover:bg-purpleshade1 dark:hover:bg-gray-600 dark:hover:text-white"
+                              >
+                                15
+                              </button>
+                            </li>
+                            <li>
+                              <button
+                                type="button"
+                                onClick={() => handleOptionClick(20)}
+                                className="block px-3 py-0.5  text-start text-black w-full hover:bg-purpleshade1 dark:hover:bg-gray-600 dark:hover:text-white"
+                              >
+                                20
+                              </button>
+                            </li>
+                          </ul>
+                        </div>
+
+                        {/* </div> */}
+                      </div>
+                    ) : (
+                      <div
+                        className={`relative inline-block ${
+                          isModalOpen ? "pointer-events-none" : ""
+                        } ${showChatbot ? "pointer-events-none" : ""}}`}
+                      >
+                        <button
+                          id="pageSizeDropdownButton"
+                          onClick={toggleDropdown}
+                          className="  text-black  text-[11px] font-normal rounded-lg  px-3 py-1 bg-gray
+                   text-center inline-flex items-center "
+                          type="button"
+                        >
+                          Page Size: {selectedPageSize}
+                          <svg
+                            className={`w-2.5 h-2 ms-3 ${
+                              isdropdownOpen ? "rotate-180" : ""
+                            }`}
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 10 6"
+                          >
+                            <path
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="m1 1 4 4 4-4"
+                            />
+                          </svg>
+                          {/* )} */}
+                        </button>
+
+                        <div
+                          className={`z-50 ${isdropdownOpen ? "" : "hidden"} ${
+                            isModalOpen ? "pointer-events-none" : ""
+                          } bg-background-100 border border-primary divide-y divide-secondary rounded-lg shadow w-28
+                   dark:bg-primary absolute bottom-full mt-1`}
+                        >
+                          <ul
+                            className="py-1 text-[11px] font-normal text-black dark:text-gray-200"
+                            aria-labelledby="pageSizeDropdownButton"
+                          >
+                            <li>
+                              <button
+                                type="button"
+                                onClick={() => handleOptionClick(5)}
+                                className="block px-3 py-0.5  text-start text-black w-full hover:bg-purpleshade1 dark:hover:bg-gray-600 dark:hover:text-white"
+                              >
+                                5
+                              </button>
+                            </li>
+                            <li>
+                              <button
+                                type="button"
+                                onClick={() => handleOptionClick(10)}
+                                className="block px-3 py-0.5  text-start text-black w-full hover:bg-purpleshade1 dark:hover:bg-gray-600 dark:hover:text-white"
+                              >
+                                10
+                              </button>
+                            </li>
+                            <li>
+                              <button
+                                type="button"
+                                onClick={() => handleOptionClick(15)}
+                                className="block px-3 py-0.5 text-start text-black w-full hover:bg-purpleshade1 dark:hover:bg-gray-600 dark:hover:text-white"
+                              >
+                                15
+                              </button>
+                            </li>
+                            <li>
+                              <button
+                                type="button"
+                                onClick={() => handleOptionClick(20)}
+                                className="block px-3 py-0.5 text-start text-black w-full hover:bg-purpleshade1 dark:hover:bg-gray-600 dark:hover:text-white"
+                              >
+                                20
+                              </button>
+                            </li>
+                          </ul>
+                        </div>
+
+                        {/* </div> */}
+                      </div>
+                    )}
                   </div>
                 </div>
-                {/* End of Scale Container */}
-              </div>{" "}
-              {/* End of Scale Wrapper */}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+        <div
+          className={`chatbot-margin  ${isDisabled || isBlurred || isModalOpen || isColumnDataModalOpen || isMetaDataModalOpen ? "pointer-events-none" : ""} `}
+          // style={{
+          //   right: "20px",
+          //   bottom: "80px",
+          // }}
+        >
+          <img
+            src={process.env.PUBLIC_URL + "/chat-icon.png"}
+            alt="Chat Icon"
+            className="w-12 h-12 cursor-pointer animate-floating"
+           onClick={handleChatbotIconClick}
+          />
+        </div>
+        {showChatbot && (
+          <Chatbot
+            isOpen={showChatbot}
+            onClose={()=> setShowChatbot(false)} // Pass handleCloseChatbot to Chatbot
+          />
+        )}
 
-      <div
-        className={`fixed z-[9999] ${isDisabled || isBlurred || isInteractionDisabled ? "pointer-events-none" : ""} `}
-        style={{
-          right: "20px",
-          bottom: "20px",
-        }}
-      >
-        <img
-          src={process.env.PUBLIC_URL + "/chat-icon.png"}
-          alt="Chat Icon"
-          className="w-12 h-12 cursor-pointer animate-floating"
-          onClick={handleChatbotIconClick}
+        <ErrorPopup
+          isOpen={isPopupOpen}
+          message={error}
+          onClose={() => {
+    setIsPopupOpen(false);
+    setSelectedFiles([]);
+  }}
+        />
+        <FolderNoDataPopup
+          isOpen={isNoDataPopupOpen}
+          message={noPattern}
+          onClose={() => setIsNoDataPopupOpen(false)}
         />
       </div>
-      {showChatbot && (
-        <Chatbot
-          isOpen={showChatbot}
-          onClose={handleCloseChatbot} // Pass handleCloseChatbot to Chatbot
-        />
-      )}
-
-      <ErrorPopup
-        isOpen={isPopupOpen}
-        message={error}
-        onClose={handleCloseChatbot}
-      />
     </>
   );
 };

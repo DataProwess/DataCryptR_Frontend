@@ -8,15 +8,23 @@ import { secureApiCall } from "../csrfUtils";
 import { useUI } from "../Context/UIContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import NewGlobalField from "../NewGlobalField";
+import NewGlobalField from "./NewGlobalField";
 import ErrorPopup from "../ErrorPopup";
 import { toast } from "react-toastify";
 import UploadPopup from "./UploadPopup";
 import DownloadPopup from "./DownloadPopup";
-import "./admin.css"
+import "./admin.css";
 
-const GlobalColumnConfig = ({ selectedOption }) => {
-  const { token, permissions, csrfToken, userEmail, authLoading } = useAuth();
+const GlobalColumnConfig = ({
+  selectedOption,
+  isNewFieldVisible,
+  setisNewFieldVisible,
+  showUploadPopup,
+  setShowUploadPopup,
+  showDownloadPopup,
+  setShowDownloadPopup,
+}) => {
+  const { token,csrfToken} = useAuth();
   const {
     isTimezoneModalOpen,
     showProfileModal,
@@ -29,12 +37,10 @@ const GlobalColumnConfig = ({ selectedOption }) => {
   } = useUI();
   const [newFieldIsMasked, setNewFieldIsMasked] = useState(false);
   const [newFieldName, setNewFieldName] = useState("");
-  const [isNewFieldVisible, setisNewFieldVisible] = useState(false);
+
   const popupRef = useRef(null);
   const [error, setError] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [showDownloadPopup, setShowDownloadPopup] = useState(false);
-  const [showUploadPopup, setShowUploadPopup] = useState(false);
   const [downloadConfigApiData, setDownloadConfigApiData] = useState(null);
   const [loadingGlobalCoumnConfig, setLoadingGlobalCoumnConfig] =
     useState(true);
@@ -223,179 +229,182 @@ const GlobalColumnConfig = ({ selectedOption }) => {
     // eslint-disable-next-line
   }, [token, selectedOption]);
 
-//   const handleUploadFile = async () => {
-//     try {
-//       if (!token) {
-//         console.error("Token is not available.");
-//         return;
-//       }
+  //   const handleUploadFile = async () => {
+  //     try {
+  //       if (!token) {
+  //         console.error("Token is not available.");
+  //         return;
+  //       }
 
-//       if (!fileName) {
-//         setError("No file selected");
-//         setIsPopupOpen(true);
-//         return;
-//       }
+  //       if (!fileName) {
+  //         setError("No file selected");
+  //         setIsPopupOpen(true);
+  //         return;
+  //       }
 
-//       const browseFile = new FormData();
-//       browseFile.append("file", fileName);
+  //       const browseFile = new FormData();
+  //       browseFile.append("file", fileName);
 
-//       const response = await secureApiCall(
-//         `${API_URL}/api/admin/upload-column/`,
-//         "POST",
-//         browseFile,
-//         {
-//           headers: {
-//             Authorization: `Bearer ${token}`,
-//           },
-//         },
-//       );
+  //       const response = await secureApiCall(
+  //         `${API_URL}/api/admin/upload-column/`,
+  //         "POST",
+  //         browseFile,
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //           },
+  //         },
+  //       );
 
-//       const data = await response.json();
-//       const message = "File uploaded successfully";
-//       setIsPopupOpen(true);
-//       setError(message);
-//       handleClearSelectedFile();
-//       setLoadingGlobalCoumnConfig(false);
-//     } catch (error) {
-//       console.error("Error uploading file:", error);
-//       setError("Failed to upload file");
-//       setIsPopupOpen(true);
-//       setLoadingGlobalCoumnConfig(false);
-//     }
-//   };
+  //       const data = await response.json();
+  //       const message = "File uploaded successfully";
+  //       setIsPopupOpen(true);
+  //       setError(message);
+  //       handleClearSelectedFile();
+  //       setLoadingGlobalCoumnConfig(false);
+  //     } catch (error) {
+  //       console.error("Error uploading file:", error);
+  //       setError("Failed to upload file");
+  //       setIsPopupOpen(true);
+  //       setLoadingGlobalCoumnConfig(false);
+  //     }
+  //   };
 
-// const handleUploadFile = async () => {
-//     console.log("clicked")
-//   try {
-//     if (!token) {
-//       console.error("Token is not available.");
-//       return;
-//     }
+  // const handleUploadFile = async () => {
+  //     console.log("clicked")
+  //   try {
+  //     if (!token) {
+  //       console.error("Token is not available.");
+  //       return;
+  //     }
 
-//     if (!fileName) {
-//       setError("No file selected");
-//       setIsPopupOpen(true);
-//       return;
-//     }
+  //     if (!fileName) {
+  //       setError("No file selected");
+  //       setIsPopupOpen(true);
+  //       return;
+  //     }
 
-//     const browseFile = new FormData();
-//     browseFile.append("file", fileName);
+  //     const browseFile = new FormData();
+  //     browseFile.append("file", fileName);
 
-//     // ✅ CORRECT: Combine method, headers, and body into a single options object
-//     const response = await secureApiCall(
-//       `${API_URL}/api/admin/upload-column/`,
-//       {
-//         method: "POST",
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//           // Note: Do NOT manually set 'Content-Type': 'multipart/form-data'
-//           // Browser automatically sets boundary header when passing FormData
-//         },
-//         body: browseFile,
-//       }
-//     );
+  //     // ✅ CORRECT: Combine method, headers, and body into a single options object
+  //     const response = await secureApiCall(
+  //       `${API_URL}/api/admin/upload-column/`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //           // Note: Do NOT manually set 'Content-Type': 'multipart/form-data'
+  //           // Browser automatically sets boundary header when passing FormData
+  //         },
+  //         body: browseFile,
+  //       }
+  //     );
 
-//     const data = await response.json();
-    
-//     if (response.ok) {
-//       setIsPopupOpen(true);
-//       setError("File uploaded successfully");
-//       handleClearSelectedFile();
-//       setShowUploadPopup(false); // Close modal on success
-//       fetchDownloadConfigData(); // Refresh list to reflect uploaded data
-//     } else {
-//       setError(data.message || "Failed to upload file");
-//       setIsPopupOpen(true);
-//     }
-//   } catch (error) {
-//     console.error("Error uploading file:", error);
-//     setError("Failed to upload file");
-//     setIsPopupOpen(true);
-//   } finally {
-//     setLoadingGlobalCoumnConfig(false);
-//   }
-// };
+  //     const data = await response.json();
 
-const handleUploadFile = async () => {
-  console.log("Upload button clicked");
-  try {
-    if (!token) {
-      setError("Authentication token is missing. Please log in again.");
-      setIsPopupOpen(true);
-      return;
-    }
+  //     if (response.ok) {
+  //       setIsPopupOpen(true);
+  //       setError("File uploaded successfully");
+  //       handleClearSelectedFile();
+  //       setShowUploadPopup(false); // Close modal on success
+  //       fetchDownloadConfigData(); // Refresh list to reflect uploaded data
+  //     } else {
+  //       setError(data.message || "Failed to upload file");
+  //       setIsPopupOpen(true);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error uploading file:", error);
+  //     setError("Failed to upload file");
+  //     setIsPopupOpen(true);
+  //   } finally {
+  //     setLoadingGlobalCoumnConfig(false);
+  //   }
+  // };
 
-    // Ensure 'fileName' is actually the File object from <input type="file">
-    if (!fileName) {
-      setError("No file selected.");
-      setIsPopupOpen(true);
-      return;
-    }
+  const handleUploadFile = async () => {
+    console.log("Upload button clicked");
+    try {
+      if (!token) {
+        setError("Authentication token is missing. Please log in again.");
+        setIsPopupOpen(true);
+        return;
+      }
 
-    if (!csrfToken) {
-      setError("CSRF token is missing. Please refresh the page.");
-      setIsPopupOpen(true);
-      return;
-    }
+      // Ensure 'fileName' is actually the File object from <input type="file">
+      if (!fileName) {
+        setError("No file selected.");
+        setIsPopupOpen(true);
+        return;
+      }
 
-    const browseFile = new FormData();
-    // Verify whether your Django endpoint expects "file" or "excel_file"
-    browseFile.append("file", fileName);
+      if (!csrfToken) {
+        setError("CSRF token is missing. Please refresh the page.");
+        setIsPopupOpen(true);
+        return;
+      }
 
-    // Call secureApiCall with correct argument positions:
-    // secureApiCall(url, method, data, options)
-    const result = await secureApiCall(
-      `${API_URL}/api/admin/upload-column/`,
-      "POST",
-      browseFile,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "X-CSRFToken": csrfToken, // Ensure CSRF token is attached
+      const browseFile = new FormData();
+      // Verify whether your Django endpoint expects "file" or "excel_file"
+      browseFile.append("file", fileName);
+
+      // Call secureApiCall with correct argument positions:
+      // secureApiCall(url, method, data, options)
+      const result = await secureApiCall(
+        `${API_URL}/api/admin/upload-column/`,
+        "POST",
+        browseFile,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "X-CSRFToken": csrfToken, // Ensure CSRF token is attached
+          },
         },
-      }
-    );
-
-    // Handling response (Handles both parsed JSON and raw Response objects)
-    let isSuccess = false;
-    let responseData = result;
-
-    if (result instanceof Response) {
-      isSuccess = result.ok;
-      try {
-        responseData = await result.json();
-      } catch (e) {
-        responseData = {};
-      }
-    } else {
-      // apiRequest already parsed the JSON response
-      isSuccess = result && !result.error && result.status !== "error";
-    }
-
-    if (isSuccess) {
-      setError("File uploaded successfully");
-      setIsPopupOpen(true);
-      handleClearSelectedFile();
-      setShowUploadPopup(false); // Close upload modal
-      if (typeof fetchDownloadConfigData === "function") {
-        fetchDownloadConfigData(); // Refresh list/table
-      }
-    } else {
-      setError(
-        responseData?.message || responseData?.detail || responseData?.error || "Failed to upload file"
       );
+
+      // Handling response (Handles both parsed JSON and raw Response objects)
+      let isSuccess = false;
+      let responseData = result;
+
+      if (result instanceof Response) {
+        isSuccess = result.ok;
+        try {
+          responseData = await result.json();
+        } catch (e) {
+          responseData = {};
+        }
+      } else {
+        // apiRequest already parsed the JSON response
+        isSuccess = result && !result.error && result.status !== "error";
+      }
+
+      if (isSuccess) {
+        setError("File uploaded successfully");
+        setIsPopupOpen(true);
+        handleClearSelectedFile();
+        setShowUploadPopup(false); // Close upload modal
+        if (typeof fetchDownloadConfigData === "function") {
+          fetchDownloadConfigData(); // Refresh list/table
+        }
+      } else {
+        setError(
+          responseData?.message ||
+            responseData?.detail ||
+            responseData?.error ||
+            "Failed to upload file",
+        );
+        setIsPopupOpen(true);
+      }
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      setError("Failed to upload file: " + (error.message || "Forbidden"));
       setIsPopupOpen(true);
+    } finally {
+      if (typeof setLoadingGlobalCoumnConfig === "function") {
+        setLoadingGlobalCoumnConfig(false);
+      }
     }
-  } catch (error) {
-    console.error("Error uploading file:", error);
-    setError("Failed to upload file: " + (error.message || "Forbidden"));
-    setIsPopupOpen(true);
-  } finally {
-    if (typeof setLoadingGlobalCoumnConfig === "function") {
-      setLoadingGlobalCoumnConfig(false);
-    }
-  }
-};
+  };
   const handleGlobalSearchClick = async () => {
     try {
       const result = await fetchDownloadConfigData(inputValue); // Pass the current search query to the API call
@@ -630,187 +639,191 @@ const handleUploadFile = async () => {
     setShowDownloadPopup(false);
   };
 
-//   const handleDownloadSaveButtonClick = async () => {
-//     try {
-//       if (!token) {
-//         console.error("Token is not available.");
-//         // navigate("/")
-//         return;
-//       }
-//       if (!Array.isArray(downloadConfigApiData)) {
-//         console.error("Invalid downloadConfigApiData format");
-//         return;
-//       }
+  //   const handleDownloadSaveButtonClick = async () => {
+  //     try {
+  //       if (!token) {
+  //         console.error("Token is not available.");
+  //         // navigate("/")
+  //         return;
+  //       }
+  //       if (!Array.isArray(downloadConfigApiData)) {
+  //         console.error("Invalid downloadConfigApiData format");
+  //         return;
+  //       }
 
-//       // Prepare the request body
-//       const requestBody = {
-//         global_column_config: [
-//           ...downloadConfigApiData.map((config) => ({
-//             id: config.id,
-//             name: config.name,
-//             is_masked: JSON.parse(config.is_masked),
-//           })),
-//           ...(newFieldName.trim() !== ""
-//             ? [
-//                 {
-//                   id: "",
-//                   name: newFieldName,
-//                   is_masked: newFieldIsMasked,
-//                 },
-//               ]
-//             : []),
-//         ],
-//       };
+  //       // Prepare the request body
+  //       const requestBody = {
+  //         global_column_config: [
+  //           ...downloadConfigApiData.map((config) => ({
+  //             id: config.id,
+  //             name: config.name,
+  //             is_masked: JSON.parse(config.is_masked),
+  //           })),
+  //           ...(newFieldName.trim() !== ""
+  //             ? [
+  //                 {
+  //                   id: "",
+  //                   name: newFieldName,
+  //                   is_masked: newFieldIsMasked,
+  //                 },
+  //               ]
+  //             : []),
+  //         ],
+  //       };
 
-//       // Make the API call
-//       const response = await secureApiCall(
-//         `${API_URL}/api/admin/update-global-column/`,
-//         {
-//           method: "POST",
-//           headers: {
-//             Authorization: `Bearer ${token}`,
-//             "X-CSRFToken": csrfToken,
-//             "Content-Type": "application/json",
-//           },
-//           credentials: "include",
-//           body: JSON.stringify(requestBody),
-//         },
-//       );
+  //       // Make the API call
+  //       const response = await secureApiCall(
+  //         `${API_URL}/api/admin/update-global-column/`,
+  //         {
+  //           method: "POST",
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //             "X-CSRFToken": csrfToken,
+  //             "Content-Type": "application/json",
+  //           },
+  //           credentials: "include",
+  //           body: JSON.stringify(requestBody),
+  //         },
+  //       );
 
-//       // Parse the response
-//       const responseData = await response.json();
+  //       // Parse the response
+  //       const responseData = await response.json();
 
-//       // Check if the request was successful
-//       if (response.ok) {
-//         setError("Data saved successfully!");
-//         setIsPopupOpen(true);
-//         // Update the state with the latest data
-//         setDownloadConfigApiData(responseData.updatedColumnData);
-//         setLoadingGlobalCoumnConfig(false);
+  //       // Check if the request was successful
+  //       if (response.ok) {
+  //         setError("Data saved successfully!");
+  //         setIsPopupOpen(true);
+  //         // Update the state with the latest data
+  //         setDownloadConfigApiData(responseData.updatedColumnData);
+  //         setLoadingGlobalCoumnConfig(false);
 
-//         fetchDownloadConfigData();
-//         setNewFieldName("");
-//         setNewFieldIsMasked(false);
-//         // Hide the new field row
-//         setisNewFieldVisible(false);
-//       } else {
-//         console.error(
-//           "Error updating global column config:",
-//           responseData.message,
-//         );
-//       }
-//     } catch (error) {
-//       console.error("An error occurred:", error.message);
-//     }
-//   };
+  //         fetchDownloadConfigData();
+  //         setNewFieldName("");
+  //         setNewFieldIsMasked(false);
+  //         // Hide the new field row
+  //         setisNewFieldVisible(false);
+  //       } else {
+  //         console.error(
+  //           "Error updating global column config:",
+  //           responseData.message,
+  //         );
+  //       }
+  //     } catch (error) {
+  //       console.error("An error occurred:", error.message);
+  //     }
+  //   };
 
-const handleDownloadSaveButtonClick = async () => {
-  try {
-    if (!token) {
-      console.error("Token is not available.");
-      return;
-    }
-    if (!Array.isArray(downloadConfigApiData)) {
-      console.error("Invalid downloadConfigApiData format");
-      return;
-    }
+  const handleDownloadSaveButtonClick = async () => {
+    try {
+      if (!token) {
+        console.error("Token is not available.");
+        return;
+      }
+      if (!Array.isArray(downloadConfigApiData)) {
+        console.error("Invalid downloadConfigApiData format");
+        return;
+      }
 
-    // Safely convert is_masked value to boolean without throwing JSON.parse errors
-    const parseMaskedValue = (val) => {
-      if (typeof val === "boolean") return val;
-      if (typeof val === "string") return val.toLowerCase() === "true";
-      return Boolean(val);
-    };
+      // Safely convert is_masked value to boolean without throwing JSON.parse errors
+      const parseMaskedValue = (val) => {
+        if (typeof val === "boolean") return val;
+        if (typeof val === "string") return val.toLowerCase() === "true";
+        return Boolean(val);
+      };
 
-    // Prepare the request body
-    const requestBody = {
-      global_column_config: [
-        ...downloadConfigApiData.map((config) => ({
-          id: config.id,
-          name: config.name,
-          is_masked: parseMaskedValue(config.is_masked),
-        })),
-        ...(newFieldName.trim() !== ""
-          ? [
-              {
-                id: "",
-                name: newFieldName.trim(),
-                is_masked: Boolean(newFieldIsMasked),
-              },
-            ]
-          : []),
-      ],
-    };
+      // Prepare the request body
+      const requestBody = {
+        global_column_config: [
+          ...downloadConfigApiData.map((config) => ({
+            id: config.id,
+            name: config.name,
+            is_masked: parseMaskedValue(config.is_masked),
+          })),
+          ...(newFieldName.trim() !== ""
+            ? [
+                {
+                  id: "",
+                  name: newFieldName.trim(),
+                  is_masked: Boolean(newFieldIsMasked),
+                },
+              ]
+            : []),
+        ],
+      };
 
-    // Make the API call using correct secureApiCall argument sequence:
-    // secureApiCall(url, method, data, options)
-    const result = await secureApiCall(
-      `${API_URL}/api/admin/update-global-column/`,
-      "POST",
-      requestBody,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "X-CSRFToken": csrfToken,
-          "Content-Type": "application/json",
+      // Make the API call using correct secureApiCall argument sequence:
+      // secureApiCall(url, method, data, options)
+      const result = await secureApiCall(
+        `${API_URL}/api/admin/update-global-column/`,
+        "POST",
+        requestBody,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "X-CSRFToken": csrfToken,
+            "Content-Type": "application/json",
+          },
         },
-      }
-    );
-
-    // Parse response safely
-    let responseData = result;
-    let isOk = false;
-
-    if (result instanceof Response) {
-      isOk = result.ok;
-      responseData = await result.json();
-    } else {
-      isOk = result && !result.error;
-    }
-
-    if (isOk) {
-      setError("Data saved successfully!");
-      setIsPopupOpen(true); // Confirmation alert popup
-
-      // Update UI table state immediately with server return data or fallback
-      if (responseData?.updatedColumnData) {
-        setDownloadConfigApiData(responseData.updatedColumnData);
-      }
-
-      // Re-fetch list data to keep everything in sync
-      if (typeof fetchDownloadConfigData === "function") {
-        fetchDownloadConfigData();
-      }
-
-      // Reset form state & CLOSE popup
-      setNewFieldName("");
-      setNewFieldIsMasked(false);
-      
-      // Close the modal popup (call your state toggle or onCancel prop)
-      if (typeof setisNewFieldVisible === "function") {
-        setisNewFieldVisible(false);
-      }
-    //   if (typeof setShowNewGlobalFieldModal === "function") {
-    //     setShowNewGlobalFieldModal(false);
-    //   }
-    } else {
-      console.error(
-        "Error updating global column config:",
-        responseData?.message || responseData?.detail
       );
-      setError(responseData?.message || responseData?.detail || "Failed to save configuration");
+
+      // Parse response safely
+      let responseData = result;
+      let isOk = false;
+
+      if (result instanceof Response) {
+        isOk = result.ok;
+        responseData = await result.json();
+      } else {
+        isOk = result && !result.error;
+      }
+
+      if (isOk) {
+        setError("Data saved successfully!");
+        setIsPopupOpen(true); // Confirmation alert popup
+
+        // Update UI table state immediately with server return data or fallback
+        if (responseData?.updatedColumnData) {
+          setDownloadConfigApiData(responseData.updatedColumnData);
+        }
+
+        // Re-fetch list data to keep everything in sync
+        if (typeof fetchDownloadConfigData === "function") {
+          fetchDownloadConfigData();
+        }
+
+        // Reset form state & CLOSE popup
+        setNewFieldName("");
+        setNewFieldIsMasked(false);
+
+        // Close the modal popup (call your state toggle or onCancel prop)
+        if (typeof setisNewFieldVisible === "function") {
+          setisNewFieldVisible(false);
+        }
+        //   if (typeof setShowNewGlobalFieldModal === "function") {
+        //     setShowNewGlobalFieldModal(false);
+        //   }
+      } else {
+        console.error(
+          "Error updating global column config:",
+          responseData?.message || responseData?.detail,
+        );
+        setError(
+          responseData?.message ||
+            responseData?.detail ||
+            "Failed to save configuration",
+        );
+        setIsPopupOpen(true);
+      }
+    } catch (error) {
+      console.error("An error occurred while saving:", error.message);
+      setError("Error saving data: " + error.message);
       setIsPopupOpen(true);
+    } finally {
+      if (typeof setLoadingGlobalCoumnConfig === "function") {
+        setLoadingGlobalCoumnConfig(false);
+      }
     }
-  } catch (error) {
-    console.error("An error occurred while saving:", error.message);
-    setError("Error saving data: " + error.message);
-    setIsPopupOpen(true);
-  } finally {
-    if (typeof setLoadingGlobalCoumnConfig === "function") {
-      setLoadingGlobalCoumnConfig(false);
-    }
-  }
-};
+  };
 
   const IsMaskedSwitch = React.memo(({ isMasked, onToggle }) => {
     const toggleIsMasked = React.useCallback(() => {
@@ -834,139 +847,149 @@ const handleDownloadSaveButtonClick = async () => {
   });
 
   return (
-  <>
-    <div
-      className={`options-data-container layout-gap flex flex-col items-center ${
-        isInteractionDisabled || isDisabled || isBlurred
-          ? "blur-effect pointer-events-none"
-          : ""
-      }`}
-    >
-      {/* Top Header & Toolbar Section */}
-      {/* Removed overflow-y-auto, added flex-shrink-0 to prevent height collapse */}
-      <div className="globalbutton-container justify-center  flex flex-col flex-shrink-0 w-full  px-3 py-1 bg-newgray rounded-lg shadow-xl shadow-slate-500/30 space-y-1">
-        
-        {/* Search & Checkbox Row */}
-        <div className="globalcolumn-search-wrapper flex items-center justify-between  ">
-          <div className="globalcolumn-search-container flex items-center px-1 bg-white rounded-md shadow-md shadow-slate-500/30 ">
-            <input
-              type="text"
-              placeholder="Search here"
-              onChange={handleInputChange}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") handleGlobalSearchClick();
-              }}
-              className="globalcolumn-searchbar  outline-none ml-1 font-light text-xs flex-grow "
-              value={inputValue}
-              // style={{ height: "2rem" }}
-            />
-            <div className="flex flex-row space-x-2 items-center pr-2">
-              <button
-                className="bg-background-100 text-2xl font-semibold"
-                onClick={() => {
-                  setInputValue("");
-                  fetchDownloadConfigData("");
+    <>
+      <div
+        className={`options-data-container layout-gap flex flex-col items-center ${
+          isInteractionDisabled || isDisabled || isBlurred
+            ? "blur-effect pointer-events-none"
+            : ""
+        }`}
+      >
+        {/* Top Header & Toolbar Section */}
+        {/* Removed overflow-y-auto, added flex-shrink-0 to prevent height collapse */}
+        <div
+          className={`globalbutton-container justify-center  flex flex-col flex-shrink-0 w-full  px-3 py-1 bg-newgray rounded-lg shadow-xl shadow-slate-500/30 space-y-1
+        ${isNewFieldVisible || showUploadPopup || showDownloadPopup ? "blur-effect " : ""}`}
+        >
+          {/* Search & Checkbox Row */}
+          <div className="globalcolumn-search-wrapper flex items-center justify-between  ">
+            <div className="globalcolumn-search-container flex items-center px-1 bg-white rounded-md shadow-md shadow-slate-500/30 ">
+              <input
+                type="text"
+                placeholder="Search here"
+                onChange={handleInputChange}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") handleGlobalSearchClick();
                 }}
-              >
-                <img
-                  src={process.env.PUBLIC_URL + "/closefile.png"}
-                  alt="close"
-                  className="h-4 w-4"
-                />
-              </button>
-              <img
-                src="search_icon.png"
-                alt="search"
-                className="cursor-pointer"
-                style={{ width: "17px", height: "17px" }}
-                onClick={handleGlobalSearchClick}
+                className="globalcolumn-searchbar  outline-none ml-1 font-light text-xs flex-grow "
+                value={inputValue}
+                // style={{ height: "2rem" }}
               />
+              <div className="flex flex-row space-x-2 items-center pr-2">
+                <button
+                  className="bg-background-100 text-2xl font-semibold"
+                  onClick={() => {
+                    setInputValue("");
+                    fetchDownloadConfigData("");
+                  }}
+                >
+                  <img
+                    src={process.env.PUBLIC_URL + "/closefile.png"}
+                    alt="close"
+                    className="h-4 w-4"
+                  />
+                </button>
+                <img
+                  src="search_icon.png"
+                  alt="search"
+                  className="cursor-pointer"
+                  style={{ width: "17px", height: "17px" }}
+                  onClick={handleGlobalSearchClick}
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center px-1 rounded-md global-mask-field">
+              <label className="flex h-10 items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={isGlobalChecked}
+                  onChange={handleChange}
+                  disabled={loadingGlobalCoumnConfig}
+                  className="mr-2 accent-purpleshade1"
+                />
+                <span className="text-xs font-normal">
+                  Mask Similar Column Name
+                </span>
+              </label>
             </div>
           </div>
 
-          <div className="flex items-center px-1 rounded-md global-mask-field">
-            <label className="flex h-10 items-center cursor-pointer">
-              <input
-                type="checkbox"
-                checked={isGlobalChecked}
-                onChange={handleChange}
-                disabled={loadingGlobalCoumnConfig}
-                className="mr-2 accent-purpleshade1"
-              />
-              <span className="text-xs font-normal">
-                Mask Similar Column Name
-              </span>
-            </label>
+          {/* Buttons Row */}
+          <div className="globalcolumn-button-wrapper flex items-center  ">
+            <div className="w-full flex flex-row space-x-4 items-center">
+              <button
+                className="add-new-button h-8 px-3 flex justify-center text-xs rounded-md cursor-pointer items-center font-medium text-white bg-purpleshade1"
+                onClick={() => {
+                  setisNewFieldVisible(true);
+                  handleAddNewField();
+                }}
+              >
+                Add New Field
+              </button>
+
+              <button
+                className={`w-20 h-8 flex rounded-md cursor-pointer justify-center items-center font-normal text-xs bg-purpleshade1 text-white ${
+                  isInteractionDisabled || isDisabled || isBlurred
+                    ? "blur-effect"
+                    : ""
+                }`}
+                onClick={handleUploadButtonClick}
+              >
+                Upload
+              </button>
+
+              <button
+                className={`w-20 h-8 flex rounded-md cursor-pointer justify-center items-center font-normal text-xs bg-purpleshade1 text-white ${
+                  isInteractionDisabled || isDisabled || isBlurred
+                    ? "blur-effect"
+                    : ""
+                }`}
+                onClick={handleDownloadButtonClick}
+              >
+                Download
+              </button>
+
+              <div className="flex-grow"></div>
+
+              <button
+                className={`w-20 h-8 flex rounded-md cursor-pointer justify-center items-center font-normal text-xs bg-purpleshade1 text-white ${
+                  isInteractionDisabled || isDisabled || isBlurred
+                    ? "blur-effect"
+                    : ""
+                }`}
+                onClick={handleDownloadSaveButtonClick}
+              >
+                Save
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Buttons Row */}
-        <div className="globalcolumn-button-wrapper flex items-center  ">
-          <div className="w-full flex flex-row space-x-4 items-center">
-            <button
-              className="add-new-button h-8 px-3 flex justify-center text-xs rounded-md cursor-pointer items-center font-medium text-white bg-purpleshade1"
-              onClick={() => {
-                setisNewFieldVisible(true);
-                handleAddNewField();
-              }}
-            >
-              Add New Field
-            </button>
-
-            <button
-              className={`w-20 h-8 flex rounded-md cursor-pointer justify-center items-center font-normal text-xs bg-purpleshade1 text-white ${
-                isInteractionDisabled || isDisabled || isBlurred ? "blur-effect" : ""
-              }`}
-              onClick={handleUploadButtonClick}
-            >
-              Upload
-            </button>
-
-            <button
-              className={`w-20 h-8 flex rounded-md cursor-pointer justify-center items-center font-normal text-xs bg-purpleshade1 text-white ${
-                isInteractionDisabled || isDisabled || isBlurred ? "blur-effect" : ""
-              }`}
-              onClick={handleDownloadButtonClick}
-            >
-              Download
-            </button>
-
-            <div className="flex-grow"></div>
-
-            <button
-              className={`w-20 h-8 flex rounded-md cursor-pointer justify-center items-center font-normal text-xs bg-purpleshade1 text-white ${
-                isInteractionDisabled || isDisabled || isBlurred ? "blur-effect" : ""
-              }`}
-              onClick={handleDownloadSaveButtonClick}
-            >
-              Save
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Column Data Table Container */}
-       <div className={`globalcolumn-data-container flex flex-col items-center layout-gap`}>
-       <div className={`globalcolumn-data-header rounded-t-xl`}>
-            <table className="table-design table-fixed w-full">
-            <colgroup>
-              <col className="w-[75%]" />
-              <col className="w-[25%]" />
-            </colgroup>
-            <thead className="bg-purpleshade1 sticky top-0 rounded-tr-lg rounded-tl-lg text-white">
-              <tr>
-                <th className="py-3 sticky top-0 px-16 rounded-tl-lg font-normal text-xs">
-                  Field Name
-                </th>
-                <th className="py-3 sticky top-0 rounded-tr-lg font-normal text-xs">
-                  Is Masked
-                </th>
-              </tr>
-            </thead>
-          </table>
-        </div>
-
+        {/* Main Column Data Table Container */}
         <div
+          className={`globalcolumn-data-container flex flex-col items-center layout-gap ${isNewFieldVisible || showUploadPopup || showDownloadPopup ? "blur-effect " : ""}`}
+        >
+          <div className={`globalcolumn-data-header rounded-t-xl`}>
+            <table className="table-design table-fixed w-full">
+              <colgroup>
+                <col className="w-[75%]" />
+                <col className="w-[25%]" />
+              </colgroup>
+              <thead className="bg-purpleshade1 sticky top-0 rounded-tr-lg rounded-tl-lg text-white">
+                <tr>
+                  <th className="py-3 sticky top-0 px-16 rounded-tl-lg font-normal text-xs">
+                    Field Name
+                  </th>
+                  <th className="py-3 sticky top-0 rounded-tr-lg font-normal text-xs">
+                    Is Masked
+                  </th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+
+          <div
             className={`globalcolumn-tabular-data  flex flex-col rounded-b-xl shadow-md shadow-slate-500/30 bg-white`}
           >
             <div
@@ -980,124 +1003,122 @@ const handleDownloadSaveButtonClick = async () => {
                   scrollbarWidth: "thin",
                 }}
               >
-              <tbody className="sticky  mt-3 px-6">
-                {loadingGlobalCoumnConfig ? (
-                  <tr>
-                    <td
-                      colSpan="4"
-                      className="w-full h-full flex flex-col justify-center items-center space-y-6 mt-20"
-                    >
-                      <img
-                        src={`${process.env.PUBLIC_URL}/loadergif.gif`}
-                        alt="Loading..."
-                        className="animate-spin w-8 h-8"
-                      />
-                      <p className="text-logintext font-[350] text-[13px] animate-pulse">
-                        Just a moment...
-                      </p>
-                    </td>
-                  </tr>
-                ) : (
-                  downloadConfigApiData &&
-                  downloadConfigApiData.map((config, index) => (
-                    <tr key={index}>
-                      <td className="w-[75%] font-light text-xs px-16 overflow-ellipsis whitespace-nowrap overflow-hidden">
-                        <input
-                          id={`config-input-${index}`}
-                          type="text"
-                          value={config.name}
-                          onChange={(e) =>
-                            handleDownloadConfigFieldChange(
-                              index,
-                              "name",
-                              e.target.value
-                            )
-                          }
+                <tbody className="sticky  mt-3 px-6">
+                  {loadingGlobalCoumnConfig ? (
+                    <tr>
+                      <td
+                        colSpan="4"
+                        className="w-full h-full flex flex-col justify-center items-center space-y-6 mt-20"
+                      >
+                        <img
+                          src={`${process.env.PUBLIC_URL}/loadergif.gif`}
+                          alt="Loading..."
+                          className="animate-spin w-8 h-8"
                         />
+                        <p className="text-logintext font-[350] text-[13px] animate-pulse">
+                          Just a moment...
+                        </p>
                       </td>
-                      <td className="w-[25%] font-light text-xs px-3 overflow-ellipsis whitespace-nowrap overflow-hidden">
-                        <div className="flex flex-row space-x-6 px-4 items-center">
-                          <IsMaskedSwitch
-                            isMasked={config.is_masked.toString() === "true"}
-                            onToggle={(isChecked) =>
+                    </tr>
+                  ) : (
+                    downloadConfigApiData &&
+                    downloadConfigApiData.map((config, index) => (
+                      <tr key={index}>
+                        <td className="w-[75%] font-light text-xs px-16 overflow-ellipsis whitespace-nowrap overflow-hidden">
+                          <input
+                            id={`config-input-${index}`}
+                            type="text"
+                            value={config.name}
+                            onChange={(e) =>
                               handleDownloadConfigFieldChange(
                                 index,
-                                "is_masked",
-                                isChecked ? "true" : "false"
+                                "name",
+                                e.target.value,
                               )
                             }
                           />
-                          {config.showDeleteButton && (
-                            <button
-                              className="bg-background-100 text-2xl font-semibold mr-4"
-                              onClick={() =>
-                                handleDeleteField(
-                                  config.field_id,
-                                  config.name
+                        </td>
+                        <td className="w-[25%] font-light text-xs px-3 overflow-ellipsis whitespace-nowrap overflow-hidden">
+                          <div className="flex flex-row space-x-6 px-4 items-center">
+                            <IsMaskedSwitch
+                              isMasked={config.is_masked.toString() === "true"}
+                              onToggle={(isChecked) =>
+                                handleDownloadConfigFieldChange(
+                                  index,
+                                  "is_masked",
+                                  isChecked ? "true" : "false",
                                 )
                               }
-                            >
-                              &times;
-                            </button>
-                          )}
-                        </div>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
+                            />
+                            {config.showDeleteButton && (
+                              <button
+                                className="bg-background-100 text-2xl font-semibold mr-4"
+                                onClick={() =>
+                                  handleDeleteField(
+                                    config.field_id,
+                                    config.name,
+                                  )
+                                }
+                              >
+                                &times;
+                              </button>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Render Popups Directly */}
-      {showUploadPopup && (
-        <UploadPopup
-          handleUploadPopupClose={handleUploadPopupClose}
-          handleBrowseClick={handleBrowseClick}
-          handleSampleFileDownload={handleSampleFileDownload}
-          selectedFileName={selectedFileName}
-          handleClearSelectedFile={handleClearSelectedFile}
-          handleUploadFile={handleUploadFile}
+        {/* Render Popups Directly */}
+        {showUploadPopup && (
+          <UploadPopup
+            handleUploadPopupClose={handleUploadPopupClose}
+            handleBrowseClick={handleBrowseClick}
+            handleSampleFileDownload={handleSampleFileDownload}
+            selectedFileName={selectedFileName}
+            handleClearSelectedFile={handleClearSelectedFile}
+            handleUploadFile={handleUploadFile}
+          />
+        )}
+
+        <ErrorPopup
+          isOpen={isPopupOpen}
+          message={error}
+          onClose={() => setIsPopupOpen(false)}
         />
-      )}
 
-      <ErrorPopup
-        isOpen={isPopupOpen}
-        message={error}
-        onClose={() => setIsPopupOpen(false)}
-      />
+        {showDownloadPopup && (
+          <div className="fixed inset-0 flex justify-center z-50 items-center ">
+            <DownloadPopup
+              onClose={handlePopupClose}
+              onSelect={handleDownloadOptionSelect}
+              popupRef={popupRef}
+              handlePopupClose={handlePopupClose}
+            />
+          </div>
+        )}
 
-      {showDownloadPopup && (
-        <div className="fixed inset-0 flex justify-center z-50 items-center bg-black/40">
-          <DownloadPopup
-            onClose={handlePopupClose}
-            onSelect={handleDownloadOptionSelect}
-            popupRef={popupRef}
-            handlePopupClose={handlePopupClose}
-          />
-        </div>
-      )}
-
-      {isNewFieldVisible && (
-        <div className="fixed inset-0 flex justify-center z-50 items-center bg-black/40">
-          <NewGlobalField
-            onCancel={() => setisNewFieldVisible(false)}
-            newFieldName={newFieldName || ""}
-            setNewFieldName={setNewFieldName}
-            newFieldIsMasked={newFieldIsMasked}
-            setNewFieldIsMasked={setNewFieldIsMasked}
-            IsMaskedSwitch={IsMaskedSwitch}
-            handleDownloadSaveButtonClick={handleDownloadSaveButtonClick}
-          />
-        </div>
-      )}
-    </div>
-  </>
-);
-
- 
+        {isNewFieldVisible && (
+          <div className="fixed inset-0 flex justify-center z-50 items-center ">
+            <NewGlobalField
+              onCancel={() => setisNewFieldVisible(false)}
+              newFieldName={newFieldName || ""}
+              setNewFieldName={setNewFieldName}
+              newFieldIsMasked={newFieldIsMasked}
+              setNewFieldIsMasked={setNewFieldIsMasked}
+              IsMaskedSwitch={IsMaskedSwitch}
+              handleDownloadSaveButtonClick={handleDownloadSaveButtonClick}
+            />
+          </div>
+        )}
+      </div>
+    </>
+  );
 };
 
 export default GlobalColumnConfig;

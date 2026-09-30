@@ -433,84 +433,219 @@ return parsedContent;
 
   // const handleDynamicMetadata = () => {};
 
+  // const handleGcpDynamicMetadata = async () => {
+  //   const targetFile = gcpSelectedFiles[0];
+  //   if (!targetFile) return;
+
+  //   // Safely extract the file path string if targetFile is an object
+  //   const targetFileKey =
+  //     typeof targetFile === "object" ? targetFile.file_key : targetFile;
+
+  //   try {
+  //     // 🛠️ Mount the modal frame overlay container instantly to run our inner loading spinner state
+  //     setGcpMetaDataModalOpen(true);
+  //     setIsGcpMetaDataLoading(true);
+  //     setGcpMetaDataError("");
+  //     setMetaGcpData(null); // Purge historical execution remnants cleanly
+
+  //     const payload = {
+  //       gcp_account_id: gcpAccountId,
+  //       bucket_name: gcpbucketName,
+  //       file_key: targetFileKey,
+  //     };
+
+  //     console.log("📨 Fetching GcpMetadata with payload:", payload);
+
+  //     const response = await apiRequest(
+  //       `${API_URL}/api/gcp/files/details/`,
+  //       "POST",
+  //       payload,
+  //     );
+
+  //     if (response && !response.error) {
+  //       // 🛠️ Extract from response.data to match your exact backend payload shape
+  //       const dataPayload = response.data || response;
+
+  //       if (!dataPayload || Object.keys(dataPayload).length === 0) {
+  //         throw new Error("GcpMetadata response structure resolved empty.");
+  //       }
+
+  //       // Save the complete object cache
+  //       setMetaGcpData(dataPayload);
+  //       document.body.style.overflow = "hidden";
+
+  //       if (typeof setDataType === "function") setDataType("Metadata");
+
+  //       // 🎯 Route the specific response keys to your state variables exactly
+  //       if (typeof setGcpFileKey === "function")
+  //         setGcpFileKey(dataPayload.file_key);
+  //       if (typeof setBucketName === "function")
+  //         setGcpBucketName(dataPayload.bucket);
+  //       if (typeof setGcpFileSize === "function")
+  //         setGcpFileSize(dataPayload.size);
+  //       if (typeof setGcpLastModified === "function")
+  //         setGcpLastModified(dataPayload.last_modified);
+  //       if (typeof setGcpContentType === "function")
+  //         setGcpContentType(dataPayload.content_type);
+  //       if (typeof setGcpEtag === "function") setGcpEtag(dataPayload.etag);
+  //       if (typeof setGcpStorageClass === "function")
+  //         setGcpStorageClass(dataPayload.storage_class);
+  //       if (typeof setGcpFileMetadata === "function")
+  //         setGcpFileMetadata(dataPayload.metaGcpData || {});
+
+  //       // Fallback handlers if your layout still expects old mock state parameters
+  //       if (typeof setGcpFilePath === "function")
+  //         setGcpFilePath(dataPayload.file_key);
+  //       if (typeof setGcpFilePrefixId === "function")
+  //         setGcpFilePrefixId(dataPayload.bucket);
+  //     } else {
+  //       throw new Error(
+  //         response?.error || "Failed to retrieve metaGcpData details.",
+  //       );
+  //     }
+  //   } catch (error) {
+  //     console.error("Exception caught while fetching GcpMetadata:", error);
+  //     if (typeof setGcpMetaDataError === "function")
+  //       setGcpMetaDataError(error?.message || "Service unavailable.");
+  //   } finally {
+  //     setIsGcpMetaDataLoading(false);
+  //   }
+  // };
+
   const handleGcpDynamicMetadata = async () => {
-    const targetFile = gcpSelectedFiles[0];
-    if (!targetFile) return;
+  const targetFile = gcpSelectedFiles[0];
 
-    // Safely extract the file path string if targetFile is an object
-    const targetFileKey =
-      typeof targetFile === "object" ? targetFile.file_key : targetFile;
+  if (!targetFile) {
+    console.warn("⚠️ No GCP file selected.");
+    return;
+  }
 
-    try {
-      // 🛠️ Mount the modal frame overlay container instantly to run our inner loading spinner state
-      setGcpMetaDataModalOpen(true);
-      setIsGcpMetaDataLoading(true);
-      setGcpMetaDataError("");
-      setMetaGcpData(null); // Purge historical execution remnants cleanly
+  const targetFileKey =
+    typeof targetFile === "object"
+      ? targetFile.file_key
+      : targetFile;
 
-      const payload = {
-        gcp_account_id: gcpAccountId,
-        bucket_name: gcpbucketName,
-        file_key: targetFileKey,
-      };
+  if (!gcpAccountId) {
+    console.error("❌ Missing GCP account ID");
+    setGcpMetaDataError("GCP account ID is missing.");
+    setGcpMetaDataModalOpen(true);
+    return;
+  }
 
-      console.log("📨 Fetching GcpMetadata with payload:", payload);
+  if (!gcpbucketName) {
+    console.error("❌ Missing GCP bucket name");
+    setGcpMetaDataError("GCP bucket name is missing.");
+    setGcpMetaDataModalOpen(true);
+    return;
+  }
 
-      const response = await apiRequest(
-        `${API_URL}/api/gcp/files/details/`,
-        "POST",
-        payload,
-      );
+  if (!targetFileKey) {
+    console.error("❌ Missing GCP file key");
+    setGcpMetaDataError("GCP file path is missing.");
+    setGcpMetaDataModalOpen(true);
+    return;
+  }
 
-      if (response && !response.error) {
-        // 🛠️ Extract from response.data to match your exact backend payload shape
-        const dataPayload = response.data || response;
+  try {
+    setGcpMetaDataModalOpen(true);
+    setIsGcpMetaDataLoading(true);
+    setGcpMetaDataError("");
+    setMetaGcpData(null);
 
-        if (!dataPayload || Object.keys(dataPayload).length === 0) {
-          throw new Error("GcpMetadata response structure resolved empty.");
-        }
+    const payload = {
+      gcp_account_id: gcpAccountId,
+      bucket_name: gcpbucketName,
+      file_key: targetFileKey,
+    };
 
-        // Save the complete object cache
-        setMetaGcpData(dataPayload);
-        document.body.style.overflow = "hidden";
+    console.log("📨 GCP Metadata Payload:", payload);
 
-        if (typeof setDataType === "function") setDataType("Metadata");
+    const response = await apiRequest(
+      `${API_URL}/api/gcp/files/details/`,
+      "POST",
+      payload
+    );
 
-        // 🎯 Route the specific response keys to your state variables exactly
-        if (typeof setGcpFileKey === "function")
-          setGcpFileKey(dataPayload.file_key);
-        if (typeof setBucketName === "function")
-          setGcpBucketName(dataPayload.bucket);
-        if (typeof setGcpFileSize === "function")
-          setGcpFileSize(dataPayload.size);
-        if (typeof setGcpLastModified === "function")
-          setGcpLastModified(dataPayload.last_modified);
-        if (typeof setGcpContentType === "function")
-          setGcpContentType(dataPayload.content_type);
-        if (typeof setGcpEtag === "function") setGcpEtag(dataPayload.etag);
-        if (typeof setGcpStorageClass === "function")
-          setGcpStorageClass(dataPayload.storage_class);
-        if (typeof setGcpFileMetadata === "function")
-          setGcpFileMetadata(dataPayload.metaGcpData || {});
+    console.log("📥 GCP Metadata Response:", response);
 
-        // Fallback handlers if your layout still expects old mock state parameters
-        if (typeof setGcpFilePath === "function")
-          setGcpFilePath(dataPayload.file_key);
-        if (typeof setGcpFilePrefixId === "function")
-          setGcpFilePrefixId(dataPayload.bucket);
-      } else {
-        throw new Error(
-          response?.error || "Failed to retrieve metaGcpData details.",
-        );
-      }
-    } catch (error) {
-      console.error("Exception caught while fetching GcpMetadata:", error);
-      if (typeof setGcpMetaDataError === "function")
-        setGcpMetaDataError(error?.message || "Service unavailable.");
-    } finally {
-      setIsGcpMetaDataLoading(false);
+    if (!response) {
+      throw new Error("Empty response received from GCP metadata API.");
     }
-  };
+
+    if (response.error) {
+      throw new Error(response.error);
+    }
+
+    const dataPayload = response.data || response;
+
+    if (
+      !dataPayload ||
+      Object.keys(dataPayload).length === 0
+    ) {
+      throw new Error(
+        "GCP metadata response is empty."
+      );
+    }
+
+    console.log(
+      "✅ GCP Metadata Data:",
+      dataPayload
+    );
+
+    setMetaGcpData(dataPayload);
+
+    document.body.style.overflow = "hidden";
+
+    if (typeof setDataType === "function")
+      setDataType("Metadata");
+
+    if (typeof setGcpFileKey === "function")
+      setGcpFileKey(dataPayload.file_key);
+
+    if (typeof setBucketName === "function")
+      setGcpBucketName(dataPayload.bucket);
+
+    if (typeof setGcpFileSize === "function")
+      setGcpFileSize(dataPayload.size);
+
+    if (typeof setGcpLastModified === "function")
+      setGcpLastModified(dataPayload.last_modified);
+
+    if (typeof setGcpContentType === "function")
+      setGcpContentType(dataPayload.content_type);
+
+    if (typeof setGcpEtag === "function")
+      setGcpEtag(dataPayload.etag);
+
+    if (typeof setGcpStorageClass === "function")
+      setGcpStorageClass(dataPayload.storage_class);
+
+    // IMPORTANT: backend returns "metadata"
+    if (typeof setGcpFileMetadata === "function")
+      setGcpFileMetadata(dataPayload.metadata || {});
+
+    if (typeof setGcpFilePath === "function")
+      setGcpFilePath(dataPayload.file_key);
+
+    if (typeof setGcpFilePrefixId === "function")
+      setGcpFilePrefixId(dataPayload.bucket);
+
+  } catch (error) {
+
+    console.error(
+      "❌ Exception caught while fetching GcpMetadata:",
+      error
+    );
+
+    setGcpMetaDataError(
+      error?.message ||
+      "Failed to retrieve GCP metadata."
+    );
+
+  } finally {
+    setIsGcpMetaDataLoading(false);
+  }
+};
 
   const handleGcpFileDefinition = async () => {
     console.log("clicked");

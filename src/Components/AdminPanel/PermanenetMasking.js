@@ -9,19 +9,14 @@ import MaskingUploadPopup from "./MaskingUploadPopup";
 
 import { useUI } from "../Context/UIContext";
 
-const PermanenetMasking = ({ selectedOption }) => {
+const PermanenetMasking = ({ selectedOption, showMaskingUploadPopup, setShowMaskingUploadPopup }) => {
   const { token, permissions, csrfToken, userEmail, authLoading } = useAuth();
   const {
-    isTimezoneModalOpen,
-    showProfileModal,
-    setIsTimezoneModalOpen,
-    setShowProfileModal,
     showChatbot,
-    setShowChatbot,
     isDisabled,
     isBlurred,
   } = useUI();
-  const [showMaskingUploadPopup, setShowMaskingUploadPopup] = useState(false);
+  
   const [selectedMaskedDataRowDeletion, setSelectedMaskedDataRowDeletion] =
     useState(null);
   const [error, setError] = useState("");
@@ -461,7 +456,7 @@ const handleMaskedDownloadButtonClick = async () => {
                         }`}
       >
      <div
-          className={`button-container flex flex-row   px-2 items-center justify-between bg-newgray rounded-lg shadow-xl shadow-slate-500/30`}
+          className={`button-container flex flex-row   px-2 items-center justify-between bg-newgray rounded-lg shadow-xl shadow-slate-500/30 ${showMaskingUploadPopup ? "blur-effect" : ""}`}
         >
           <div className="w-full flex flex-row justify-end space-x-2  ">
             {/* <button
@@ -514,7 +509,7 @@ const handleMaskedDownloadButtonClick = async () => {
           </div>
         </div>
        <div className={`usergroup-data-container flex flex-col items-center `}>
-       <div className={`usergroup-data-header rounded-t-xl`}>
+       <div className={`usergroup-data-header rounded-t-xl ${showMaskingUploadPopup ? "blur-effect" : ""}`}>
           <table className="table-design table-fixed w-full ">
               <colgroup>
                 <col className="w-[1%]" />
@@ -575,7 +570,7 @@ const handleMaskedDownloadButtonClick = async () => {
             className={`usergroup-tabular-data mt-2 flex flex-col rounded-b-xl shadow-md shadow-slate-500/30 bg-white`}
           >
             <div
-              className={`usergroup-tabular-rows py-1  overflow-auto `}
+              className={`usergroup-tabular-rows py-1  overflow-auto ${showMaskingUploadPopup ? "blur-effect" : ""}`}
               style={{ scrollbarWidth: "thin" }}
             >
               <table className="table-design table-fixed w-full ">

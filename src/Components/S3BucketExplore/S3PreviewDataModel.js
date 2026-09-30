@@ -1,19 +1,13 @@
 import { useState, useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
-import FullScreenPreview from "../FullScreenPreview";
 import { useAuth } from "../AuthContext";
 import TabularPreview from "./TabularPreview";
-import { apiRequest, makeAuthenticatedRequest } from "../csrfUtils";
+import { apiRequest } from "../csrfUtils";
 import { API_URL } from "../ApiConfig";
 import ErrorPopup from "../ErrorPopup";
 
 const S3PreviewDataModel = ({
   selectedFiles,
-  handleDownload,
-  closePreviewModal,
-  handleDynamicPreview,
   previewData,
-  isModalOpen,
   s3AccountId,
   bucketId,
   selectedS3AccountName,
@@ -26,43 +20,31 @@ const S3PreviewDataModel = ({
   );
 
   const { token, csrfToken, permissions } = useAuth();
-  const location = useLocation();
-  const [itemOffset, setItemOffset] = useState(0);
-  const [isOpenRows, setIsOpenRows] = useState(false);
+  // const location = useLocation();
+  // const [, setIsOpenRows] = useState(false);
   const [selectedFormat, setSelectedFormat] = useState("plain_text");
-  const [showInput, setShowInput] = useState(false);
-  const [showTableInput, setShowTableInput] = useState(true);
-  const [selectedStorageAccount, setSelectedStorageAccount] = useState(
-    location.state?.selectedStorageAccount || null,
-  );
-  const containerData = location.state?.containerData;
-  const fileShareId = location.state?.fileShareId;
+  const [, setShowInput] = useState(false);
+  const [, setShowTableInput] = useState(true);
   const [s3Error, setS3Error] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [currentMatchIndex, setCurrentMatchIndex] = useState(-1);
   const [matchedIndexes, setMatchedIndexes] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(20);
   const [currentTablePage, setCurrentTablePage] = useState(1);
-  const [previousTableButtonDisabled, setPreviousTableButtonDisabled] =
+  const [, setPreviousTableButtonDisabled] =
     useState(true);
-  const [nextTableButtonDisabled, setNextTableButtonDisabled] = useState(false);
+  const [, setNextTableButtonDisabled] = useState(false);
   const [searchInputText, setSearchInputText] = useState("");
   const [maskedData, setMaskedData] = useState(true);
-  const [isMasked, setIsMasked] = useState(
+  const [isMasked, ] = useState(
     localStorage.getItem("isMasked") === "true" || true,
   );
 
   const canSeeRealData = permissions?.includes("SeeRealData");
-  const [downlloading, setDownloading] = useState(true);
+  const [, setDownloading] = useState(true);
   const containerRef = useRef(null);
   const matchRefs = useRef([]);
 
-  const [selectionId, setSelectionId] = useState(
-    containerData ? containerData : fileShareId,
-  );
-  const [selectionType, setSelectionType] = useState(
-    containerData ? "container" : "fileShare",
-  );
 
   const [dataLoading, setDataLoading] = useState(!previewData);
 
@@ -130,7 +112,8 @@ const S3PreviewDataModel = ({
             ? JSON.stringify(feature.geometry.coordinates)
             : "";
           let cleanedCoordinates = rawCoords
-            .replace(/[\[\]]/g, "")
+            // .replace(/[\[\]]/g, "")
+            .replace(/[[\]]/g, "")
             .split(/,(?=-?\d+\.)/)
             .map((coord) => coord.trim())
             .filter(Boolean)
@@ -276,6 +259,7 @@ const S3PreviewDataModel = ({
       setMatchedIndexes([]);
       setCurrentMatchIndex(-1);
     }
+    // eslint-disable-next-line
   }, [searchInputText, previewData, currentTablePage, rowsPerPage]);
 
   const handleSearchInputChange = (event) => {
@@ -325,68 +309,7 @@ const S3PreviewDataModel = ({
     setMaskedData((prevMaskedData) => !prevMaskedData);
   };
 
-  // const handleDownloadFile = async () => {
-  //   // Guard Clause: Ensure a valid file index exists
-  //   if (!selectedFiles || !selectedFiles[0]) {
-  //     alert("⚠️ No files selected for download compilation.");
-  //     return;
-  //   }
-
-  //   try {
-  //     setDownloading(true);
-
-  //     const fileKey = selectedFiles[0];
-
-  //     // Construct strict explicit integer structures for Django models
-  //     const payload = {
-  //       s3_account_id: parseInt(s3AccountId, 10),
-  //       s3_bucket_id: parseInt(bucketId, 10),
-  //       file_key: fileKey,
-  //       is_masked: Boolean(maskedData)
-  //     };
-
-  //     console.log("[S3 Download Pipeline] Dispatching task request payload...", payload);
-
-  //     /* * 🚀 `apiRequest` naturally handles auth headers, checks CSRF validity,
-  //      * stringifies data, and returns the raw parsed JSON object automatically.
-  //      */
-  //    const responseData = await apiRequest(
-  //       `${API_URL}/api/s3/files/download/`,
-  //       "POST",
-  //       payload,
-  //       {
-  //         headers: {
-  //           "Authorization": `Bearer ${token}`,
-  //           "X-CSRFToken": csrfToken
-  //         }
-  //       }
-  //     );
-
-  //     // Guard Clause: Validate that the backend returned a successful message
-  //     if (responseData && responseData.message) {
-  //       alert(`✅ ${responseData.message}! You can monitor progress inside your Tasks profile tab.`);
-  //     } else if (responseData && responseData.error) {
-  //       throw new Error(responseData.error);
-  //     } else {
-  //       throw new Error("No validation acknowledgment received from cloud task engine.");
-  //     }
-
-  //   } catch (error) {
-  //     console.error("[S3 Download Pipeline Error]:", error);
-
-  //     // Graceful production alert system parsing
-  //     if (error.message.includes("504") || error.message.toLowerCase().includes("timeout")) {
-  //       alert(
-  //         "⚠️ Gateway Timeout (504):\nThe server took too long to queue this task. " +
-  //         "Please check your Celery broker terminal logs to see if workers are hanging."
-  //       );
-  //     } else {
-  //       alert(`Failed to compile cloud download streams: ${error.message}`);
-  //     }
-  //   } finally {
-  //     setDownloading(false);
-  //   }
-  // };
+  
 
   // Helper to safely extract CSRF token directly from cookies if state is empty
   const getCookie = (name) => {
@@ -463,38 +386,8 @@ const S3PreviewDataModel = ({
     }
   };
 
-  // useEffect(() => {
-  //   if (
-  //     selectionId &&
-  //     selectionType &&
-  //     selectedStorageAccount &&
-  //     selectedFormat
-  //   ) {
-  //     setDataLoading(true);
-  //     handleDynamicPreview(
-  //       selectionId,
-  //       selectionType,
-  //       selectedStorageAccount,
-  //       selectedFormat,
-  //       maskedData,
-  //     )
-  //       .then(() => setDataLoading(false))
-  //       .catch((error) => {
-  //         setDataLoading(false);
-  //         console.error("Error fetching data:", error);
-  //       });
-  //   }
-  // }, [
-  //   maskedData,
-  //   selectionId,
-  //   selectionType,
-  //   selectedStorageAccount,
-  //   selectedFormat,
-  // ]);
+ 
 
-  const toggleRowsDropdown = () => {
-    setIsOpenRows((prev) => !prev);
-  };
 
   const handleCheckboxChange = (event) => {};
 
@@ -507,13 +400,13 @@ const S3PreviewDataModel = ({
     setIsDownloadStorageState(Boolean(isDownloadStorage));
   }, [isDownloadStorage]);
 
-  console.log("downloadingstate", isDownloadStorageState);
+
 
   // Selection handler for setting rows per page
-  const selectOption = (value) => {
-    handleRowsPerPageChange(value);
-    setIsOpenRows(false);
-  };
+  // const selectOption = (value) => {
+  //   handleRowsPerPageChange(value);
+  //   setIsOpenRows(false);
+  // };
 
   return (
     <div

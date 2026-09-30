@@ -129,6 +129,8 @@ const ContainerOptionsModal = ({
     },
   };
 
+  console.log("📦 Request body for API call:", requestBody);
+
   try {
     /* ✅ FIX 1: Pass parameters exactly to match your utility signature:
       Arg 1: URL

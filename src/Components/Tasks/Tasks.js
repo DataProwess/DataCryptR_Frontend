@@ -1,7 +1,5 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import authService from "../auth";
-// import Navbar from "../Navbar";
 import Navbar from "../Navbar/Navbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimes, faSpinner } from "@fortawesome/free-solid-svg-icons";
@@ -11,8 +9,6 @@ import { faAsterisk } from "@fortawesome/free-solid-svg-icons";
 import Sidebar from "../Sidebar/Sidebar";
 import { API_URL } from "../ApiConfig";
 import Chatbot from "../Chatbot";
-import ProfileModal from "../ProfileModal";
-import TimezoneModal from "../TimeZoneModal";
 import "./tasks.css";
 import ErrorPopup from "../ErrorPopup";
 import { apiRequest } from "../csrfUtils";
@@ -36,7 +32,7 @@ const getViewportDimensions = () => ({
 
 const Tasks = () => {
   const { isDisabled, isBlurred } = useUI();
-  const { token, csrfToken, permissions } = useAuth();
+  const { token} = useAuth();
   const [error, setError] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [showChatbot, setShowChatbot] = useState(false);
@@ -48,25 +44,16 @@ const Tasks = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
-  // eslint-disable-next-line
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  // eslint-disable-next-line
-  const [isZoomedIn, setIsZoomedIn] = useState(false);
-  // const [zoomLevel, setZoomLevel] = useState(100);
+  const [, setIsZoomedIn] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  // eslint-disable-next-line
-  const [isDataArray, setIsDataArray] = useState(false);
-  // const [searchQuery, setSearchQuery] = useState("");
-  // eslint-disable-next-line
-  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
-  // eslint-disable-next-line
-  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+  const [, setIsDataArray] = useState(false);
+  const [, setViewportHeight] = useState(window.innerHeight);
+  const [, setViewportWidth] = useState(window.innerWidth);
   const [showZoomPopup, setShowZoomPopup] = useState(false);
   const [showProfileModal, setShowProfileModal] = useState(false);
-  const [selectedNavbarOption, setSelectedNavbarOption] = useState(null);
+  const [, setSelectedNavbarOption] = useState(null);
   const [zoomLevel, setZoomLevel] = useState(getZoomLevel());
-  // eslint-disable-next-line
-  const [viewportDimensions, setViewportDimensions] = useState(
+  const [, setViewportDimensions] = useState(
     getViewportDimensions(),
   );
 
@@ -235,7 +222,7 @@ const Tasks = () => {
   );
 
   useEffect(() => {
-    if (token) {
+    if (token ) {
       fetchTaskReport(token, currentPage, pageSize, searchQuery);
     }
     // eslint-disable-next-line
@@ -361,18 +348,7 @@ const Tasks = () => {
   const handleChatbotIconClick = () => {
     setShowChatbot(!showChatbot); // Toggle the showChatbot state
   };
-  const handleOptionSelect = (option) => {
-    setSelectedNavbarOption(option);
-
-    // Determine which modal to open based on the selected option
-    if (option === "Profile") {
-      setShowProfileModal(true);
-      setIsTimezoneModalOpen(false); // Ensure timezone modal is closed
-    } else if (option === "Select Time Zone") {
-      setIsTimezoneModalOpen(true);
-      setShowProfileModal(false); // Ensure profile modal is closed
-    }
-  };
+ 
 
   const isInteractionDisabled = isPopupOpen ||  showChatbot;
 
@@ -671,7 +647,7 @@ const Tasks = () => {
             isOpen={showChatbot} // Pass isOpen state to Chatbot
           />
         )}
-        {showProfileModal && (
+        {/* {showProfileModal && (
           <ProfileModal
             isOpen={showProfileModal}
             onClose={handleCloseChatbot}
@@ -682,7 +658,7 @@ const Tasks = () => {
           closePreviewModal={handleCloseChatbot}
           setIsTimezoneModalOpen={setIsTimezoneModalOpen}
           setSelectedNavbarOption={setSelectedNavbarOption}
-        />
+        /> */}
 
         <ErrorPopup
           isOpen={isPopupOpen}

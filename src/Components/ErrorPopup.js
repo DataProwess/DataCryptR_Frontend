@@ -43,10 +43,10 @@ const ErrorPopup = ({ isOpen, message, onClose }) => {
   return (
     <Modal
       isOpen={isOpen}
-      onRequestClose={onClose}
+      // onRequestClose={onClose}
       contentLabel="Error"
       overlayClassName="fixed inset-0  flex justify-center items-center z-[9999]"
-      className="bg-white border border-gray-200 space-y-3 rounded-lg shadow-md shadow-slate-500/30 p-2 flex flex-col items-center z-[10000]"
+      className="bg-white outline-none border border-gray-200 space-y-3 rounded-lg shadow-md shadow-slate-500/30 p-2 flex flex-col items-center z-[10000]"
       style={{
         content: {
           width: '25vw',   // 80% of the viewport width

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import authService from "./auth";
-import Sidebar from "./Sidebar";
+import Sidebar from "./V1_Sidebar";
 import Navbar from "./Navbar";
 import { toast } from "react-toastify";
 import { API_URL } from "./ApiConfig";

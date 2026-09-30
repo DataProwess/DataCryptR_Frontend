@@ -8,7 +8,6 @@ import Sidebar from "../Sidebar/Sidebar";
 import { useUI } from "../Context/UIContext";
 import { ReportsOptions_Config } from "./ReportsOptionsConfig";
 import ReportsOptionsItems from "./ReportsOptionsItems";
-import ReportsGlobalColumnConfig from "./ReportsGlobalColumnConfig";
 import { API_URL } from "../ApiConfig";
 import { apiRequest } from "../csrfUtils";
 import { toast } from "react-toastify";
@@ -21,10 +20,6 @@ import Chatbot from "../Chatbot";
 const Reports = () => {
   const { token, permissions, csrfToken, userEmail, authLoading } = useAuth();
   const {
-    isTimezoneModalOpen,
-    showProfileModal,
-    setIsTimezoneModalOpen,
-    setShowProfileModal,
     showChatbot,
     setShowChatbot,
     isDisabled,
@@ -36,8 +31,8 @@ const Reports = () => {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [totalPages, setTotalPages] = useState(1);
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [error, setError] = useState("");
+  const [, setIsPopupOpen] = useState(false);
+  const [, setError] = useState("");
   const [filteredStartDate, setFilteredStartDate] = useState("");
   const [filteredEndDate, setFilteredEndDate] = useState("");
   const [pageSize, setPageSize] = useState(10);
@@ -45,27 +40,22 @@ const Reports = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [userInputQuery, setUserInputQuery] = useState("");
-  const [isZoomedIn, setIsZoomedIn] = useState(false);
   const [zoomLevel, setZoomLevel] = useState(100);
   const [showZoomPopup, setShowZoomPopup] = useState(false);
   const [showDateFilter, setShowDateFilter] = useState(false);
-  const [isDownloaded, setIsDownloaded] = useState(false);
+  const [, setIsDownloaded] = useState(false);
   const [selectionRange, setSelectionRange] = useState({
     startDate: new Date(),
     endDate: new Date(),
     key: "selection",
   });
   const [isOpen, setIsOpen] = useState(false);
-  const [isDataArray, setIsDataArray] = useState(false);
+  const [, setIsDataArray] = useState(false);
   const [data, setData] = useState([]);
-  const [newFieldIsMasked, setNewFieldIsMasked] = useState(false);
-  const [newFieldName, setNewFieldName] = useState("");
-  const [columnData, setColumnData] = useState([]);
-  const [isNewFieldVisible, setisNewFieldVisible] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const [downloadSeconds, setDownloadSeconds] = useState(0);
   const [downloadCompleted, setDownloadCompleted] = useState(false);
-  const [downloadElapsed, setDownloadElapsed] = useState(0);
+  
   const isInteractionDisabled = showChatbot ;
 
   // Track initial mount so pageSize effect doesn't trigger extra call on load
